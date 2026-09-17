@@ -1,6 +1,6 @@
-# Alex Polychroniadis — Portfolio
+# Alex Polychroniadis
 
-A personal site for a CV: skills, selected work, experience, and a printable résumé. The layout is a dual-identity split — **Engineer** on the left, **Maker** on the right — inspired by [kiara-plds.vercel.app](https://kiara-plds.vercel.app/), with original copy and case studies.
+Personal site and printable CV for software / Forward Deployed–style roles.
 
 ## Run locally
 
@@ -11,15 +11,21 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: hero, split columns, chat widget
-- CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF** (or print)
+- Home: single-page CV (About, Experience, Projects, Education, Skills, Contact)
+- Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
-## Customize
+## Edit content
 
-All name, contact, skills, jobs, and projects live in [`lib/site.ts`](lib/site.ts). That file also feeds the printable CV, so you only edit once.
+All facts live in [`lib/content.ts`](lib/content.ts). The homepage and `/cv` both read from that file. Do not invent employers, metrics, or grades beyond what is there.
 
-Set `social.linkedin` and `social.github` when you have those URLs. Until then, email is the contact path.
+To add a PDF later, drop `public/Alex_Polychroniadis_CV.pdf` and point a button at it. Until then, **View CV** uses the print page.
+
+## Deploy
+
+**Vercel:** import the repo, framework Next.js, default build (`next build`). No env vars required.
+
+**Cloudflare Pages:** framework Next.js, build command `npx @cloudflare/next-on-pages` *or* use the OpenNext Cloudflare adapter if you already use that elsewhere. A static-ish App Router deploy also works via `npx opennextjs-cloudflare` — the site has no database or auth.
 
 ## Stack
 
-Next.js, TypeScript, Tailwind CSS, and shadcn/ui.
+Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui.
