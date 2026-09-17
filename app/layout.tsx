@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { DM_Sans, Source_Serif_4 } from "next/font/google";
 import { content } from "@/lib/content";
 import "./globals.css";
@@ -30,15 +31,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`dark ${sans.variable} ${heading.variable} h-full`}>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}",
-          }}
-        />
-      </head>
-      <body className="min-h-full bg-background text-foreground">{children}</body>
+      <body className="min-h-full bg-background text-foreground">
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}`}
+        </Script>
+        {children}
+      </body>
     </html>
   );
 }
