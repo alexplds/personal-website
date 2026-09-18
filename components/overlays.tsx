@@ -8,6 +8,7 @@ type Mode = Destination["animation"] | null;
 export function useLaunch() {
   const [mode, setMode] = useState<Mode>(null);
   const [href, setHref] = useState("");
+  const [runId, setRunId] = useState(0);
   const [pendingNote, setPendingNote] = useState("");
   const labelRef = useRef("");
 
@@ -20,6 +21,7 @@ export function useLaunch() {
     }
     setHref(dest.href);
     setMode(dest.animation);
+    setRunId((n) => n + 1);
   }
 
   function finish(url: string) {
@@ -34,16 +36,18 @@ export function useLaunch() {
     );
   }
 
-  return { mode, href, pendingNote, launch, finish, clearNote: () => setPendingNote("") };
+  return { mode, href, runId, pendingNote, launch, finish, clearNote: () => setPendingNote("") };
 }
 
 export function LaunchOverlay({
   mode,
   href,
+  runId,
   onDone,
 }: {
   mode: Mode;
   href: string;
+  runId: number;
   onDone: (url: string) => void;
 }) {
   const doneRef = useRef(onDone);
@@ -56,7 +60,7 @@ export function LaunchOverlay({
     if (!mode) return;
     const t = window.setTimeout(() => doneRef.current(href), mode === "tennis" ? 2300 : 1700);
     return () => window.clearTimeout(t);
-  }, [mode, href]);
+  }, [mode, href, runId]);
 
   if (!mode) return null;
 
@@ -79,7 +83,8 @@ function TennisScene() {
       <div className="pointer-events-none absolute top-6 bottom-6 left-1/2 w-0.5 -translate-x-1/2 bg-white/70 md:top-16 md:bottom-16" />
       <div className="tennis-ball-track" aria-hidden="true">
         <div className="tennis-ball-bounce">
-          <div className="tennis-ball" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icons/tennis-ball.png" alt="" className="tennis-ball-photo" />
         </div>
       </div>
       <p className="relative z-10 font-heading text-4xl text-white md:text-6xl">GoCourt.gr</p>
@@ -89,19 +94,26 @@ function TennisScene() {
 
 function F1Scene() {
   return (
-    <div className="relative flex h-full items-center justify-center overflow-hidden bg-[#0a0a0a]">
+    <div className="relative flex h-full items-center justify-center overflow-hidden bg-[#111]">
       <div className="speed-lines" aria-hidden="true" />
       <div className="checkered-bar" aria-hidden="true" />
       <div className="f1-car" aria-hidden="true">
-        <svg viewBox="0 0 220 70" className="h-16 w-auto md:h-20">
-          <polygon points="20,40 70,28 150,28 200,40 190,50 30,50" fill="#e10600" />
-          <rect x="95" y="16" width="36" height="16" rx="3" fill="#1a1a1a" />
-          <circle cx="58" cy="52" r="12" fill="#222" stroke="#f3f1ea" strokeWidth="3" />
-          <circle cx="168" cy="52" r="12" fill="#222" stroke="#f3f1ea" strokeWidth="3" />
-          <polygon points="150,28 200,40 188,28" fill="#ff4d4d" />
+        <svg viewBox="0 0 200 56" className="h-10 w-auto">
+          <path
+            d="M22 34 H58 L72 22 H118 L138 34 H176 L170 42 H30 Z"
+            fill="#e10600"
+            stroke="#8a0400"
+            strokeWidth="1.5"
+          />
+          <rect x="86" y="16" width="28" height="12" rx="2" fill="#1a1a1a" />
+          <circle cx="56" cy="44" r="8" fill="#222" stroke="#eee" strokeWidth="2" />
+          <circle cx="150" cy="44" r="8" fill="#222" stroke="#eee" strokeWidth="2" />
+          <path d="M138 34 H172" stroke="#ffb3b3" strokeWidth="2" />
         </svg>
       </div>
-      <p className="relative z-10 font-heading text-3xl text-white md:text-5xl">Portfolio</p>
+      <p className="relative z-10 text-sm tracking-[0.2em] text-white/80 uppercase">
+        Opening portfolio
+      </p>
     </div>
   );
 }

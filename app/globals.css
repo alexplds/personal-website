@@ -240,16 +240,25 @@
 .sport-trail {
   position: fixed;
   inset: 0;
-  z-index: 5;
+  z-index: 4;
   overflow: hidden;
+}
+
+.sport-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
 }
 
 .sport-ball {
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0.92;
-  will-change: transform;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 14%));
 }
 
 .sport-face {
@@ -261,8 +270,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  transform-origin: 20% 80%;
+  transform-origin: 30% 70%;
   will-change: transform, opacity;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 12%));
 }
 
 .reveal {
@@ -302,9 +312,9 @@
   position: absolute;
   top: 42%;
   left: 50%;
-  width: 28px;
-  height: 28px;
-  margin-left: -14px;
+  width: 26px;
+  height: 26px;
+  margin-left: -13px;
   will-change: transform;
   animation: tennis-x 2.2s cubic-bezier(0.37, 0, 0.63, 1) both;
 }
@@ -314,17 +324,18 @@
   animation: tennis-y 2.2s both;
 }
 
-.tennis-ball {
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 30% 28%, #fff8c4, #d6e24a 42%, #7f9a1c);
-  box-shadow:
-    inset -3px -3px 0 rgb(255 255 255 / 22%),
-    0 8px 16px rgb(0 0 0 / 25%);
+.tennis-ball,
+.tennis-ball-photo {
+  width: 26px;
+  height: 26px;
   will-change: transform;
   animation: tennis-spin 2.2s linear both;
+}
+
+.tennis-ball-photo {
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 28%));
 }
 
 .court-lines {

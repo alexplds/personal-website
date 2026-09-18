@@ -5,7 +5,7 @@ import { LaunchOverlay, PendingNote, useLaunch } from "@/components/overlays";
 import { Reveal } from "@/components/reveal";
 
 export function PlaySection() {
-  const { mode, href, pendingNote, launch, finish, clearNote } = useLaunch();
+  const { mode, href, runId, pendingNote, launch, finish, clearNote } = useLaunch();
 
   return (
     <section id="play" className="scroll-mt-20 px-5 py-16">
@@ -37,7 +37,7 @@ export function PlaySection() {
           </Reveal>
         ))}
       </div>
-      <LaunchOverlay mode={mode} href={href} onDone={finish} />
+      <LaunchOverlay key={runId} mode={mode} href={href} runId={runId} onDone={finish} />
       <PendingNote note={pendingNote} onClose={clearNote} />
     </section>
   );

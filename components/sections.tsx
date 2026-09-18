@@ -2,6 +2,7 @@ import { content } from "@/lib/content";
 import { CopyEmail } from "@/components/copy-email";
 import { PlaySection } from "@/components/destinations";
 import { Reveal } from "@/components/reveal";
+import { FootballGraphic } from "@/components/sport-graphics";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -13,15 +14,13 @@ export function HeroSection() {
         <p className="hero-in text-xs tracking-[0.2em] text-muted-foreground uppercase">
           {content.location}
         </p>
-        <div className="mt-4 flex items-start gap-4">
+        <div className="mt-4 flex items-start gap-3">
           <h1 className="font-heading hero-in hero-in-2 min-w-0 text-5xl leading-[0.95] tracking-tight md:text-7xl">
             {content.name}
           </h1>
-          <div
-            id="ball-home"
-            className="mt-2 hidden size-11 shrink-0 md:block"
-            aria-hidden="true"
-          />
+          <div className="hero-in hero-in-2 mt-2 hidden size-7 shrink-0 md:block" aria-hidden="true">
+            <FootballGraphic className="size-full" />
+          </div>
         </div>
           <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
             {content.roleLine}
