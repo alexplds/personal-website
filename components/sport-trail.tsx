@@ -11,24 +11,22 @@ import {
 type Pose = {
   x: number;
   y: number;
-  size: number;
   tennis: number;
-  rot: number;
   tennisHit: number;
   padelHit: number;
-  opacity: number;
+  visible: boolean;
 };
 
-const start: Pose = {
+const idle: Pose = {
   x: 0,
   y: 0,
-  size: 260,
   tennis: 0,
-  rot: 0,
   tennisHit: 0,
   padelHit: 0,
-  opacity: 1,
+  visible: false,
 };
+
+const SIZE = 44;
 
 function clamp(n: number, a = 0, b = 1) {
   return Math.min(b, Math.max(a, n));
@@ -43,14 +41,20 @@ function smooth(e0: number, e1: number, x: number) {
   return t * t * (3 - 2 * t);
 }
 
-function hitPulse(progress: number, at: number, width = 0.07) {
-  const d = Math.abs(progress - at);
-  return clamp(1 - d / width);
+function hitPulse(progress: number, at: number, width = 0.05) {
+  return clamp(1 - Math.abs(progress - at) / width);
+}
+
+function gutterX(homeX: number) {
+  const main = document.querySelector("main");
+  const right = main?.getBoundingClientRect().right ?? window.innerWidth - 80;
+  const room = window.innerWidth - right;
+  if (room < 64) return homeX;
+  return Math.min(right + 28 + SIZE / 2, window.innerWidth - 28);
 }
 
 export function SportTrail() {
-  const [pose, setPose] = useState<Pose>(start);
-  const [ready, setReady] = useState(false);
+  const [pose, setPose] = useState<Pose>(idle);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -59,69 +63,40 @@ export function SportTrail() {
     function measure() {
       const home = document.getElementById("ball-home");
       const play = document.getElementById("play");
-      if (!home) return;
+      if (!home || window.innerWidth < 960) {
+        setPose(idle);
+        return;
+      }
 
       const homeBox = home.getBoundingClientRect();
       const playTop = play ? play.getBoundingClientRect().top + window.scrollY : 2200;
       const startY = window.scrollY + homeBox.top;
-      const startX = homeBox.left + homeBox.width / 2;
-      const startSize = Math.min(homeBox.width, homeBox.height, 320);
-      const y = window.scrollY;
-      const span = Math.max(playTop - startY, 1);
-      const p = clamp((y - startY + 80) / span);
+      const homeX = homeBox.left + homeBox.width / 2;
+      const homeY = homeBox.top + homeBox.height / 2;
+      const p = clamp((window.scrollY - startY + 40) / Math.max(playTop - startY, 1));
+      const xTrack = gutterX(homeX);
 
       if (reduced) {
         setPose({
-          x: startX,
-          y: homeBox.top + homeBox.height / 2,
-          size: startSize,
+          x: homeX,
+          y: homeY,
           tennis: 0,
-          rot: 0,
           tennisHit: 0,
           padelHit: 0,
-          opacity: 1,
+          visible: true,
         });
-        setReady(true);
         return;
       }
 
-      const follow = smooth(0.02, 0.22, p);
-      const toTennis = smooth(0.28, 0.48, p);
-      const tennisHit = hitPulse(p, 0.5);
-      const padelHit = hitPulse(p, 0.82);
-      const afterTennis = smooth(0.5, 0.58, p);
-      const afterPadel = smooth(0.82, 0.9, p);
-
-      const endX = window.innerWidth - Math.min(160, window.innerWidth * 0.16);
-      const midX = window.innerWidth * 0.78;
-      const tennisX = window.innerWidth * 0.7;
-      const padelX = window.innerWidth * 0.74;
-
-      let x = lerp(startX, midX, follow);
-      x = lerp(x, tennisX, toTennis);
-      x += tennisHit * -36;
-      x = lerp(x, padelX, afterTennis);
-      x += padelHit * -28;
-      x = lerp(x, endX, afterPadel);
-
-      const heroY = homeBox.top + homeBox.height / 2;
-      const travelY = lerp(window.innerHeight * 0.28, window.innerHeight * 0.62, p);
-      const yPos = lerp(heroY, travelY, follow);
-
-      const size = lerp(startSize, 92, smooth(0.05, 0.4, p));
-      const rot = lerp(0, 220, p) + tennisHit * 18 + padelHit * -14;
-
+      const follow = smooth(0.04, 0.2, p);
       setPose({
-        x,
-        y: yPos,
-        size,
-        tennis: toTennis,
-        rot,
-        tennisHit,
-        padelHit,
-        opacity: 1 - smooth(0.94, 1.05, p) * 0.35,
+        x: lerp(homeX, xTrack, follow),
+        y: lerp(homeY, lerp(120, window.innerHeight - 140, p), follow),
+        tennis: smooth(0.32, 0.46, p),
+        tennisHit: hitPulse(p, 0.48),
+        padelHit: hitPulse(p, 0.8),
+        visible: true,
       });
-      setReady(true);
     }
 
     function onScroll() {
@@ -139,17 +114,16 @@ export function SportTrail() {
     };
   }, []);
 
-  if (!ready) return null;
+  if (!pose.visible) return null;
 
   return (
     <div className="sport-trail no-print pointer-events-none" aria-hidden="true">
       <div
         className="sport-ball"
         style={{
-          width: pose.size,
-          height: pose.size,
-          opacity: pose.opacity,
-          transform: `translate3d(${pose.x - pose.size / 2}px, ${pose.y - pose.size / 2}px, 0) rotate(${pose.rot}deg)`,
+          width: SIZE,
+          height: SIZE,
+          transform: `translate3d(${pose.x - SIZE / 2}px, ${pose.y - SIZE / 2}px, 0)`,
         }}
       >
         <div className="sport-face" style={{ opacity: 1 - pose.tennis }}>
@@ -161,22 +135,22 @@ export function SportTrail() {
       </div>
 
       <div
-        className="sport-racquet tennis-racquet"
+        className="sport-racquet"
         style={{
-          opacity: clamp(pose.tennisHit * 1.4, 0, 1),
-          transform: `translate3d(${pose.x + pose.size * 0.15}px, ${pose.y - 90}px, 0) rotate(${-38 + pose.tennisHit * 70}deg)`,
+          opacity: pose.tennisHit,
+          transform: `translate3d(${pose.x + 10}px, ${pose.y - 28}px, 0) rotate(${-24 + pose.tennisHit * 18}deg)`,
         }}
       >
-        <TennisRacquet className="h-56 w-auto md:h-72" />
+        <TennisRacquet className="h-[72px] w-auto" />
       </div>
       <div
-        className="sport-racquet padel-racquet"
+        className="sport-racquet"
         style={{
-          opacity: clamp(pose.padelHit * 1.4, 0, 1),
-          transform: `translate3d(${pose.x + pose.size * 0.1}px, ${pose.y - 80}px, 0) rotate(${32 - pose.padelHit * 64}deg)`,
+          opacity: pose.padelHit,
+          transform: `translate3d(${pose.x + 10}px, ${pose.y - 28}px, 0) rotate(${18 - pose.padelHit * 16}deg)`,
         }}
       >
-        <PadelRacquet className="h-56 w-auto md:h-72" />
+        <PadelRacquet className="h-[72px] w-auto" />
       </div>
     </div>
   );

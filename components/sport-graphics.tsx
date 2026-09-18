@@ -1,53 +1,50 @@
 export function FootballGraphic({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 200 200" className={className} aria-hidden="true">
-      <defs>
-        <radialGradient id="fb-skin" cx="32%" cy="28%" r="78%">
-          <stop offset="0%" stopColor="#ffffff" />
-          <stop offset="55%" stopColor="#ececec" />
-          <stop offset="100%" stopColor="#b8b8b8" />
-        </radialGradient>
-      </defs>
-      <circle cx="100" cy="100" r="96" fill="url(#fb-skin)" />
-      <circle cx="100" cy="100" r="96" fill="none" stroke="#1a1a1a" strokeWidth="3" />
-      <polygon points="100,58 124,76 115,104 85,104 76,76" fill="#171717" />
+    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
+      <circle cx="32" cy="32" r="30" fill="#f4f4f4" stroke="#2a2a2a" strokeWidth="1.5" />
+      <polygon points="32,20 39.2,25.2 36.4,33.6 27.6,33.6 24.8,25.2" fill="#1c1c1c" />
       <path
-        d="M100 58 L76 76 L48 62 L62 28 Z M100 58 L124 76 L152 62 L138 28 Z M76 76 L85 104 L52 128 L32 98 Z M124 76 L115 104 L148 128 L168 98 Z M85 104 L115 104 L128 148 L72 148 Z"
+        d="M32 20 L24.8 25.2 L16 20.4 L20.8 11.2 L32 12.4 Z
+           M32 20 L39.2 25.2 L48 20.4 L43.2 11.2 L32 12.4 Z
+           M24.8 25.2 L27.6 33.6 L18.4 40 L11.6 32.8 L16 20.4 Z
+           M39.2 25.2 L36.4 33.6 L45.6 40 L52.4 32.8 L48 20.4 Z
+           M27.6 33.6 L36.4 33.6 L40 46.4 L24 46.4 Z"
         fill="none"
-        stroke="#171717"
-        strokeWidth="4"
+        stroke="#1c1c1c"
+        strokeWidth="1.6"
         strokeLinejoin="round"
       />
-      <polygon points="62,28 100,18 138,28 124,52 76,52" fill="none" stroke="#171717" strokeWidth="4" />
-      <polygon points="32,98 22,128 48,162 72,148 52,128" fill="none" stroke="#171717" strokeWidth="4" />
-      <polygon points="168,98 178,128 152,162 128,148 148,128" fill="none" stroke="#171717" strokeWidth="4" />
+      <path
+        d="M20.8 11.2 C24 8.4 40 8.4 43.2 11.2
+           M11.6 32.8 C8.8 28 9.2 18 16 20.4
+           M52.4 32.8 C55.2 28 54.8 18 48 20.4
+           M18.4 40 L14 50.8 C20 56 44 56 50 50.8 L45.6 40
+           M24 46.4 L32 54.8 L40 46.4"
+        fill="none"
+        stroke="#1c1c1c"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
 export function TennisBallGraphic({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 200 200" className={className} aria-hidden="true">
-      <defs>
-        <radialGradient id="tb-skin" cx="30%" cy="28%" r="78%">
-          <stop offset="0%" stopColor="#f7f4a8" />
-          <stop offset="45%" stopColor="#d4e054" />
-          <stop offset="100%" stopColor="#8aa322" />
-        </radialGradient>
-      </defs>
-      <circle cx="100" cy="100" r="96" fill="url(#tb-skin)" />
+    <svg viewBox="0 0 64 64" className={className} aria-hidden="true">
+      <circle cx="32" cy="32" r="30" fill="#d4e157" stroke="#9aaa2a" strokeWidth="1.2" />
       <path
-        d="M18 78 C70 40, 70 160, 18 122"
+        d="M8 26 C22 16 22 48 8 38"
         fill="none"
-        stroke="#f8f6e8"
-        strokeWidth="10"
+        stroke="#f7f4dc"
+        strokeWidth="3.2"
         strokeLinecap="round"
       />
       <path
-        d="M182 78 C130 40, 130 160, 182 122"
+        d="M56 26 C42 16 42 48 56 38"
         fill="none"
-        stroke="#f8f6e8"
-        strokeWidth="10"
+        stroke="#f7f4dc"
+        strokeWidth="3.2"
         strokeLinecap="round"
       />
     </svg>
@@ -56,67 +53,40 @@ export function TennisBallGraphic({ className = "" }: { className?: string }) {
 
 export function TennisRacquet({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 160 360" className={className} aria-hidden="true">
-      <ellipse cx="80" cy="92" rx="58" ry="78" fill="#c4a36a" stroke="#3a2a14" strokeWidth="10" />
-      <ellipse cx="80" cy="92" rx="46" ry="66" fill="#f3efe4" />
-      {Array.from({ length: 8 }, (_, i) => (
-        <line
-          key={`v${i}`}
-          x1={48 + i * 8}
-          y1="32"
-          x2={48 + i * 8}
-          y2="152"
-          stroke="#9a8f7a"
-          strokeWidth="1.2"
-        />
-      ))}
-      {Array.from({ length: 10 }, (_, i) => (
-        <line
-          key={`h${i}`}
-          x1="38"
-          y1={40 + i * 11}
-          x2="122"
-          y2={40 + i * 11}
-          stroke="#9a8f7a"
-          strokeWidth="1.2"
-        />
-      ))}
-      <rect x="72" y="168" width="16" height="110" rx="6" fill="#3a2a14" />
-      <rect x="68" y="268" width="24" height="70" rx="10" fill="#1f6b3c" />
+    <svg viewBox="0 0 48 96" className={className} aria-hidden="true">
+      <ellipse cx="24" cy="26" rx="17" ry="22" fill="#efe6d4" stroke="#5c4630" strokeWidth="3" />
+      <path d="M13 12 V40 M18 10 V42 M24 9 V43 M30 10 V42 M35 12 V40" stroke="#c4b49a" strokeWidth="0.8" />
+      <path d="M10 16 H38 M10 22 H38 M10 28 H38 M10 34 H38" stroke="#c4b49a" strokeWidth="0.8" />
+      <rect x="21.2" y="47" width="5.6" height="26" rx="1.6" fill="#5c4630" />
+      <rect x="19.6" y="71" width="8.8" height="18" rx="3" fill="#3f6b45" />
     </svg>
   );
 }
 
 export function PadelRacquet({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 180 360" className={className} aria-hidden="true">
+    <svg viewBox="0 0 52 96" className={className} aria-hidden="true">
       <path
-        d="M90 22 C142 22 162 70 162 118 C162 176 128 214 90 214 C52 214 18 176 18 118 C18 70 38 22 90 22 Z"
-        fill="#1c3f7a"
-        stroke="#0d2244"
-        strokeWidth="8"
-      />
-      <path
-        d="M90 40 C128 40 142 76 142 118 C142 164 118 194 90 194 C62 194 38 164 38 118 C38 76 52 40 90 40 Z"
-        fill="#2b6cb0"
+        d="M26 6 C40 6 46 18 46 32 C46 48 36 58 26 58 C16 58 6 48 6 32 C6 18 12 6 26 6 Z"
+        fill="#2a5f9e"
+        stroke="#1a3d6b"
+        strokeWidth="2.4"
       />
       {[
-        [70, 70],
-        [90, 62],
-        [110, 70],
-        [62, 96],
-        [90, 92],
-        [118, 96],
-        [70, 122],
-        [90, 126],
-        [110, 122],
-        [80, 152],
-        [100, 152],
+        [18, 20],
+        [26, 18],
+        [34, 20],
+        [16, 30],
+        [26, 30],
+        [36, 30],
+        [18, 40],
+        [26, 42],
+        [34, 40],
       ].map(([cx, cy]) => (
-        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="6" fill="#0d2244" opacity="0.45" />
+        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.2" fill="#d7e6f6" />
       ))}
-      <rect x="80" y="210" width="20" height="78" rx="6" fill="#0d2244" />
-      <rect x="74" y="280" width="32" height="64" rx="12" fill="#e8c36a" />
+      <rect x="23" y="57" width="6" height="18" rx="1.5" fill="#1a3d6b" />
+      <rect x="21" y="73" width="10" height="16" rx="3" fill="#d2b15a" />
     </svg>
   );
 }
