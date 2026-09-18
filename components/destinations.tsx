@@ -32,9 +32,7 @@ export function PlaySection() {
               <p className="text-xs tracking-wide uppercase opacity-70">{dest.kicker}</p>
               <p className="font-heading mt-2 text-2xl">{dest.title}</p>
               <p className="mt-3 text-sm text-muted-foreground">{dest.hint}</p>
-              <span className="mt-6 inline-block text-sm underline underline-offset-4">
-                {dest.href ? "Open" : "Open when the link is in"}
-              </span>
+              <span className="mt-6 inline-block text-sm underline underline-offset-4">Open</span>
             </button>
           </Reveal>
         ))}

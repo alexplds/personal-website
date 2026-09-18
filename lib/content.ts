@@ -69,7 +69,7 @@ export const content = {
       kicker: "Mahara · studio work",
       hint: "Formula 1, then the portfolio.",
       animation: "f1" as const,
-      href: "",
+      href: "https://mahara.bath.ac.uk/view/view.php?t=e5303c1dc98b77b34811",
     },
     {
       id: "year2",
@@ -77,7 +77,7 @@ export const content = {
       kicker: "Mahara · studio work",
       hint: "Formula 1, then the portfolio.",
       animation: "f1" as const,
-      href: "",
+      href: "https://mahara.bath.ac.uk/view/view.php?t=e5adef5a06be9a83ac51",
     },
   ],
   education: [
