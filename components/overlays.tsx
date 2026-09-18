@@ -54,7 +54,7 @@ export function LaunchOverlay({
 
   useEffect(() => {
     if (!mode) return;
-    const t = window.setTimeout(() => doneRef.current(href), 1700);
+    const t = window.setTimeout(() => doneRef.current(href), mode === "tennis" ? 2300 : 1700);
     return () => window.clearTimeout(t);
   }, [mode, href]);
 
@@ -77,7 +77,11 @@ function TennisScene() {
       <div className="court-lines pointer-events-none absolute inset-6 rounded-sm border-2 border-white/70 md:inset-16" />
       <div className="pointer-events-none absolute top-1/2 right-0 left-0 h-0.5 -translate-y-1/2 bg-white/70" />
       <div className="pointer-events-none absolute top-6 bottom-6 left-1/2 w-0.5 -translate-x-1/2 bg-white/70 md:top-16 md:bottom-16" />
-      <div className="tennis-ball" aria-hidden="true" />
+      <div className="tennis-ball-track" aria-hidden="true">
+        <div className="tennis-ball-bounce">
+          <div className="tennis-ball" />
+        </div>
+      </div>
       <p className="relative z-10 font-heading text-4xl text-white md:text-6xl">GoCourt.gr</p>
     </div>
   );

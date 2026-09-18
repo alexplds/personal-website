@@ -61,7 +61,7 @@ export const content = {
       kicker: "Co-founded with a friend · in pilot",
       hint: "Tennis, then the site.",
       animation: "tennis" as const,
-      href: "https://gocourt.gr",
+      href: "https://www.gocourt.gr",
     },
     {
       id: "year1",
