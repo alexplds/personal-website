@@ -7,42 +7,49 @@ import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section id="top" className="relative overflow-hidden px-5 pt-20 pb-16 md:pt-28 md:pb-24">
+    <section id="top" className="relative overflow-visible px-5 pt-20 pb-16 md:pt-28 md:pb-24">
       <div className="hero-orb" aria-hidden="true" />
-      <div className="float-ball" aria-hidden="true" />
-      <p className="hero-in text-xs tracking-[0.2em] text-muted-foreground uppercase">
-        {content.location}
-      </p>
-      <h1 className="font-heading hero-in hero-in-2 mt-4 text-5xl leading-[0.95] tracking-tight md:text-7xl">
-        {content.name}
-      </h1>
-      <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
-        {content.roleLine}
-      </p>
-      <p className="hero-in hero-in-4 mt-5 max-w-2xl text-[16px] leading-relaxed">
-        {content.heroLead}
-      </p>
-      <div className="hero-in hero-in-5 mt-6 flex flex-wrap gap-2">
-        {content.languages.map((lang) => (
-          <span
-            key={lang.name}
-            className="rounded-full border border-border bg-card/70 px-3 py-1 text-sm backdrop-blur"
-          >
-            {lang.name}
-            <span className="text-muted-foreground"> · {lang.note}</span>
-          </span>
-        ))}
-      </div>
-      <div className="hero-in hero-in-6 mt-8 flex flex-wrap items-center gap-3">
-        <Button nativeButton={false} render={<a href="#story" />}>
-          The story
-        </Button>
-        <Button nativeButton={false} variant="outline" render={<a href="#play" />}>
-          GoCourt & portfolios
-        </Button>
-        <Button nativeButton={false} variant="outline" render={<a href="/cv" />}>
-          View CV
-        </Button>
+      <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1fr)_minmax(240px,42%)]">
+        <div>
+          <p className="hero-in text-xs tracking-[0.2em] text-muted-foreground uppercase">
+            {content.location}
+          </p>
+          <h1 className="font-heading hero-in hero-in-2 mt-4 text-5xl leading-[0.95] tracking-tight md:text-7xl">
+            {content.name}
+          </h1>
+          <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
+            {content.roleLine}
+          </p>
+          <p className="hero-in hero-in-4 mt-5 max-w-2xl text-[16px] leading-relaxed">
+            {content.heroLead}
+          </p>
+          <div className="hero-in hero-in-5 mt-6 flex flex-wrap gap-2">
+            {content.languages.map((lang) => (
+              <span
+                key={lang.name}
+                className="rounded-full border border-border bg-card/70 px-3 py-1 text-sm backdrop-blur"
+              >
+                {lang.name}
+                <span className="text-muted-foreground"> · {lang.note}</span>
+              </span>
+            ))}
+          </div>
+          <div className="hero-in hero-in-6 mt-8 flex flex-wrap items-center gap-3">
+            <Button nativeButton={false} render={<a href="#story" />}>
+              The story
+            </Button>
+            <Button nativeButton={false} variant="outline" render={<a href="#play" />}>
+              GoCourt & portfolios
+            </Button>
+            <Button nativeButton={false} variant="outline" render={<a href="/cv" />}>
+              View CV
+            </Button>
+          </div>
+        </div>
+        <div
+          id="ball-home"
+          className="relative mx-auto aspect-square w-full max-w-[320px] md:max-w-none"
+        />
       </div>
     </section>
   );
