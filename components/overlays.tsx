@@ -13,12 +13,7 @@ export function useLaunch() {
   const labelRef = useRef("");
 
   function launch(dest: Destination) {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     labelRef.current = dest.title;
-    if (reduced) {
-      finish(dest.href);
-      return;
-    }
     setHref(dest.href);
     setMode(dest.animation);
     setRunId((n) => n + 1);
@@ -58,7 +53,9 @@ export function LaunchOverlay({
 
   useEffect(() => {
     if (!mode) return;
-    const t = window.setTimeout(() => doneRef.current(href), mode === "tennis" ? 2300 : 1700);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const wait = reduced ? 700 : mode === "tennis" ? 2300 : 1700;
+    const t = window.setTimeout(() => doneRef.current(href), wait);
     return () => window.clearTimeout(t);
   }, [mode, href, runId]);
 

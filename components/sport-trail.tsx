@@ -28,9 +28,8 @@ const idle: Pose = {
   visible: false,
 };
 
-const SIZE = 26;
-const MIN_WIDTH = 1120;
-const GUTTER_NEED = 56;
+const SIZE = 28;
+const MIN_WIDTH = 1000;
 
 function clamp(n: number, a = 0, b = 1) {
   return Math.min(b, Math.max(a, n));
@@ -41,36 +40,33 @@ function lerp(a: number, b: number, t: number) {
 }
 
 function smooth(e0: number, e1: number, x: number) {
-  const t = clamp((x - e0) / (e1 - e0));
+  const span = e1 - e0;
+  if (span <= 0) return x >= e1 ? 1 : 0;
+  const t = clamp((x - e0) / span);
   return t * t * (3 - 2 * t);
 }
 
-function hitPulse(progress: number, at: number, width = 0.03) {
+function hitPulse(progress: number, at: number, width = 0.04) {
   return clamp(1 - Math.abs(progress - at) / width);
 }
 
 function gutterX() {
-  if (window.innerWidth < MIN_WIDTH) return null;
+  if (typeof window === "undefined" || window.innerWidth < MIN_WIDTH) return null;
   const main = document.querySelector("main");
-  const right = main?.getBoundingClientRect().right ?? window.innerWidth;
-  const room = window.innerWidth - right;
-  if (room < GUTTER_NEED) return null;
-  return right + Math.min(room * 0.58, 36);
+  const right = main?.getBoundingClientRect().right ?? window.innerWidth - 80;
+  const x = window.innerWidth - 26;
+  // Hide rather than sit on copy when the column is too close to the edge.
+  if (x - SIZE / 2 < right + 8) return null;
+  return x;
 }
 
 export function SportTrail() {
   const [pose, setPose] = useState<Pose>(idle);
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let frame = 0;
 
     function measure() {
-      if (reduced) {
-        setPose(idle);
-        return;
-      }
-
       const x = gutterX();
       const play = document.getElementById("play");
       if (x == null) {
@@ -78,22 +74,23 @@ export function SportTrail() {
         return;
       }
 
-      const playTop = play ? play.getBoundingClientRect().top + window.scrollY : 2200;
-      const start = 90;
-      const p = clamp((window.scrollY - start) / Math.max(playTop - start, 1));
-      const fade = smooth(0.04, 0.14, p) * (1 - smooth(0.9, 0.99, p));
+      const playTop = play ? play.getBoundingClientRect().top + window.scrollY : 2400;
+      const start = 40;
+      const span = Math.max(playTop - start, 400);
+      const p = clamp((window.scrollY - start) / span);
+      const fade = smooth(0.01, 0.08, p) * (1 - smooth(0.96, 1, p));
 
-      if (fade < 0.04) {
+      if (fade < 0.02) {
         setPose(idle);
         return;
       }
 
       setPose({
         x,
-        y: lerp(108, window.innerHeight - 128, p),
-        tennis: smooth(0.3, 0.42, p),
-        tennisHit: hitPulse(p, 0.48),
-        padelHit: hitPulse(p, 0.78),
+        y: lerp(120, window.innerHeight - 110, p),
+        tennis: smooth(0.26, 0.4, p),
+        tennisHit: hitPulse(p, 0.46),
+        padelHit: hitPulse(p, 0.76),
         fade,
         visible: true,
       });
@@ -116,6 +113,8 @@ export function SportTrail() {
 
   if (!pose.visible) return null;
 
+  const fade = Number.isFinite(pose.fade) ? pose.fade : 0;
+
   return (
     <div className="sport-trail no-print pointer-events-none" aria-hidden="true">
       <div
@@ -123,7 +122,7 @@ export function SportTrail() {
         style={{
           width: SIZE,
           height: SIZE,
-          opacity: pose.fade * 0.72,
+          opacity: fade * 0.88,
           transform: `translate3d(${pose.x - SIZE / 2}px, ${pose.y - SIZE / 2}px, 0)`,
         }}
       >
@@ -138,20 +137,20 @@ export function SportTrail() {
       <div
         className="sport-racquet"
         style={{
-          opacity: pose.fade * pose.tennisHit * 0.55,
-          transform: `translate3d(${pose.x - 20}px, ${pose.y - 18}px, 0) rotate(${-18 + pose.tennisHit * 10}deg)`,
+          opacity: fade * pose.tennisHit * 0.7,
+          transform: `translate3d(${pose.x - 22}px, ${pose.y - 20}px, 0) rotate(${-16 + pose.tennisHit * 8}deg)`,
         }}
       >
-        <TennisRacquet className="h-10 w-auto" />
+        <TennisRacquet className="h-9 w-auto" />
       </div>
       <div
         className="sport-racquet"
         style={{
-          opacity: pose.fade * pose.padelHit * 0.55,
-          transform: `translate3d(${pose.x - 18}px, ${pose.y - 16}px, 0) rotate(${12 - pose.padelHit * 8}deg)`,
+          opacity: fade * pose.padelHit * 0.7,
+          transform: `translate3d(${pose.x - 20}px, ${pose.y - 18}px, 0) rotate(${10 - pose.padelHit * 6}deg)`,
         }}
       >
-        <PadelRacquet className="h-10 w-auto" />
+        <PadelRacquet className="h-9 w-auto" />
       </div>
     </div>
   );
