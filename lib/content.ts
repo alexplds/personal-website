@@ -7,15 +7,30 @@ export const content = {
   phoneHref: "tel:[phone removed]",
   linkedin: "https://linkedin.com/in/alexpolychroniadis",
   linkedinLabel: "linkedin.com/in/alexpolychroniadis",
-  roleLine: "Engineering student · Forward Deployed–style software roles",
-  availability:
-    "Open to Forward Deployed Software Engineer and similar customer-facing software roles.",
+  roleLine: "Engineer, builder, and lifelong athlete",
   heroLead:
-    "Placement experience on live mission-critical systems, AI tooling for testing, and a real product in pilot — gocourt.gr.",
-  about: [
-    "I'm an engineering student with a clear pull toward computer science. On placement I worked on live, mission-critical systems where risk mitigation actually mattered, and I built AI tooling that made testing simpler.",
-    "I study Integrated Mechanical and Electrical Engineering (IMEE) at the University of Bath, and I keep choosing the software side of the work: APIs, data, operator-facing UIs, and shipping something someone can use.",
-    "I co-founded gocourt.gr with a friend. It is in pilot now — a two-sided padel and tennis booking marketplace for Athens, built in Node, Python, and SQL. I share product, backend, payments, and club-owner relationships; I am not a sole founder.",
+    "I grew up between languages and cultures. Sport taught me how to compete; engineering taught me how to build. This site is the short version of that path.",
+  story: [
+    {
+      id: "home",
+      title: "A multicultural house",
+      body: "I grew up in a house where Greek, French, and English were just how you asked for the salt. That mix is still how I move: I can sit with people from different places, switch register, and stay myself. Greek is home. English and French are how I work and think in the world.",
+    },
+    {
+      id: "sport",
+      title: "Sport, then courts",
+      body: "I have played sport my whole life. The court is still the place I understand fastest — timing, teammates, the next point. That is why gocourt.gr exists: a booking product for people who actually want to play. I co-founded it with a friend. The site speaks for the product; I will not write an essay over it here.",
+    },
+    {
+      id: "build",
+      title: "Engineering and the web",
+      body: "The other half of me is systems: live infrastructure, testing, interfaces, and shipping something someone can click. Placement work at Firstco put me on mission-critical sites. Web work is how I turn an idea into a URL. Year one and year two studio work lives in my Mahara portfolios — press those when you want the build trail.",
+    },
+  ],
+  languages: [
+    { name: "Greek", level: "Native", note: "Home" },
+    { name: "English", level: "Full professional", note: "Work" },
+    { name: "French", level: "Full professional", note: "Work" },
   ],
   experience: [
     {
@@ -24,20 +39,9 @@ export const content = {
       period: "September 2025 – September 2026",
       place: "London (hybrid)",
       bullets: [
-        "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, working on live mission-critical airport infrastructure with operations stakeholders.",
-        "Contributed to a Power Management System at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation and error handling for work on a live site.",
-        "Built a Python MCP server so an AI agent could create and manage SpiraTest cases via authenticated APIs, helping make testing more efficient.",
-      ],
-    },
-    {
-      org: "gocourt.gr",
-      role: "Co-Founder",
-      period: "Ongoing",
-      place: "In pilot · target launch January 2027",
-      bullets: [
-        "Shipping a two-sided padel/tennis booking marketplace for Athens, Greece. Players book courts; club owners manage bookings.",
-        "Built on Node/Express, PostgreSQL, Socket.IO, and Stripe Connect, with concurrency-safe booking so courts can’t double-book.",
-        "Co-own product, backend, payments, and court-owner relationships with a co-founder.",
+        "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders.",
+        "Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
+        "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs.",
       ],
     },
     {
@@ -50,46 +54,30 @@ export const content = {
       ],
     },
   ],
-  projects: [
+  destinations: [
     {
       id: "gocourt",
-      title: "gocourt.gr",
-      kind: "Featured · Co-founded with a friend",
-      period: "Pilot · target launch January 2027",
-      summary:
-        "A two-sided booking marketplace for padel and tennis courts in Athens. Players book; club owners manage the calendar.",
-      detail: [
-        "Stack: Node/Express, PostgreSQL, Socket.IO, Stripe Connect.",
-        "Concurrency-safe booking so the same court cannot be taken twice.",
-        "Infra: Render and Cloudflare.",
-        "I share product, backend, payments, and owner relationships with my co-founder — not a solo build.",
-      ],
+      title: "GoCourt.gr",
+      kicker: "Co-founded with a friend · in pilot",
+      hint: "Tennis, then the site.",
+      animation: "tennis" as const,
       href: "https://gocourt.gr",
     },
     {
-      id: "beatrix",
-      title: "BEATRIX",
-      kind: "University of Bath",
-      period: "IMEE",
-      summary:
-        "Multi-sensor robot with a MATLAB GUI and facial recognition. Sensor streams landed in an operator-facing UI; the system was iterated as a working end-to-end build.",
-      detail: [
-        "Integrated sensor streams into an operator-facing MATLAB GUI.",
-        "Facial recognition as part of the operator loop, not a disconnected demo.",
-        "Built and iterated until the full path — sense, decide, show — actually ran.",
-      ],
+      id: "year1",
+      title: "Year 1 portfolio",
+      kicker: "Mahara · studio work",
+      hint: "Formula 1, then the portfolio.",
+      animation: "f1" as const,
+      href: "",
     },
     {
-      id: "mouse",
-      title: "Autonomous Mouse Race",
-      kind: "University of Bath",
-      period: "IMEE",
-      summary:
-        "Autonomous race robot built and debugged under real-world constraints. Control and sensing had to work on the track, not only on paper.",
-      detail: [
-        "Hardware and control brought up against track conditions, not only simulation.",
-        "Debugged sensing and control where the failure was visible in a race, not a lab plot.",
-      ],
+      id: "year2",
+      title: "Year 2 portfolio",
+      kicker: "Mahara · studio work",
+      hint: "Formula 1, then the portfolio.",
+      animation: "f1" as const,
+      href: "",
     },
   ],
   education: [
@@ -126,32 +114,20 @@ export const content = {
     },
     {
       group: "Systems & embedded",
-      items: [
-        "PLC/SCADA (ABB AC500, Zenon)",
-        "Arduino / embedded",
-        "MATLAB",
-      ],
-    },
-    {
-      group: "Languages",
-      items: [
-        "English — full professional",
-        "French — full professional",
-        "Greek — native",
-      ],
+      items: ["PLC/SCADA (ABB AC500, Zenon)", "Arduino / embedded", "MATLAB"],
     },
   ],
   nav: [
-    { href: "#about", label: "About" },
-    { href: "#experience", label: "Experience" },
-    { href: "#projects", label: "Projects" },
-    { href: "#education", label: "Education" },
-    { href: "#skills", label: "Skills" },
+    { href: "#story", label: "Story" },
+    { href: "#work", label: "Work" },
+    { href: "#play", label: "Play" },
     { href: "#contact", label: "Contact" },
   ],
   seo: {
-    title: "Alex Polychroniadis — Engineering student, London",
+    title: "Alex Polychroniadis — London",
     description:
-      "IMEE student at the University of Bath. Placement engineer on live mission-critical systems, co-founder of gocourt.gr. Open to Forward Deployed Software Engineer and similar roles.",
+      "Engineer and co-founder of gocourt.gr. Grew up between Greek, French, and English. Sport, web, and systems.",
   },
 } as const;
+
+export type Destination = (typeof content.destinations)[number];

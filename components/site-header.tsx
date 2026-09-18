@@ -12,7 +12,7 @@ export function SiteHeader() {
 
   return (
     <header className="no-print sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-3 px-5">
+      <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-3 px-5">
         <a href="#top" className="text-sm font-medium tracking-tight">
           {content.shortName}
         </a>

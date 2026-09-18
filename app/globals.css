@@ -134,3 +134,195 @@
     color: black !important;
   }
 }
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(12px, -18px);
+  }
+}
+
+@keyframes tennis-rally {
+  0% {
+    transform: translate(-42vw, 8vh);
+  }
+  35% {
+    transform: translate(8vw, -16vh);
+  }
+  70% {
+    transform: translate(36vw, 10vh);
+  }
+  100% {
+    transform: translate(48vw, -4vh);
+  }
+}
+
+@keyframes ball-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes f1-pass {
+  0% {
+    transform: translateX(-60vw);
+  }
+  100% {
+    transform: translateX(55vw);
+  }
+}
+
+@keyframes streak {
+  from {
+    transform: translateX(-20%);
+    opacity: 0.2;
+  }
+  to {
+    transform: translateX(20%);
+    opacity: 0.7;
+  }
+}
+
+.hero-in {
+  animation: fade-up 0.8s ease both;
+}
+.hero-in-2 {
+  animation-delay: 0.08s;
+}
+.hero-in-3 {
+  animation-delay: 0.16s;
+}
+.hero-in-4 {
+  animation-delay: 0.24s;
+}
+.hero-in-5 {
+  animation-delay: 0.32s;
+}
+.hero-in-6 {
+  animation-delay: 0.4s;
+}
+
+.hero-orb {
+  position: absolute;
+  right: -4rem;
+  top: -3rem;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(47 107 60 / 28%), transparent 70%);
+  pointer-events: none;
+}
+
+.float-ball {
+  position: absolute;
+  right: 12%;
+  top: 7rem;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #f7f3c8, #c5d94a 45%, #6d8b1e);
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 20%);
+  animation: float-y 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+.story-card {
+  transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-4px);
+}
+
+.court-card {
+  background:
+    linear-gradient(180deg, rgb(47 107 60 / 16%), transparent 60%),
+    var(--card);
+}
+
+.track-card {
+  background:
+    linear-gradient(180deg, rgb(225 6 0 / 12%), transparent 55%),
+    var(--card);
+}
+
+.tennis-ball {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 32% 30%, #f8f4c4, #d4e054 40%, #8aa322);
+  box-shadow: inset -4px -4px 0 rgb(255 255 255 / 25%);
+  animation: tennis-rally 1.6s cubic-bezier(0.3, 0.7, 0.3, 1) both;
+}
+
+.court-lines {
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 30%);
+}
+
+.f1-car {
+  position: absolute;
+  animation: f1-pass 1.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.speed-lines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 18px,
+    rgb(255 255 255 / 6%) 18px 20px
+  );
+  animation: streak 0.7s linear infinite;
+}
+
+.checkered-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4.5rem;
+  height: 100%;
+  background:
+    conic-gradient(#fff 25%, #111 0 50%, #fff 0 75%, #111 0) 0 0 / 28px 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-in,
+  .float-ball,
+  .tennis-ball,
+  .f1-car,
+  .speed-lines,
+  .reveal {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

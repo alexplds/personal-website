@@ -39,8 +39,22 @@ export default function CVPage() {
             LinkedIn
           </a>
         </p>
-        <p className="mt-4 max-w-2xl text-sm leading-relaxed">{content.about[0]}</p>
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed">{content.heroLead}</p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {content.languages.map((l) => `${l.name} (${l.level})`).join(" · ")}
+        </p>
       </header>
+
+      <section className="mt-8">
+        <h2 className="text-xs font-semibold tracking-[0.2em] uppercase">Story</h2>
+        <div className="mt-4 space-y-3 text-sm leading-relaxed">
+          {content.story.map((block) => (
+            <p key={block.id}>
+              <span className="font-medium">{block.title}.</span> {block.body}
+            </p>
+          ))}
+        </div>
+      </section>
 
       <section className="mt-8">
         <h2 className="text-xs font-semibold tracking-[0.2em] uppercase">Experience</h2>
@@ -65,25 +79,24 @@ export default function CVPage() {
       </section>
 
       <section className="mt-8">
-        <h2 className="text-xs font-semibold tracking-[0.2em] uppercase">Projects</h2>
-        <div className="mt-4 space-y-4">
-          {content.projects.map((project) => (
-            <article key={project.id}>
-              <h3 className="font-medium">
-                {project.title}{" "}
-                <span className="text-sm font-normal text-muted-foreground">
-                  · {project.kind}
-                </span>
-              </h3>
-              <p className="mt-1 text-sm leading-relaxed">{project.summary}</p>
-              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-relaxed">
-                {project.detail.map((line) => (
-                  <li key={line}>{line}</li>
-                ))}
-              </ul>
-            </article>
+        <h2 className="text-xs font-semibold tracking-[0.2em] uppercase">Destinations</h2>
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm">
+          {content.destinations.map((d) => (
+            <li key={d.id}>
+              {d.title}
+              {d.href ? (
+                <>
+                  {" — "}
+                  <a className="underline" href={d.href}>
+                    {d.href.replace("https://", "")}
+                  </a>
+                </>
+              ) : (
+                " — Mahara link to be added"
+              )}
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       <section className="mt-8">

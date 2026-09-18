@@ -11,12 +11,14 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: single-page CV (About, Experience, Projects, Education, Skills, Contact)
+- Home: story, work, destination buttons (GoCourt + year portfolios), contact
 - Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
 ## Edit content
 
-All facts live in [`lib/content.ts`](lib/content.ts). The homepage and `/cv` both read from that file. Do not invent employers, metrics, or grades beyond what is there.
+All facts live in [`lib/content.ts`](lib/content.ts). The homepage and `/cv` both read from that file.
+
+When you have Mahara URLs, set `href` on the `year1` and `year2` destinations. Empty href still plays the Formula 1 animation and then tells you the link is missing. GoCourt already opens `https://gocourt.gr` after the tennis rally.
 
 To add a PDF later, drop `public/Alex_Polychroniadis_CV.pdf` and point a button at it. Until then, **View CV** uses the print page.
 

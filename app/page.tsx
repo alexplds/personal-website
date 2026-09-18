@@ -1,13 +1,11 @@
 import { SiteHeader } from "@/components/site-header";
 import {
-  AboutSection,
   ContactSection,
-  EducationSection,
-  ExperienceSection,
   HeroSection,
-  ProjectsSection,
+  PlaySection,
   SiteFooter,
-  SkillsSection,
+  StorySection,
+  WorkSection,
 } from "@/components/sections";
 
 export default function Home() {
@@ -20,13 +18,11 @@ export default function Home() {
         Skip to content
       </a>
       <SiteHeader />
-      <main className="mx-auto max-w-3xl">
+      <main className="mx-auto max-w-4xl">
         <HeroSection />
-        <AboutSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <EducationSection />
-        <SkillsSection />
+        <StorySection />
+        <WorkSection />
+        <PlaySection />
         <ContactSection />
       </main>
       <SiteFooter />
