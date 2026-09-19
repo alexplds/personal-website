@@ -11,7 +11,7 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: story, work, destination buttons (GoCourt + year portfolios), contact
+- Home: story, then a Desk / Court split you can drag (work on one side, GoCourt and year portfolios on the other), contact
 - Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
 ## Edit content

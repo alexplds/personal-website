@@ -125,6 +125,16 @@
 }
 
 @media print {
+  .rooms-seam {
+    display: none !important;
+  }
+  .rooms-board {
+    display: block !important;
+  }
+  .rooms-pane {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+  }
   .no-print {
     display: none !important;
   }
@@ -286,6 +296,115 @@
 .reveal-in {
   opacity: 1;
   transform: none;
+}
+
+.rooms-band {
+  margin-top: 1rem;
+  border-block: 1px solid var(--border);
+  background: color-mix(in oklab, var(--muted) 35%, var(--background));
+}
+
+.rooms-intro {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 4rem 1.25rem 1.5rem;
+}
+
+.rooms-board {
+  display: flex;
+  flex-direction: column;
+  max-width: 72rem;
+  margin: 0 auto 4rem;
+  padding: 0 1.25rem;
+  gap: 1rem;
+}
+
+.rooms-pane {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 1.5rem 1.35rem 2rem;
+}
+
+.rooms-desk {
+  background: var(--card);
+}
+
+.rooms-court {
+  background:
+    linear-gradient(180deg, rgb(47 107 60 / 10%), transparent 42%),
+    var(--card);
+}
+
+.rooms-label {
+  margin-bottom: 1.25rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.rooms-seam {
+  display: none;
+}
+
+@media (min-width: 960px) {
+  .rooms-board {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    min-height: 36rem;
+  }
+
+  .rooms-desk {
+    flex: 0 0 var(--desk, 56%);
+  }
+
+  .rooms-court {
+    flex: 1 1 auto;
+  }
+
+  .rooms-seam {
+    display: flex;
+    position: relative;
+    z-index: 2;
+    width: 1.35rem;
+    flex: 0 0 1.35rem;
+    margin-inline: -0.35rem;
+    align-items: center;
+    justify-content: center;
+    cursor: col-resize;
+    background: transparent;
+    border: 0;
+    color: var(--muted-foreground);
+    touch-action: none;
+  }
+
+  .rooms-seam:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  .rooms-grip {
+    display: flex;
+    width: 1.35rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--background);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 6%);
+  }
+
+  .rooms-board-dragging {
+    user-select: none;
+    cursor: col-resize;
+  }
+
+  .rooms-board-dragging .rooms-pane {
+    pointer-events: none;
+  }
 }
 
 .story-card {

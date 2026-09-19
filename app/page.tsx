@@ -1,3 +1,4 @@
+import { RoomsSplit } from "@/components/rooms";
 import { SiteHeader } from "@/components/site-header";
 import { SportTrail } from "@/components/sport-trail";
 import {
@@ -20,12 +21,15 @@ export default function Home() {
       </a>
       <SiteHeader />
       <SportTrail />
-      <main className="mx-auto max-w-4xl">
-        <HeroSection />
-        <StorySection />
-        <WorkSection />
-        <PlaySection />
-        <ContactSection />
+      <main>
+        <div className="mx-auto max-w-4xl">
+          <HeroSection />
+          <StorySection />
+        </div>
+        <RoomsSplit desk={<WorkSection embedded />} court={<PlaySection embedded />} />
+        <div className="mx-auto max-w-4xl">
+          <ContactSection />
+        </div>
       </main>
       <SiteFooter />
     </div>

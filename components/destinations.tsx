@@ -4,20 +4,33 @@ import { content } from "@/lib/content";
 import { LaunchOverlay, PendingNote, useLaunch } from "@/components/overlays";
 import { Reveal } from "@/components/reveal";
 
-export function PlaySection() {
+export function PlaySection({ embedded = false }: { embedded?: boolean }) {
   const { mode, href, runId, pendingNote, launch, finish, clearNote } = useLaunch();
 
   return (
-    <section id="play" className="scroll-mt-20 px-5 py-16">
-      <Reveal>
-        <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Play</p>
-        <h2 className="font-heading mt-2 text-3xl">Where the work lives</h2>
-        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-          No write-up that tries to replace the thing itself. Press GoCourt for a rally, then the
-          live site. Press a year for a lap, then the Mahara portfolio.
-        </p>
-      </Reveal>
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+    <section
+      id={embedded ? undefined : "play"}
+      className={embedded ? "" : "scroll-mt-20 px-5 py-16"}
+    >
+      {embedded ? (
+        <>
+          <h2 className="font-heading text-2xl">Where the work lives</h2>
+          <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+            Press GoCourt for a rally, then the live site. Press a year for a lap, then the Mahara
+            portfolio.
+          </p>
+        </>
+      ) : (
+        <Reveal>
+          <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Play</p>
+          <h2 className="font-heading mt-2 text-3xl">Where the work lives</h2>
+          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
+            No write-up that tries to replace the thing itself. Press GoCourt for a rally, then the
+            live site. Press a year for a lap, then the Mahara portfolio.
+          </p>
+        </Reveal>
+      )}
+      <div className={`mt-8 grid gap-4 ${embedded ? "grid-cols-1" : "md:grid-cols-3"}`}>
         {content.destinations.map((dest, i) => (
           <Reveal key={dest.id} delay={i * 90}>
             <button
