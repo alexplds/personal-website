@@ -248,14 +248,16 @@
 
 .name-light {
   position: relative;
-  width: 18px;
-  height: 18px;
+  top: -0.55rem;
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
   border-radius: 999px;
   background: radial-gradient(circle at 32% 28%, #fff8c4, #d4e054 42%, #8aa322);
   box-shadow:
-    0 0 10px 3px rgb(212 224 84 / 45%),
-    0 0 22px 8px rgb(141 163 34 / 22%);
+    0 0 14px 5px rgb(47 107 60 / 55%),
+    0 0 32px 14px rgb(47 107 60 / 32%),
+    0 0 6px 1px rgb(212 224 84 / 40%);
   animation: float-y 4.5s ease-in-out infinite;
 }
 

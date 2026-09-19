@@ -18,7 +18,7 @@ export function HeroSection() {
         </p>
         <h1 className="font-heading hero-in hero-in-2 mt-4 text-5xl leading-[1.1] tracking-tight md:text-7xl">
           {firstName}{" "}
-          <span className="inline-flex items-center gap-3.5 whitespace-nowrap">
+          <span className="inline-flex items-start gap-8 whitespace-nowrap">
             {lastName}
             <span className="name-light hidden md:inline-block" aria-hidden="true" />
           </span>
