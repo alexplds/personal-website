@@ -28,57 +28,14 @@ export function HeroSection() {
           <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
             {content.roleLine}
           </p>
-          <p className="hero-in hero-in-4 mt-5 max-w-2xl text-[16px] leading-relaxed">
-            {content.heroLead}
-          </p>
-          <div className="hero-in hero-in-5 mt-6 flex flex-wrap gap-2">
-            {content.languages.map((lang) => (
-              <span
-                key={lang.name}
-                className="rounded-full border border-border bg-card/70 px-3 py-1 text-sm backdrop-blur"
-              >
-                {lang.name}
-                <span className="text-muted-foreground"> · {lang.note}</span>
-              </span>
-            ))}
-          </div>
-          <div className="hero-in hero-in-6 mt-8 flex flex-wrap items-center gap-3">
-          <Button nativeButton={false} render={<a href="#story" />}>
-            The story
-          </Button>
-          <Button nativeButton={false} variant="outline" render={<a href="#play" />}>
+          <div className="hero-in hero-in-4 mt-8 flex flex-wrap items-center gap-3">
+          <Button nativeButton={false} render={<a href="#play" />}>
             GoCourt & portfolios
           </Button>
           <Button nativeButton={false} variant="outline" render={<a href="/cv" />}>
             View CV
           </Button>
         </div>
-      </div>
-    </section>
-  );
-}
-
-export function StorySection() {
-  return (
-    <section id="story" className="scroll-mt-20 px-5 py-16">
-      <Reveal>
-        <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Story</p>
-        <h2 className="font-heading mt-2 text-3xl">How I got here</h2>
-      </Reveal>
-      <div className="mt-8 grid gap-5 md:grid-cols-3">
-        {content.story.map((block, i) => (
-          <Reveal key={block.id} delay={i * 80}>
-            <article className="story-card h-full rounded-2xl border border-border bg-card px-5 py-6">
-              <p className="text-xs tracking-[0.16em] text-muted-foreground uppercase">
-                0{i + 1}
-              </p>
-              <h3 className="font-heading mt-2 text-xl">{block.title}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
-                {block.body}
-              </p>
-            </article>
-          </Reveal>
-        ))}
       </div>
     </section>
   );

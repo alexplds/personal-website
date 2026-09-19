@@ -118,7 +118,6 @@ export const content = {
     },
   ],
   nav: [
-    { href: "#story", label: "Story" },
     { href: "#work", label: "Work" },
     { href: "#play", label: "Play" },
     { href: "#contact", label: "Contact" },

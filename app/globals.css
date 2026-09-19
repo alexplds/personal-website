@@ -461,14 +461,6 @@
   }
 }
 
-.story-card {
-  transition: transform 0.3s ease;
-}
-
-.story-card:hover {
-  transform: translateY(-4px);
-}
-
 .court-card {
   background:
     linear-gradient(180deg, rgb(47 107 60 / 16%), transparent 60%),

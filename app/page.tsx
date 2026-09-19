@@ -6,7 +6,6 @@ import {
   HeroSection,
   PlaySection,
   SiteFooter,
-  StorySection,
   WorkSection,
 } from "@/components/sections";
 
@@ -14,7 +13,7 @@ export default function Home() {
   return (
     <div>
       <a
-        href="#story"
+        href="#work"
         className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:bg-background focus:px-3 focus:py-2"
       >
         Skip to content
@@ -24,7 +23,6 @@ export default function Home() {
       <main>
         <div className="mx-auto max-w-4xl">
           <HeroSection />
-          <StorySection />
         </div>
         <RoomsSplit desk={<WorkSection embedded />} court={<PlaySection embedded />} />
         <div className="mx-auto max-w-4xl">
