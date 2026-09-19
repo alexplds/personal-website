@@ -11,16 +11,18 @@ export function HeroSection() {
 
   return (
     <section id="top" className="relative overflow-visible px-5 pt-20 pb-16 md:pt-28 md:pb-24">
-      <div className="hero-orb" aria-hidden="true" />
       <div>
         <p className="hero-in text-xs tracking-[0.2em] text-muted-foreground uppercase">
           {content.location}
         </p>
         <h1 className="font-heading hero-in hero-in-2 mt-4 text-5xl leading-[1.1] tracking-tight md:text-7xl">
           {firstName}{" "}
-          <span className="inline-flex items-start gap-8 whitespace-nowrap">
+          <span className="inline-flex items-start whitespace-nowrap">
             {lastName}
-            <span className="name-light hidden md:inline-block" aria-hidden="true" />
+            <span className="name-light-wrap hidden md:inline-block" aria-hidden="true">
+              <span className="name-light-glow" />
+              <span className="name-light" />
+            </span>
           </span>
         </h1>
           <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
