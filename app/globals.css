@@ -291,14 +291,14 @@
 .dark .name-light-glow {
   background: radial-gradient(
     circle,
-    rgb(90 176 108 / 42%) 0%,
-    rgb(47 107 60 / 28%) 40%,
-    transparent 72%
+    rgb(110 198 126 / 58%) 0%,
+    rgb(47 107 60 / 40%) 38%,
+    transparent 70%
   );
 }
 
 .dark .name-light {
-  box-shadow: 0 0 16px 5px rgb(90 176 108 / 40%);
+  box-shadow: 0 0 18px 6px rgb(110 198 126 / 45%);
 }
 
 .sport-trail {
