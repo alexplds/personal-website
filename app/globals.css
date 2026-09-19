@@ -145,6 +145,16 @@
   }
 }
 
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;
@@ -234,6 +244,29 @@
 }
 .hero-in-6 {
   animation-delay: 0.4s;
+}
+
+.name-light {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: radial-gradient(circle at 32% 28%, #fff8c4, #d4e054 42%, #8aa322);
+  box-shadow:
+    0 0 10px 3px rgb(212 224 84 / 45%),
+    0 0 22px 8px rgb(141 163 34 / 22%);
+  animation: float-y 4.5s ease-in-out infinite;
+}
+
+.name-light::after {
+  content: "";
+  position: absolute;
+  inset: 22% 18% auto auto;
+  width: 28%;
+  height: 22%;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 55%);
 }
 
 .hero-orb {
@@ -490,6 +523,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-in,
   .float-ball,
+  .name-light,
   .tennis-ball-track,
   .tennis-ball-bounce,
   .tennis-ball,

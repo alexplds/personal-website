@@ -2,7 +2,6 @@ import { content } from "@/lib/content";
 import { CopyEmail } from "@/components/copy-email";
 import { PlaySection } from "@/components/destinations";
 import { Reveal } from "@/components/reveal";
-import { FootballGraphic } from "@/components/sport-graphics";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -21,9 +20,7 @@ export function HeroSection() {
           {firstName}{" "}
           <span className="inline-flex items-center gap-3.5 whitespace-nowrap">
             {lastName}
-            <span className="relative hidden size-7 shrink-0 md:inline-block" aria-hidden="true">
-              <FootballGraphic className="size-full" />
-            </span>
+            <span className="name-light hidden md:inline-block" aria-hidden="true" />
           </span>
         </h1>
           <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
