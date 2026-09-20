@@ -8,6 +8,8 @@ export const content = {
   linkedin: "https://linkedin.com/in/alexpolychroniadis",
   linkedinLabel: "linkedin.com/in/alexpolychroniadis",
   roleLine: "Engineer, builder, and lifelong athlete",
+  intersection:
+    "I have always loved two things at once: computer science, and sport. In Greece you could not simply book a court for the hour you wanted — it was calls, guesswork, and hoping someone was there. That gap is why gocourt.gr exists. I co-founded it with a friend. The site is where those two loves meet: a booking product that lets people play when they actually want to play.",
   heroLead:
     "I grew up between languages and cultures. Sport taught me how to compete; engineering taught me how to build. This site is the short version of that path.",
   story: [

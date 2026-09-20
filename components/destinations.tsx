@@ -71,6 +71,9 @@ export function IntersectionSection() {
     <div id="play" className="rooms-pane rooms-intersection scroll-mt-20">
       <p className="rooms-label">Intersection</p>
       <h2 className="font-heading text-2xl">Intersection</h2>
+      <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
+        {content.intersection}
+      </p>
       <DestinationButtons destinations={court} />
     </div>
   );
