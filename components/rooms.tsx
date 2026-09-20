@@ -118,9 +118,26 @@ export function RoomsSplit({
         </div>
       </div>
 
+      <RoomsJoin pct={pct} />
+
       <div className="rooms-intersection-wrap">
         <IntersectionSection />
       </div>
     </section>
+  );
+}
+
+function RoomsJoin({ pct }: { pct: number }) {
+  const left = pct * 5;
+  const right = pct * 10 + (1000 - pct * 10) / 2;
+
+  return (
+    <div className="rooms-join" aria-hidden="true">
+      <svg viewBox="0 0 1000 64" preserveAspectRatio="none">
+        <path d={`M ${left} 0 C ${left} 34, 500 18, 500 64`} />
+        <path d={`M ${right} 0 C ${right} 34, 500 18, 500 64`} />
+        <circle cx="500" cy="61" r="4" />
+      </svg>
+    </div>
   );
 }

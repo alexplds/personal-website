@@ -368,9 +368,40 @@
   display: flex;
   flex-direction: column;
   max-width: 72rem;
-  margin: 0 auto 1rem;
+  margin: 0 auto;
   padding: 0 1.25rem;
   gap: 1rem;
+}
+
+.rooms-join {
+  display: none;
+}
+
+.rooms-join svg {
+  display: block;
+  width: 100%;
+  height: 4rem;
+}
+
+.rooms-join path {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1.6;
+}
+
+.rooms-join circle {
+  fill: var(--background);
+  stroke: var(--border);
+  stroke-width: 1.6;
+}
+
+.rooms-intersection > :not(.rooms-venn) {
+  position: relative;
+  z-index: 1;
+}
+
+.rooms-intersection .rooms-label {
+  margin-bottom: 0.45rem;
 }
 
 .rooms-intersection-wrap {
@@ -380,9 +411,71 @@
 }
 
 .rooms-intersection {
+  position: relative;
+  overflow: hidden;
   background:
-    linear-gradient(180deg, rgb(47 107 60 / 16%), transparent 55%),
+    linear-gradient(90deg, var(--card) 0%, transparent 46%, transparent 54%, rgb(47 107 60 / 12%) 100%),
+    linear-gradient(180deg, rgb(47 107 60 / 14%), transparent 58%),
     var(--card);
+}
+
+.rooms-venn {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.rooms-venn-a,
+.rooms-venn-b {
+  position: absolute;
+  top: 50%;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 999px;
+  translate: 0 -50%;
+}
+
+.rooms-venn-a {
+  left: 18%;
+  background: rgb(20 20 20 / 4%);
+}
+
+.rooms-venn-b {
+  right: 18%;
+  background: rgb(47 107 60 / 16%);
+}
+
+.dark .rooms-venn-a {
+  background: rgb(243 241 234 / 5%);
+}
+
+.dark .rooms-venn-b {
+  background: rgb(90 176 108 / 16%);
+}
+
+.rooms-formula {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.65rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.rooms-cap {
+  display: inline-flex;
+  width: 1.4rem;
+  height: 1.4rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  font-size: 0.85rem;
+  letter-spacing: 0;
 }
 
 .rooms-pane {
@@ -415,6 +508,13 @@
 }
 
 @media (min-width: 960px) {
+  .rooms-join {
+    display: block;
+    max-width: 72rem;
+    margin: -0.15rem auto 0;
+    padding: 0 1.25rem;
+  }
+
   .rooms-board {
     flex-direction: row;
     align-items: stretch;
