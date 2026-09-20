@@ -28,14 +28,6 @@ export function HeroSection() {
           <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
             {content.roleLine}
           </p>
-          <div className="hero-in hero-in-4 mt-8 flex flex-wrap items-center gap-3">
-          <Button nativeButton={false} render={<a href="#play" />}>
-            GoCourt & portfolios
-          </Button>
-          <Button nativeButton={false} variant="outline" render={<a href="/cv" />}>
-            View CV
-          </Button>
-        </div>
       </div>
     </section>
   );
