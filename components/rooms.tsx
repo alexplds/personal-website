@@ -7,6 +7,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
+import { IntersectionSection } from "@/components/destinations";
 import { GripVerticalIcon } from "lucide-react";
 
 const MIN = 30;
@@ -68,13 +69,13 @@ export function RoomsSplit({
   }
 
   return (
-    <section className="rooms-band" aria-label="Desk and court">
+    <section className="rooms-band" aria-label="Desk, court, and intersection">
       <div className="rooms-intro">
         <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Rooms</p>
         <h2 className="font-heading mt-2 text-3xl">Desk and court</h2>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-          One person, two rooms. Year portfolios sit on the desk. GoCourt lives on the court. Drag
-          the seam if you want more of one.
+          Two rooms, then the overlap. Year portfolios sit on the desk. GoCourt sits in the
+          intersection. Drag the seam if you want more of one room.
         </p>
       </div>
 
@@ -111,10 +112,14 @@ export function RoomsSplit({
           </span>
         </button>
 
-        <div id="play" className="rooms-pane rooms-court scroll-mt-20">
+        <div className="rooms-pane rooms-court scroll-mt-20">
           <p className="rooms-label">Court</p>
           {court}
         </div>
+      </div>
+
+      <div className="rooms-intersection-wrap">
+        <IntersectionSection />
       </div>
     </section>
   );

@@ -119,7 +119,7 @@ export const content = {
   ],
   nav: [
     { href: "#work", label: "Work" },
-    { href: "#play", label: "Play" },
+    { href: "#play", label: "Intersection" },
     { href: "#contact", label: "Contact" },
   ],
   seo: {

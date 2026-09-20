@@ -62,7 +62,16 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
           <h2 className="font-heading mt-2 text-3xl">Personal life</h2>
         </Reveal>
       )}
-      <DestinationButtons destinations={court} stacked={embedded} />
     </section>
+  );
+}
+
+export function IntersectionSection() {
+  return (
+    <div id="play" className="rooms-pane rooms-intersection scroll-mt-20">
+      <p className="rooms-label">Intersection</p>
+      <h2 className="font-heading text-2xl">Intersection</h2>
+      <DestinationButtons destinations={court} />
+    </div>
   );
 }
