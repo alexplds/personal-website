@@ -14,7 +14,7 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
     >
       {embedded ? (
         <>
-          <h2 className="font-heading text-2xl">Where the work lives</h2>
+          <h2 className="font-heading text-2xl">Personal life</h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
             Press GoCourt for a rally, then the live site. Press a year for a lap, then the Mahara
             portfolio.
@@ -23,7 +23,7 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
       ) : (
         <Reveal>
           <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Play</p>
-          <h2 className="font-heading mt-2 text-3xl">Where the work lives</h2>
+          <h2 className="font-heading mt-2 text-3xl">Personal life</h2>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
             No write-up that tries to replace the thing itself. Press GoCourt for a rally, then the
             live site. Press a year for a lap, then the Mahara portfolio.
