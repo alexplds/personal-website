@@ -73,8 +73,8 @@ export function RoomsSplit({
         <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Rooms</p>
         <h2 className="font-heading mt-2 text-3xl">Desk and court</h2>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-          One person, two rooms — not two identities. The job stays on the desk. GoCourt and the
-          year portfolios live on the court. Drag the seam if you want more of one.
+          One person, two rooms. Year portfolios sit on the desk. GoCourt lives on the court. Drag
+          the seam if you want more of one.
         </p>
       </div>
 

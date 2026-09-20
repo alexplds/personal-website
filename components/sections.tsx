@@ -1,8 +1,7 @@
 import { content } from "@/lib/content";
 import { CopyEmail } from "@/components/copy-email";
-import { PlaySection } from "@/components/destinations";
+import { PlaySection, WorkDestinations } from "@/components/destinations";
 import { Reveal } from "@/components/reveal";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
@@ -47,58 +46,7 @@ export function WorkSection({ embedded = false }: { embedded?: boolean }) {
           <h2 className="font-heading mt-2 text-3xl">Engineer / Computer Scientist</h2>
         </Reveal>
       )}
-      <ol className="mt-8 space-y-10">
-        {content.experience.map((job, i) => (
-          <Reveal key={`${job.org}-${job.role}`} delay={i * 60}>
-            <li>
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 className="text-base font-medium">
-                  {job.role} · {job.org}
-                </h3>
-                <p className="text-xs tracking-wide text-muted-foreground">{job.period}</p>
-              </div>
-              <p className="mt-1 text-sm text-muted-foreground">{job.place}</p>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-relaxed">
-                {job.bullets.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
-            </li>
-          </Reveal>
-        ))}
-      </ol>
-      <Reveal className="mt-12">
-        <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Also</p>
-        <div className="mt-4 space-y-4">
-          {content.education.map((ed) => (
-            <div key={ed.school}>
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 className="text-base font-medium">{ed.school}</h3>
-                <p className="text-xs text-muted-foreground">{ed.period}</p>
-              </div>
-              <p className="text-[15px]">{ed.award}</p>
-              <p className="text-sm text-muted-foreground">{ed.extra}</p>
-            </div>
-          ))}
-        </div>
-      </Reveal>
-      <Reveal className="mt-12">
-        <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Skills</p>
-        <div className="mt-4 space-y-5">
-          {content.skills.map((group) => (
-            <div key={group.group}>
-              <h3 className="text-sm font-medium">{group.group}</h3>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <Badge key={item} variant="outline" className="rounded-md px-2.5 py-1">
-                    {item}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Reveal>
+      <WorkDestinations />
     </section>
   );
 }
