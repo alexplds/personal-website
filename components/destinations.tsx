@@ -66,7 +66,11 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
   );
 }
 
-export function IntersectionSection() {
+export function IntersectionSection({ embedded = false }: { embedded?: boolean }) {
+  if (embedded) {
+    return <DestinationButtons destinations={court} />;
+  }
+
   return (
     <div id="play" className="rooms-pane rooms-intersection scroll-mt-20">
       <p className="rooms-label">Intersection</p>

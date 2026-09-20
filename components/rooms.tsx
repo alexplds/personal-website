@@ -1,18 +1,15 @@
 "use client";
 
-import {
-  useCallback,
-  useRef,
-  useState,
-  type CSSProperties,
-  type ReactNode,
-} from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { IntersectionSection } from "@/components/destinations";
-import { GripVerticalIcon } from "lucide-react";
-
-const MIN = 30;
-const MAX = 70;
-const START = 56;
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { content } from "@/lib/content";
 
 export function RoomsSplit({
   desk,
@@ -21,50 +18,24 @@ export function RoomsSplit({
   desk: ReactNode;
   court: ReactNode;
 }) {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const [pct, setPct] = useState(START);
-  const [dragging, setDragging] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const moveTo = useCallback((clientX: number) => {
-    const board = boardRef.current;
-    if (!board) return;
-    const rect = board.getBoundingClientRect();
-    if (rect.width < 8) return;
-    const next = ((clientX - rect.left) / rect.width) * 100;
-    setPct(Math.min(MAX, Math.max(MIN, next)));
+  useEffect(() => {
+    function sync() {
+      if (window.location.hash === "#play") setOpen(true);
+    }
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
   }, []);
 
-  function onPointerDown(event: React.PointerEvent<HTMLButtonElement>) {
-    if (window.innerWidth < 960) return;
-    event.preventDefault();
-    setDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
-    moveTo(event.clientX);
-  }
-
-  function onPointerMove(event: React.PointerEvent<HTMLButtonElement>) {
-    if (!dragging) return;
-    moveTo(event.clientX);
-  }
-
-  function endDrag(event: React.PointerEvent<HTMLButtonElement>) {
-    if (!dragging) return;
-    setDragging(false);
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
+  function setDialog(next: boolean) {
+    setOpen(next);
+    if (!next && window.location.hash === "#play") {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
     }
-  }
-
-  function onKeyDown(event: React.KeyboardEvent<HTMLButtonElement>) {
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      setPct((n) => Math.max(MIN, n - 3));
-    } else if (event.key === "ArrowRight") {
-      event.preventDefault();
-      setPct((n) => Math.min(MAX, n + 3));
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      setPct(START);
+    if (next && window.location.hash !== "#play") {
+      history.replaceState(null, "", "#play");
     }
   }
 
@@ -74,42 +45,19 @@ export function RoomsSplit({
         <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Rooms</p>
         <h2 className="font-heading mt-2 text-3xl">Desk and court</h2>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-          Two rooms, then the overlap. Year portfolios sit on the desk. GoCourt sits in the
-          intersection. Drag the seam if you want more of one room.
+          Two rooms. Press the green Intersection button between them to open where they meet.
         </p>
       </div>
 
-      <div
-        ref={boardRef}
-        className={`rooms-board${dragging ? " rooms-board-dragging" : ""}`}
-        style={{ "--desk": `${pct}%` } as CSSProperties}
-      >
+      <div className="rooms-board">
         <div id="work" className="rooms-pane rooms-desk scroll-mt-20">
           <p className="rooms-label">Desk</p>
           {desk}
         </div>
 
-        <button
-          type="button"
-          role="separator"
-          className="rooms-seam"
-          aria-label="Resize desk and court"
-          aria-orientation="vertical"
-          aria-controls="work play"
-          aria-valuemin={MIN}
-          aria-valuemax={MAX}
-          aria-valuenow={Math.round(pct)}
-          aria-valuetext={`${Math.round(pct)} percent desk`}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={endDrag}
-          onPointerCancel={endDrag}
-          onDoubleClick={() => setPct(START)}
-          onKeyDown={onKeyDown}
-        >
-          <span className="rooms-grip" aria-hidden="true">
-            <GripVerticalIcon className="size-3.5" />
-          </span>
+        <button type="button" className="rooms-open" onClick={() => setDialog(true)}>
+          <span className="rooms-open-kicker">Open</span>
+          <span className="rooms-open-title">Intersection</span>
         </button>
 
         <div className="rooms-pane rooms-court scroll-mt-20">
@@ -118,9 +66,20 @@ export function RoomsSplit({
         </div>
       </div>
 
-      <div className="rooms-intersection-wrap">
-        <IntersectionSection />
-      </div>
+      <Dialog open={open} onOpenChange={setDialog}>
+        <DialogContent
+          className="rooms-intersection-dialog sm:max-w-2xl"
+          showCloseButton
+        >
+          <DialogHeader>
+            <DialogTitle className="font-heading text-2xl">Intersection</DialogTitle>
+            <DialogDescription className="text-[15px] leading-relaxed">
+              {content.intersection}
+            </DialogDescription>
+          </DialogHeader>
+          <IntersectionSection embedded />
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
