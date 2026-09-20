@@ -40,11 +40,11 @@ export function WorkSection({ embedded = false }: { embedded?: boolean }) {
       className={embedded ? "" : "scroll-mt-20 px-5 py-16"}
     >
       {embedded ? (
-        <h2 className="font-heading text-2xl">Where I have been useful</h2>
+        <h2 className="font-heading text-2xl">Engineer / Computer Scientist</h2>
       ) : (
         <Reveal>
           <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Work</p>
-          <h2 className="font-heading mt-2 text-3xl">Where I have been useful</h2>
+          <h2 className="font-heading mt-2 text-3xl">Engineer / Computer Scientist</h2>
         </Reveal>
       )}
       <ol className="mt-8 space-y-10">
