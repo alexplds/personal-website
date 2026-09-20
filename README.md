@@ -11,7 +11,7 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: hero, then Desk and Court with an Intersection button between them that opens GoCourt, then contact
+- Home: hero, then a wide Desk / Court split you can drag (red / blue), with a small purple Intersection button over the seam, then contact
 - Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
 ## Edit content

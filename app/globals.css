@@ -359,95 +359,37 @@
 }
 
 .rooms-intro {
-  max-width: 56rem;
+  max-width: 72rem;
   margin: 0 auto;
-  padding: 4rem 1.25rem 1.5rem;
+  padding: 3.5rem 1.5rem 1.25rem;
 }
 
 .rooms-board {
   display: flex;
   flex-direction: column;
-  max-width: 72rem;
+  max-width: 92rem;
   margin: 0 auto 4rem;
-  padding: 0 1.25rem;
-  gap: 1rem;
-}
-
-.rooms-open {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  width: 100%;
-  min-height: 3.5rem;
-  padding: 0.9rem 1.25rem;
-  border: 0;
-  border-radius: 999px;
-  background: #2f6b3c;
-  color: #f6f4ef;
-  cursor: pointer;
-  box-shadow:
-    0 6px 18px rgb(47 107 60 / 38%),
-    0 0 0 3px rgb(47 107 60 / 18%);
-  transition:
-    transform 0.15s ease,
-    background 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.rooms-open:hover {
-  background: #3b8550;
-  transform: translateY(-2px);
-  box-shadow:
-    0 10px 22px rgb(47 107 60 / 42%),
-    0 0 0 4px rgb(47 107 60 / 22%);
-}
-
-.rooms-open:focus-visible {
-  outline: 3px solid #2f6b3c;
-  outline-offset: 3px;
-}
-
-.rooms-open-kicker {
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.85;
-}
-
-.rooms-open-title {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 600;
-  line-height: 1.1;
-}
-
-.rooms-intersection-dialog {
-  background:
-    linear-gradient(180deg, rgb(47 107 60 / 16%), transparent 50%),
-    var(--popover);
-  padding: 1.5rem 1.5rem 1.25rem;
-}
-
-.rooms-intersection-dialog [data-slot="dialog-description"] {
-  text-wrap: pretty;
+  padding: 0 1rem;
+  gap: 0.85rem;
 }
 
 .rooms-pane {
   min-width: 0;
-  border: 1px solid var(--border);
   border-radius: 1.25rem;
-  padding: 1.5rem 1.35rem 2rem;
+  padding: 1.6rem 1.5rem 2rem;
 }
 
 .rooms-desk {
-  background: var(--card);
+  border: 1px solid rgb(225 6 0 / 28%);
+  background:
+    linear-gradient(180deg, rgb(225 6 0 / 16%), transparent 52%),
+    var(--card);
 }
 
 .rooms-court {
+  border: 1px solid rgb(37 99 180 / 30%);
   background:
-    linear-gradient(180deg, rgb(47 107 60 / 10%), transparent 42%),
+    linear-gradient(180deg, rgb(37 99 180 / 16%), transparent 52%),
     var(--card);
 }
 
@@ -459,30 +401,115 @@
   color: var(--muted-foreground);
 }
 
+.rooms-seam {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rooms-open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: #6d28d9;
+  color: #f6f4ef;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.1;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgb(109 40 217 / 32%);
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.rooms-open:hover {
+  background: #7c3aed;
+  transform: translateY(-1px);
+}
+
+.rooms-open:focus-visible {
+  outline: 2px solid #6d28d9;
+  outline-offset: 3px;
+}
+
+.rooms-open-kicker {
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.rooms-intersection-dialog {
+  background:
+    linear-gradient(180deg, rgb(109 40 217 / 18%), transparent 52%),
+    var(--popover);
+  padding: 1.5rem 1.5rem 1.25rem;
+}
+
+.rooms-intersection-dialog [data-slot="dialog-description"] {
+  text-wrap: pretty;
+}
+
+.rooms-intersection-dialog .court-card {
+  background:
+    linear-gradient(180deg, rgb(109 40 217 / 18%), transparent 60%),
+    var(--card);
+  border-color: rgb(109 40 217 / 36%);
+}
+
 @media (min-width: 960px) {
   .rooms-board {
+    position: relative;
     flex-direction: row;
     align-items: stretch;
-    gap: 1.15rem;
-    min-height: 0;
+    gap: 0;
+    min-height: min(72vh, 46rem);
   }
 
-  .rooms-desk,
+  .rooms-desk {
+    flex: 0 0 var(--desk, 50%);
+  }
+
   .rooms-court {
-    flex: 1 1 0;
+    flex: 1 1 auto;
+  }
+
+  .rooms-seam {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--desk, 50%);
+    z-index: 3;
+    width: 2.6rem;
+    translate: -50% 0;
+    cursor: col-resize;
+    touch-action: none;
   }
 
   .rooms-open {
-    flex: 0 0 9.25rem;
-    align-self: center;
-    width: 9.25rem;
-    min-height: 9.25rem;
-    border-radius: 1.35rem;
-    padding: 1.15rem 0.85rem;
+    width: 4.6rem;
+    min-height: 4.6rem;
+    padding: 0.4rem 0.35rem;
+    font-size: 0.68rem;
+    cursor: pointer;
   }
 
-  .rooms-open-title {
-    font-size: 1.2rem;
+  .rooms-board-dragging {
+    user-select: none;
+    cursor: col-resize;
+  }
+
+  .rooms-board-dragging .rooms-pane {
+    pointer-events: none;
   }
 }
 
