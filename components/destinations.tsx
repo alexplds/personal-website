@@ -69,16 +69,7 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
 export function IntersectionSection() {
   return (
     <div id="play" className="rooms-pane rooms-intersection scroll-mt-20">
-      <div className="rooms-venn" aria-hidden="true">
-        <span className="rooms-venn-a" />
-        <span className="rooms-venn-b" />
-      </div>
       <p className="rooms-label">Intersection</p>
-      <p className="rooms-formula">
-        <span>Desk</span>
-        <span className="rooms-cap">∩</span>
-        <span>Court</span>
-      </p>
       <h2 className="font-heading text-2xl">Intersection</h2>
       <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
         {content.intersection}
