@@ -137,6 +137,71 @@ export const content = {
       items: ["PLC/SCADA (ABB AC500, Zenon)", "Arduino / embedded", "MATLAB"],
     },
   ],
+  skillAreas: [
+    {
+      group: "Solutions engineering",
+      how: "Live sites, people on the ground, and shipping something they can use.",
+      items: [
+        {
+          name: "Live integration",
+          proof:
+            "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders. Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
+        },
+        {
+          name: "Customer-facing work",
+          proof:
+            "Marine Sales Engineer Intern at ELTRAK: customer-facing technical sales supporting marine equipment. At Firstco I worked with operations stakeholders on live mission-critical infrastructure.",
+        },
+        {
+          name: "GoCourt.gr",
+          proof:
+            "I co-founded gocourt.gr with a friend. It is a booking product in pilot — web work that turns an idea into a URL people can click.",
+        },
+      ],
+    },
+    {
+      group: "Data analysis",
+      how: "APIs, test data, and the engineering software on the CV.",
+      items: [
+        {
+          name: "Python",
+          proof:
+            "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs (FastMCP / httpx).",
+        },
+        {
+          name: "APIs and data",
+          proof:
+            "REST APIs and authenticated API work on that SpiraTest MCP server. PostgreSQL is a software skill on the CV.",
+        },
+        {
+          name: "MATLAB",
+          proof:
+            "MATLAB sits under systems and embedded skills from IMEE and engineering work.",
+        },
+      ],
+    },
+    {
+      group: "Solutions architecture",
+      how: "How pieces fit: control systems, services, and a mechanical-electrical degree.",
+      items: [
+        {
+          name: "PLC / SCADA",
+          proof:
+            "ABB AC500 PLCs and Zenon SCADA on the Heathrow upgrade and the Telehouse Power Management System. Arduino / embedded is on the CV.",
+        },
+        {
+          name: "Services",
+          proof:
+            "The MCP server is a small service: authenticated APIs so an agent could create and manage test cases.",
+        },
+        {
+          name: "IMEE",
+          proof:
+            "BEng Integrated Mechanical and Electrical Engineering at the University of Bath. Java and C++ are software skills on the CV.",
+        },
+      ],
+    },
+  ],
   courtSkills: [
     {
       group: "Sports I play",

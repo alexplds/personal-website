@@ -1,7 +1,6 @@
 "use client";
 
 import { content, type Destination } from "@/lib/content";
-import { IntroCode } from "@/components/intro-code";
 import { Journey } from "@/components/journey";
 import { LanguageFields } from "@/components/languages";
 import { SkillList } from "@/components/skill-list";
@@ -67,7 +66,6 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
           <h2 className="font-heading mt-2 text-3xl">Personal life</h2>
         </Reveal>
       )}
-      <IntroCode />
       <Sports />
       <SkillList title="Skills" groups={content.courtSkills} tone="court" />
       <LanguageFields />
