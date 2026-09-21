@@ -274,21 +274,36 @@
 .name-light {
   position: relative;
   display: block;
+  overflow: hidden;
   width: 22px;
   height: 22px;
   border-radius: 999px;
-  background: radial-gradient(circle at 32% 28%, #fff8c4, #d4e054 42%, #8aa322);
+  background: radial-gradient(circle at 40% 35%, #d6e05a, #c2d248 48%, #8aa322);
   box-shadow: 0 0 10px 3px rgb(47 107 60 / 35%);
 }
 
+.name-light::before,
 .name-light::after {
   content: "";
   position: absolute;
-  inset: 22% 18% auto auto;
-  width: 28%;
-  height: 22%;
+  top: 50%;
+  width: 19px;
+  height: 20px;
+  box-sizing: border-box;
+  border: 1.35px solid #f4f0e4;
   border-radius: 999px;
-  background: rgb(255 255 255 / 55%);
+}
+
+.name-light::before {
+  left: -12px;
+  translate: 0 -50%;
+  rotate: -10deg;
+}
+
+.name-light::after {
+  right: -12px;
+  translate: 0 -50%;
+  rotate: -10deg;
 }
 
 .dark .name-light-glow {
