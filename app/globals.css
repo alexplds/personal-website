@@ -523,68 +523,76 @@
   margin-top: 1.5rem;
 }
 
-.skill-area + .skill-area {
-  margin-top: 1.15rem;
+.skill-item-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
 }
 
-.skill-area-title {
-  margin: 0;
+.skill-item {
+  padding: 0.55rem 0.95rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--desk-tint, rgb(225 6 0)) 22%, var(--border));
+  background: color-mix(in oklab, var(--card) 88%, rgb(225 6 0));
+  color: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.skill-item:hover,
+.skill-item.is-open {
+  background: color-mix(in oklab, var(--card) 72%, rgb(225 6 0));
+}
+
+.skill-popup {
+  position: fixed;
+  z-index: 40;
+  width: min(22.5rem, calc(100vw - 1.5rem));
+  max-height: min(28rem, calc(100vh - 1.5rem));
+  overflow: auto;
+  padding: 1rem 1.15rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 28%);
+}
+
+.skill-popup-close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.6rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.skill-popup-title {
+  margin: 0 1.6rem 0 0;
   font-size: 1.05rem;
   font-weight: 600;
 }
 
-.skill-area-how {
-  margin: 0.3rem 0 0.7rem;
+.skill-popup-how {
+  margin: 0.4rem 0 0;
   font-size: 0.84rem;
   line-height: 1.45;
   color: var(--muted-foreground);
 }
 
-.skill-proof-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.6rem;
-}
-
-.skill-proof-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  min-height: 5.4rem;
-  padding: 0.95rem 1rem 1rem;
-  border-radius: 1rem;
-  border: 1px solid color-mix(in oklab, var(--desk-tint, rgb(225 6 0)) 24%, var(--border));
-  background: color-mix(in oklab, var(--card) 86%, rgb(225 6 0));
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.skill-proof-tile:hover,
-.skill-proof-tile.is-open {
-  background: color-mix(in oklab, var(--card) 72%, rgb(225 6 0));
-}
-
-.skill-proof-name {
-  font-size: 1.15rem;
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-.skill-proof-hint {
-  margin-top: 0.28rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-
-.skill-proof-body {
+.skill-popup-proof {
   margin: 0.7rem 0 0;
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   line-height: 1.5;
-  color: var(--muted-foreground);
 }
 
 .skill-desk .skill-chips li {
