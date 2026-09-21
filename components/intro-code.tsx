@@ -39,9 +39,9 @@ export function IntroCode() {
           <span className="intro-key intro-key-mix">result</span>
           {": "}
           <span className="intro-str">&quot;{gocourt?.title ?? "GoCourt.gr"}&quot;</span>
-          {",\n"}
-          {"}; "}
+          {" "}
           <span className="intro-cmt">{"// co-founded with a friend"}</span>
+          {"\n};"}
         </code>
       </pre>
     </div>
