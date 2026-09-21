@@ -160,20 +160,11 @@ export const content = {
         "Data Analysis · MATLAB · Data Visualisation · PostgreSQL · SQL · Dashboards / Analytics",
     },
     {
-      group: "Live systems",
-      how: "The strongest technical proof: real plant, real risk, not a lab demo.",
-      items: [
-        {
-          name: "Heathrow",
-          proof:
-            "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders.",
-        },
-        {
-          name: "Telehouse",
-          proof:
-            "Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
-        },
-      ],
+      group: "Sales engineering",
+      how: "I like turning a messy customer ask into a clear technical offer. At ELTRAK as a Marine Sales Engineer intern I worked with clients and engineering on marine equipment — motors, generators, cranes — building priced proposals in CAT and Palfinger and supporting a large shipboard install from drawings.",
+      items: [],
+      skills:
+        "Sales Engineering · Technical Sales · Proposal Writing · Engineering Drawings · Client-facing work",
     },
   ],
   courtSkills: [

@@ -5,6 +5,15 @@ import { content } from "@/lib/content";
 
 const POPUP_WIDTH = 360;
 
+type SkillArea = {
+  group: string;
+  how: string;
+  items: readonly { name: string; proof: string }[];
+  skills?: string;
+};
+
+const skillAreas = content.skillAreas as readonly SkillArea[];
+
 export function SkillProofs() {
   const [open, setOpen] = useState<string | null>(null);
   const [pos, setPos] = useState({ top: 0, left: 0 });
@@ -69,13 +78,13 @@ export function SkillProofs() {
     };
   }, [open]);
 
-  const area = content.skillAreas.find((item) => item.group === open);
+  const area = skillAreas.find((item) => item.group === open);
 
   return (
     <div className="skill-proofs">
       <p className="rooms-label">Skills</p>
       <div ref={listRef} className="skill-item-list">
-        {content.skillAreas.map((item) => (
+        {skillAreas.map((item) => (
           <button
             key={item.group}
             type="button"
@@ -115,7 +124,7 @@ export function SkillProofs() {
               <strong>{item.name}.</strong> {item.proof}
             </p>
           ))}
-          {"skills" in area && area.skills ? (
+          {area.skills ? (
             <p className="skill-popup-proof">
               <strong>Skills:</strong> {area.skills}
             </p>
