@@ -147,21 +147,10 @@ export const content = {
     },
     {
       group: "Programming & APIs",
-      how: "Ship working software across backend, frontend, and tools people actually use.",
-      items: [
-        {
-          name: "GoCourt.gr",
-          proof:
-            "Co-founded a padel/tennis court booking marketplace (pilot with club owners). Backend and realtime booking flows, owner dashboard, and player booking — web plus native iOS/Android via Capacitor.",
-        },
-        {
-          name: "Spira MCP (Firstco)",
-          proof:
-            "Python service exposing SpiraTest over REST for tool/agent use (FastMCP, httpx).",
-        },
-      ],
+      how: "I like to learn software by building things people use. With a friend I co-founded gocourt.gr, a court-booking marketplace that connects sports club owners and players, currently live in pilot mode, used by club owners around Athens. At Firstco I also built a Python MCP/REST service so testing on SpiraTest became more efficient.",
+      items: [],
       skills:
-        "Python · JavaScript · Node.js · Express.js · React · REST APIs · Socket.IO · PostgreSQL · Git · Capacitor / Mobile · MCP",
+        "MCP · Python · JavaScript · Node.js · Express.js · React · REST APIs · Socket.IO · PostgreSQL · Git · Capacitor",
     },
     {
       group: "Data analytics",
