@@ -2,18 +2,16 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { IntersectionSection } from "@/components/destinations";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { content } from "@/lib/content";
 
 const MIN = 28;
 const MAX = 72;
 const START = 50;
+const MIX_MS = 720;
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
 export function RoomsSplit({
   desk,
@@ -23,28 +21,70 @@ export function RoomsSplit({
   court: ReactNode;
 }) {
   const boardRef = useRef<HTMLDivElement>(null);
+  const openRef = useRef<HTMLButtonElement>(null);
+  const backRef = useRef<HTMLButtonElement>(null);
+  const closeTimer = useRef<number>(0);
   const [pct, setPct] = useState(START);
   const [dragging, setDragging] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [layer, setLayer] = useState(false);
+  const [spread, setSpread] = useState(false);
 
-  useEffect(() => {
-    function sync() {
-      if (window.location.hash === "#play") setOpen(true);
+  const setMix = useCallback((next: boolean, instant = false) => {
+    window.clearTimeout(closeTimer.current);
+
+    if (next) {
+      setLayer(true);
+      if (instant || prefersReducedMotion()) {
+        setSpread(true);
+      } else {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => setSpread(true));
+        });
+      }
+      if (window.location.hash !== "#play") {
+        history.replaceState(null, "", "#play");
+      }
+      return;
     }
-    sync();
-    window.addEventListener("hashchange", sync);
-    return () => window.removeEventListener("hashchange", sync);
-  }, []);
 
-  function setDialog(next: boolean) {
-    setOpen(next);
-    if (!next && window.location.hash === "#play") {
+    setSpread(false);
+    if (instant || prefersReducedMotion()) {
+      setLayer(false);
+    } else {
+      closeTimer.current = window.setTimeout(() => setLayer(false), MIX_MS);
+    }
+    if (window.location.hash === "#play") {
       history.replaceState(null, "", window.location.pathname + window.location.search);
     }
-    if (next && window.location.hash !== "#play") {
-      history.replaceState(null, "", "#play");
+    window.setTimeout(() => openRef.current?.focus(), instant ? 0 : 80);
+  }, []);
+
+  useEffect(() => {
+    function onHash() {
+      if (window.location.hash === "#play") setMix(true);
+      else {
+        setSpread(false);
+        setLayer(false);
+      }
     }
-  }
+    if (window.location.hash === "#play") queueMicrotask(() => setMix(true, true));
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, [setMix]);
+
+  useEffect(() => {
+    if (!spread) return;
+    backRef.current?.focus();
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") setMix(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [spread, setMix]);
+
+  useEffect(() => {
+    return () => window.clearTimeout(closeTimer.current);
+  }, []);
 
   const moveTo = useCallback((clientX: number) => {
     const board = boardRef.current;
@@ -56,7 +96,7 @@ export function RoomsSplit({
   }, []);
 
   function onPointerDown(event: React.PointerEvent<HTMLDivElement>) {
-    if (window.innerWidth < 960) return;
+    if (layer || window.innerWidth < 960) return;
     event.preventDefault();
     setDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -77,6 +117,7 @@ export function RoomsSplit({
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (layer) return;
     if (event.key === "ArrowLeft") {
       event.preventDefault();
       setPct((n) => Math.max(MIN, n - 3));
@@ -89,19 +130,28 @@ export function RoomsSplit({
     }
   }
 
+  const boardClass = [
+    "rooms-board",
+    dragging ? "rooms-board-dragging" : "",
+    layer ? "is-mixing" : "",
+    spread ? "is-mixed" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <section className="rooms-band" aria-label="Desk, court, and intersection">
       <div className="rooms-intro">
         <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Rooms</p>
         <h2 className="font-heading mt-2 text-3xl">Desk and court</h2>
         <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-          Drag the seam left or right. The small purple button in the middle opens the intersection.
+          Drag the seam left or right. The button on the seam mixes the two rooms into GoCourt.
         </p>
       </div>
 
       <div
         ref={boardRef}
-        className={`rooms-board${dragging ? " rooms-board-dragging" : ""}`}
+        className={boardClass}
         style={{ "--desk": `${pct}%` } as CSSProperties}
       >
         <div id="work" className="rooms-pane rooms-desk scroll-mt-20">
@@ -111,8 +161,9 @@ export function RoomsSplit({
 
         <div
           role="separator"
-          tabIndex={0}
+          tabIndex={layer ? -1 : 0}
           className="rooms-seam"
+          aria-hidden={layer}
           aria-label="Resize desk and court"
           aria-orientation="vertical"
           aria-controls="work"
@@ -128,10 +179,12 @@ export function RoomsSplit({
           onKeyDown={onKeyDown}
         >
           <button
+            ref={openRef}
             type="button"
             className="rooms-open"
-            onClick={() => setDialog(true)}
+            onClick={() => setMix(true)}
             onPointerDown={(event) => event.stopPropagation()}
+            tabIndex={layer ? -1 : 0}
           >
             <span className="rooms-open-kicker">Open</span>
             Intersection
@@ -142,19 +195,31 @@ export function RoomsSplit({
           <p className="rooms-label">Court</p>
           {court}
         </div>
-      </div>
 
-      <Dialog open={open} onOpenChange={setDialog}>
-        <DialogContent className="rooms-intersection-dialog sm:max-w-2xl" showCloseButton>
-          <DialogHeader>
-            <DialogTitle className="font-heading text-2xl">Intersection</DialogTitle>
-            <DialogDescription className="text-[15px] leading-relaxed">
-              {content.intersection}
-            </DialogDescription>
-          </DialogHeader>
+        <div className="rooms-mixer" aria-hidden="true">
+          <div className="rooms-mixer-desk" />
+          <div className="rooms-mixer-court" />
+        </div>
+
+        <div
+          id="play"
+          className="rooms-mix"
+          role="region"
+          aria-hidden={!spread}
+          inert={spread ? undefined : true}
+          aria-label="Intersection — GoCourt"
+        >
+          <button ref={backRef} type="button" className="rooms-back" onClick={() => setMix(false)}>
+            <span aria-hidden="true">←</span> Back
+          </button>
+          <p className="rooms-label">Intersection</p>
+          <h2 className="font-heading text-3xl md:text-4xl">GoCourt</h2>
+          <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
+            {content.intersection}
+          </p>
           <IntersectionSection embedded />
-        </DialogContent>
-      </Dialog>
+        </div>
+      </div>
     </section>
   );
 }
