@@ -1,6 +1,7 @@
 import { content } from "@/lib/content";
 import { CopyEmail } from "@/components/copy-email";
 import { PlaySection, WorkDestinations } from "@/components/destinations";
+import { IntroCode } from "@/components/intro-code";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 
@@ -27,6 +28,7 @@ export function HeroSection() {
           <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
             {content.roleLine}
           </p>
+          <IntroCode />
       </div>
     </section>
   );
