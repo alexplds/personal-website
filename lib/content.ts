@@ -31,8 +31,8 @@ export const content = {
   ],
   languages: [
     { name: "Greek", level: "Native", flag: "gr", origin: "Greece" },
-    { name: "English", level: "Full professional", flag: "gb", origin: "the United Kingdom" },
-    { name: "French", level: "Full professional", flag: "fr", origin: "France" },
+    { name: "English", level: "Fluent", flag: "gb", origin: "the United Kingdom" },
+    { name: "French", level: "Fluent", flag: "fr", origin: "France" },
     { name: "Italian", level: "Starting to learn", flag: "it", origin: "Italy" },
   ],
   experience: [
