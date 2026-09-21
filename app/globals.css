@@ -254,10 +254,10 @@
   max-width: 100%;
   padding: 0.85rem 1.15rem 1.05rem;
   border-radius: 1.05rem;
-  border: 1px solid rgb(243 241 234 / 12%);
-  background: #141414;
-  color: #e8e4da;
-  box-shadow: 0 12px 32px rgb(0 0 0 / 18%);
+  border: 1px solid rgb(20 20 20 / 12%);
+  background: #ffffff;
+  color: #141414;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 8%);
 }
 
 .intro-code-file {
@@ -266,7 +266,7 @@
   font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #8a8680;
+  color: #6e6a64;
 }
 
 .intro-code pre {
@@ -283,30 +283,69 @@
 }
 
 .intro-kw {
-  color: #9a9690;
+  color: #6e6a64;
 }
 
 .intro-key-based {
-  color: #c8c2b8;
+  color: #3d3b38;
 }
 
 .intro-key-desk {
-  color: #f07870;
+  color: #c41e16;
 }
 
 .intro-key-court {
-  color: #7eb4ea;
+  color: #1d5aa3;
 }
 
 .intro-key-mix {
-  color: #d4a3c8;
+  color: #8a4a7a;
 }
 
 .intro-str {
-  color: #d4e054;
+  color: #6b7a12;
 }
 
 .intro-cmt {
+  color: #7a7670;
+}
+
+.dark .intro-code {
+  border-color: rgb(243 241 234 / 12%);
+  background: #141414;
+  color: #e8e4da;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 18%);
+}
+
+.dark .intro-code-file {
+  color: #8a8680;
+}
+
+.dark .intro-kw {
+  color: #9a9690;
+}
+
+.dark .intro-key-based {
+  color: #c8c2b8;
+}
+
+.dark .intro-key-desk {
+  color: #f07870;
+}
+
+.dark .intro-key-court {
+  color: #7eb4ea;
+}
+
+.dark .intro-key-mix {
+  color: #d4a3c8;
+}
+
+.dark .intro-str {
+  color: #d4e054;
+}
+
+.dark .intro-cmt {
   color: #7a7670;
 }
 
