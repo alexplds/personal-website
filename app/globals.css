@@ -361,11 +361,15 @@
   --desk-face: color-mix(in oklab, var(--desk-tint) 16%, var(--card));
   --court-face: color-mix(in oklab, var(--court-tint) 16%, var(--card));
   --mix-face: color-mix(in oklab, var(--desk-face) 50%, var(--court-face));
-  --mix-wash: color-mix(
+  --mix-hue: color-mix(
     in oklab,
-    color-mix(in oklab, var(--desk-tint) 50%, var(--court-tint)) 16%,
-    transparent
+    color-mix(in oklab, var(--desk-tint) 42%, var(--court-tint)) 86%,
+    white
   );
+  --mix-wash: color-mix(in oklab, var(--mix-hue) 16%, transparent);
+  --mix-open: color-mix(in oklab, var(--mix-hue) 38%, transparent);
+  --mix-open-face: color-mix(in oklab, var(--mix-hue) 32%, var(--card));
+  --mix-open-line: color-mix(in oklab, var(--mix-hue) 46%, var(--border));
   --desk-line: color-mix(in oklab, var(--desk-tint) 28%, var(--border));
   --court-line: color-mix(in oklab, var(--court-tint) 30%, var(--border));
   --mix-line: color-mix(in oklab, var(--desk-line) 50%, var(--court-line));
@@ -520,9 +524,9 @@
   overflow: auto;
   border-radius: 1.25rem;
   padding: 3.4rem 1.6rem 2rem;
-  border: 1px solid var(--mix-line);
+  border: 1px solid var(--mix-open-line);
   background:
-    linear-gradient(180deg, var(--mix-wash), transparent 52%),
+    linear-gradient(180deg, var(--mix-open), transparent 52%),
     var(--card);
   opacity: 0;
   visibility: hidden;
@@ -541,9 +545,9 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.35rem 0.7rem 0.35rem 0.55rem;
-  border: 1px solid var(--mix-line);
+  border: 1px solid var(--mix-open-line);
   border-radius: 999px;
-  background: var(--mix-face);
+  background: var(--mix-open-face);
   color: var(--foreground);
   font-size: 0.78rem;
   font-weight: 600;
@@ -552,19 +556,19 @@
 }
 
 .rooms-back:hover {
-  background: color-mix(in oklab, var(--desk-face) 50%, var(--court-face));
+  background: color-mix(in oklab, var(--mix-open-face) 82%, white);
 }
 
 .rooms-back:focus-visible {
-  outline: 2px solid var(--mix-line);
+  outline: 2px solid var(--mix-open-line);
   outline-offset: 3px;
 }
 
 .rooms-mix .court-card {
   background:
-    linear-gradient(180deg, var(--mix-wash), transparent 60%),
+    linear-gradient(180deg, var(--mix-open), transparent 60%),
     var(--card);
-  border-color: var(--mix-line);
+  border-color: var(--mix-open-line);
 }
 
 .rooms-board.is-mixing .rooms-mixer {
@@ -589,13 +593,13 @@
 .rooms-board.is-mixed .rooms-mixer-desk {
   height: 100%;
   width: 100%;
-  background: color-mix(in oklab, var(--desk-tint) 8%, transparent);
+  background: color-mix(in oklab, var(--desk-tint) 20%, transparent);
 }
 
 .rooms-board.is-mixed .rooms-mixer-court {
   height: 100%;
   width: 100%;
-  background: color-mix(in oklab, var(--court-tint) 8%, transparent);
+  background: color-mix(in oklab, var(--court-tint) 20%, transparent);
 }
 
 .rooms-board.is-mixed .rooms-mix {
