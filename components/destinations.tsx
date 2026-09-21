@@ -2,6 +2,7 @@
 
 import { content, type Destination } from "@/lib/content";
 import { IntroCode } from "@/components/intro-code";
+import { LanguageFields } from "@/components/languages";
 import { LaunchOverlay, PendingNote, useLaunch } from "@/components/overlays";
 import { Reveal } from "@/components/reveal";
 
@@ -64,6 +65,7 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
         </Reveal>
       )}
       <IntroCode />
+      <LanguageFields />
     </section>
   );
 }

@@ -30,9 +30,10 @@ export const content = {
     },
   ],
   languages: [
-    { name: "Greek", level: "Native", note: "Home" },
-    { name: "English", level: "Full professional", note: "Work" },
-    { name: "French", level: "Full professional", note: "Work" },
+    { name: "Greek", level: "Native", flag: "gr", origin: "Greece" },
+    { name: "English", level: "Full professional", flag: "gb", origin: "the United Kingdom" },
+    { name: "French", level: "Full professional", flag: "fr", origin: "France" },
+    { name: "Italian", level: "Starting to learn", flag: "it", origin: "Italy" },
   ],
   experience: [
     {
