@@ -140,19 +140,10 @@ export const content = {
   skillAreas: [
     {
       group: "Solutions engineering",
-      how: "Sit with the people who run a system, understand the friction, ship something they can actually use.",
-      items: [
-        {
-          name: "Spira MCP (Firstco)",
-          proof:
-            "Built a Python MCP server (FastMCP, httpx, REST) so engineers could create and manage SpiraTest cases through AI tools instead of clicking through a UI — turning a real workflow bottleneck into an agent-usable API.",
-        },
-        {
-          name: "Field context (Firstco)",
-          proof:
-            "Testing and integration on a live PLC/SCADA upgrade at Heathrow Airport with operations stakeholders. On Telehouse’s data centres Power Management System, produced documentation for fault mitigation and recovery so power can keep flowing across the site if something fails.",
-        },
-      ],
+      how: "I like being in the room with the people who run a system — hearing what breaks, what they’re scared of, then helping ship something that holds up. At Firstco that meant live PLC/SCADA work at Heathrow, Telehouse Power Management System docs for fault mitigation and recovery so power keeps flowing. I also built a Python MCP server so engineers could drive SpiraTest through AI tools significantly improving efficiency.",
+      items: [],
+      skills:
+        "Artificial Intelligence · Solutions Engineering · Systems Integration · Integration Testing · PLC · SCADA · MCP · Stakeholder work",
     },
     {
       group: "Programming & APIs",
