@@ -173,20 +173,11 @@ export const content = {
         "Python · JavaScript · Node.js · Express.js · React · REST APIs · Socket.IO · PostgreSQL · Git · Capacitor / Mobile · MCP",
     },
     {
-      group: "Customer-facing",
-      how: "Solutions work is talking to the people who have to live with the system.",
-      items: [
-        {
-          name: "Operations stakeholders",
-          proof:
-            "Heathrow PLC/SCADA upgrade on live airport infrastructure with operations stakeholders.",
-        },
-        {
-          name: "Technical sales",
-          proof:
-            "ELTRAK S.A., Athens: customer-facing technical sales supporting marine equipment.",
-        },
-      ],
+      group: "Data analytics",
+      how: "I’ve always liked the idea that data can prove something by forming opinions from evidence, not guesses. That’s a big reason I chose Bath IMEE: an engineering degree that trains you to read a graph and understand what’s going on fast. I’ve sharpened analysis and visualisation mainly through university coursework in MATLAB, and on gocourt.gr the owner dashboard uses PostgreSQL-backed analytics so clubs can see how their courts are actually performing.",
+      items: [],
+      skills:
+        "Data Analysis · MATLAB · Data Visualisation · PostgreSQL · SQL · Dashboards / Analytics",
     },
     {
       group: "Live systems",
@@ -201,17 +192,6 @@ export const content = {
           name: "Telehouse",
           proof:
             "Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
-        },
-      ],
-    },
-    {
-      group: "GoCourt.gr",
-      how: "A product I shipped, not a coursework brief.",
-      items: [
-        {
-          name: "Co-founded",
-          proof:
-            "I co-founded gocourt.gr with a friend. Booking for people who actually want to play. The site is in pilot.",
         },
       ],
     },
