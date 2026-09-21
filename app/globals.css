@@ -366,7 +366,6 @@
     color-mix(in oklab, var(--desk-tint) 42%, var(--court-tint)) 86%,
     white
   );
-  --mix-wash: color-mix(in oklab, var(--mix-hue) 16%, transparent);
   --mix-open: color-mix(in oklab, var(--mix-hue) 38%, transparent);
   --mix-open-face: color-mix(in oklab, var(--mix-hue) 32%, var(--card));
   --mix-open-line: color-mix(in oklab, var(--mix-hue) 46%, var(--border));
