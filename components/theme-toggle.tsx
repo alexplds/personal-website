@@ -1,7 +1,6 @@
 "use client";
 
 import { MoonIcon, SunIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   function toggle() {
@@ -11,15 +10,9 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="icon-sm"
-      onClick={toggle}
-      aria-label="Toggle colour theme"
-    >
+    <button type="button" className="header-social" onClick={toggle} aria-label="Toggle colour theme">
       <SunIcon className="hidden dark:block" />
       <MoonIcon className="dark:hidden" />
-    </Button>
+    </button>
   );
 }

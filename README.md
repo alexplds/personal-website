@@ -20,7 +20,7 @@ All facts live in [`lib/content.ts`](lib/content.ts). The homepage and `/cv` bot
 
 Year 1 and Year 2 buttons play the Formula 1 lap, then open the Mahara views. GoCourt opens `https://www.gocourt.gr` after the tennis rally.
 
-To add a PDF later, drop `public/Alex_Polychroniadis_CV.pdf` and point a button at it. Until then, **View CV** uses the print page.
+The header is just LinkedIn and email (plus a theme toggle). The printable CV stays at `/cv`. To add a PDF later, drop `public/Alex_Polychroniadis_CV.pdf` and link it from there.
 
 ## Deploy
 

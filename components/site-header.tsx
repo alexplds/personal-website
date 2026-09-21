@@ -1,59 +1,38 @@
-"use client";
-
-import Link from "next/link";
-import { useState } from "react";
-import { MenuIcon, XIcon } from "lucide-react";
+import { Mail } from "lucide-react";
 import { content } from "@/lib/content";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Button } from "@/components/ui/button";
+
+function LinkedInMark() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0z" />
+    </svg>
+  );
+}
 
 export function SiteHeader() {
-  const [open, setOpen] = useState(false);
-
   return (
-    <header className="no-print sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
+    <header className="no-print sticky top-0 z-40 bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-3 px-5">
         <a href="#top" className="text-sm font-medium tracking-tight">
           {content.shortName}
         </a>
-        <nav className="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
-          {content.nav.map((item) => (
-            <a key={item.href} href={item.href} className="hover:text-foreground">
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <div className="flex items-center gap-1">
-          <ThemeToggle />
-          <Button nativeButton={false} render={<Link href="/cv" />} size="sm">
-            View CV
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            className="md:hidden"
-            aria-expanded={open}
-            aria-label="Menu"
-            onClick={() => setOpen((v) => !v)}
+        <div className="header-socials">
+          <a
+            className="header-social"
+            href={content.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
           >
-            {open ? <XIcon /> : <MenuIcon />}
-          </Button>
+            <LinkedInMark />
+          </a>
+          <a className="header-social" href={`mailto:${content.email}`} aria-label="Email">
+            <Mail />
+          </a>
+          <ThemeToggle />
         </div>
       </div>
-      {open ? (
-        <nav className="border-t border-border px-5 py-3 md:hidden">
-          <ul className="flex flex-col gap-3 text-sm">
-            {content.nav.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} onClick={() => setOpen(false)}>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      ) : null}
     </header>
   );
 }
