@@ -406,6 +406,86 @@
   color: var(--muted-foreground);
 }
 
+.journey {
+  margin-top: 1.6rem;
+}
+
+.journey-list {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 1.15rem;
+  list-style: none;
+}
+
+.journey-list::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  bottom: 0.55rem;
+  left: 0.28rem;
+  width: 1px;
+  background: color-mix(in oklab, var(--court-tint, rgb(37 99 180)) 35%, var(--border));
+}
+
+.journey-item {
+  position: relative;
+  padding-bottom: 1.15rem;
+}
+
+.journey-item:last-child {
+  padding-bottom: 0;
+}
+
+.journey-item::before {
+  content: "";
+  position: absolute;
+  top: 0.42rem;
+  left: -1.04rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--court-tint, rgb(37 99 180)) 70%, white);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--court-tint, rgb(37 99 180)) 18%, transparent);
+}
+
+.journey-item.is-current::before {
+  background: var(--mix-open-face, #c9a3c0);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--mix-open-line, #8a4a7a) 35%, transparent);
+}
+
+.journey-place-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.55rem;
+}
+
+.journey-place {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.journey-now {
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 80%, var(--court-tint, rgb(37 99 180)));
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.journey-detail {
+  margin: 0.28rem 0 0;
+  max-width: 28rem;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
 .name-light-wrap {
   position: relative;
   top: -2.15rem;

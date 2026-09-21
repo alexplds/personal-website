@@ -35,6 +35,23 @@ export const content = {
     { name: "French", level: "Fluent", flag: "fr", origin: "France" },
     { name: "Italian", level: "Starting to learn", flag: "it", origin: "Italy" },
   ],
+  journey: [
+    {
+      place: "Athens, Greece",
+      detail: "Grew up in a multicultural house (Greek, French, and English).",
+      current: false,
+    },
+    {
+      place: "Bath, UK",
+      detail: "Integrated Mechanical and Electrical Engineering at the University of Bath.",
+      current: false,
+    },
+    {
+      place: "London, UK",
+      detail: "Placement Engineer at Firstco.",
+      current: true,
+    },
+  ],
   experience: [
     {
       org: "Firstco",
