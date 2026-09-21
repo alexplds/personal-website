@@ -1,7 +1,6 @@
 import { content } from "@/lib/content";
 import { CopyEmail } from "@/components/copy-email";
 import { PlaySection, WorkDestinations } from "@/components/destinations";
-import { IntroCode } from "@/components/intro-code";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 
@@ -47,7 +46,6 @@ export function WorkSection({ embedded = false }: { embedded?: boolean }) {
           <h2 className="font-heading mt-2 text-3xl">Engineer / Computer Scientist</h2>
         </Reveal>
       )}
-      <IntroCode />
       <WorkDestinations />
     </section>
   );

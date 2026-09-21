@@ -1,6 +1,7 @@
 "use client";
 
 import { content, type Destination } from "@/lib/content";
+import { IntroCode } from "@/components/intro-code";
 import { LaunchOverlay, PendingNote, useLaunch } from "@/components/overlays";
 import { Reveal } from "@/components/reveal";
 
@@ -62,6 +63,7 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
           <h2 className="font-heading mt-2 text-3xl">Personal life</h2>
         </Reveal>
       )}
+      <IntroCode />
     </section>
   );
 }
