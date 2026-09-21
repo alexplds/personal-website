@@ -4,6 +4,8 @@ import { content, type Destination } from "@/lib/content";
 import { IntroCode } from "@/components/intro-code";
 import { Journey } from "@/components/journey";
 import { LanguageFields } from "@/components/languages";
+import { SkillList } from "@/components/skill-list";
+import { Sports } from "@/components/sports";
 import { LaunchOverlay, PendingNote, useLaunch } from "@/components/overlays";
 import { Reveal } from "@/components/reveal";
 
@@ -66,6 +68,8 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
         </Reveal>
       )}
       <IntroCode />
+      <Sports />
+      <SkillList title="Skills" groups={content.courtSkills} tone="court" />
       <LanguageFields />
       <Journey />
     </section>

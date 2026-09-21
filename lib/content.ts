@@ -137,6 +137,29 @@ export const content = {
       items: ["PLC/SCADA (ABB AC500, Zenon)", "Arduino / embedded", "MATLAB"],
     },
   ],
+  courtSkills: [
+    {
+      group: "Sports I play",
+      items: ["Tennis", "Football", "Padel"],
+    },
+    {
+      group: "On the court",
+      items: ["Timing", "Teammates", "The next point"],
+    },
+  ],
+  sports: {
+    lead: "I have played sport my whole life. The court is still the place I understand fastest.",
+    done: [
+      {
+        title: "Court sports",
+        body: "Tennis, football, and padel. Timing, teammates, the next point.",
+      },
+      {
+        title: "GoCourt.gr",
+        body: "Co-founded with a friend after you could not simply book a court in Greece for the hour you wanted.",
+      },
+    ],
+  },
   nav: [
     { href: "#work", label: "Work" },
     { href: "#play", label: "Intersection" },
