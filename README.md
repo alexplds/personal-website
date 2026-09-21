@@ -11,7 +11,7 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: hero, then a wide Desk / Court split you can drag (red / blue). The seam button is the mix of those two colours. Click it and the rooms animate into one GoCourt box; Back undoes it. Then contact.
+- Home: hero, then a wide Desk / Court split you can drag (red / blue washes). The seam button and the mix animation use those same two pane colours, not a new full purple. Click the seam to mix them into one GoCourt box; Back undoes it. Then contact.
 - Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
 ## Edit content
