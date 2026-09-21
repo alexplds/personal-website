@@ -187,7 +187,7 @@ export function RoomsSplit({
             tabIndex={layer ? -1 : 0}
           >
             <span className="rooms-open-kicker">Open</span>
-            Intersection
+            GoCourt
           </button>
         </div>
 
