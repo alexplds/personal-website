@@ -155,20 +155,22 @@ export const content = {
       ],
     },
     {
-      group: "Live systems",
-      how: "The strongest technical proof: real plant, real risk, not a lab demo.",
+      group: "Programming & APIs",
+      how: "Ship working software across backend, frontend, and tools people actually use.",
       items: [
         {
-          name: "Heathrow",
+          name: "GoCourt.gr",
           proof:
-            "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders.",
+            "Co-founded a padel/tennis court booking marketplace (pilot with club owners). Backend and realtime booking flows, owner dashboard, and player booking — web plus native iOS/Android via Capacitor.",
         },
         {
-          name: "Telehouse",
+          name: "Spira MCP (Firstco)",
           proof:
-            "Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
+            "Python service exposing SpiraTest over REST for tool/agent use (FastMCP, httpx).",
         },
       ],
+      skills:
+        "Python · JavaScript · Node.js · Express.js · React · REST APIs · Socket.IO · PostgreSQL · Git · Capacitor / Mobile · MCP",
     },
     {
       group: "Customer-facing",
@@ -187,18 +189,18 @@ export const content = {
       ],
     },
     {
-      group: "Python & APIs",
-      how: "The data-shaped work I can walk through in an interview. Not a BI internship — a Python service on real test data.",
+      group: "Live systems",
+      how: "The strongest technical proof: real plant, real risk, not a lab demo.",
       items: [
         {
-          name: "MCP server",
+          name: "Heathrow",
           proof:
-            "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs (FastMCP / httpx).",
+            "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders.",
         },
         {
-          name: "REST APIs",
+          name: "Telehouse",
           proof:
-            "That service is authenticated API work: create and manage cases, not a slide deck.",
+            "Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
         },
       ],
     },

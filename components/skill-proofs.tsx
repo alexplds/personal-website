@@ -115,6 +115,11 @@ export function SkillProofs() {
               <strong>{item.name}.</strong> {item.proof}
             </p>
           ))}
+          {"skills" in area && area.skills ? (
+            <p className="skill-popup-proof">
+              <strong>Skills:</strong> {area.skills}
+            </p>
+          ) : null}
         </div>
       ) : null}
     </div>
