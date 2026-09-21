@@ -201,6 +201,63 @@ export const content = {
         },
       ],
     },
+    {
+      group: "Programming",
+      how: "The languages on the CV, used in placement work and the degree.",
+      items: [
+        {
+          name: "Python",
+          proof:
+            "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs (FastMCP / httpx).",
+        },
+        {
+          name: "Java, C++, JavaScript",
+          proof:
+            "Java, C++, and JavaScript / Node.js are software skills on the CV, alongside Git, Express, and Socket.IO.",
+        },
+      ],
+    },
+    {
+      group: "Testing",
+      how: "Live systems and a test-case service.",
+      items: [
+        {
+          name: "System integration",
+          proof:
+            "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure.",
+        },
+        {
+          name: "SpiraTest",
+          proof:
+            "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs.",
+        },
+      ],
+    },
+    {
+      group: "Web",
+      how: "Turning an idea into a URL.",
+      items: [
+        {
+          name: "GoCourt.gr",
+          proof:
+            "I co-founded gocourt.gr with a friend. Web work is how I turn an idea into a URL. JavaScript / Node.js, REST APIs, and Stripe are software skills on the CV.",
+        },
+      ],
+    },
+    {
+      group: "Embedded",
+      how: "Control hardware and the IMEE toolkit.",
+      items: [
+        {
+          name: "Arduino / embedded",
+          proof: "Arduino / embedded is listed under systems and embedded skills on the CV.",
+        },
+        {
+          name: "MATLAB",
+          proof: "MATLAB sits under systems and embedded skills from IMEE and engineering work.",
+        },
+      ],
+    },
   ],
   courtSkills: [
     {
