@@ -59,9 +59,9 @@ export const content = {
       period: "September 2025 – September 2026",
       place: "London (hybrid)",
       bullets: [
-        "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders.",
-        "Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
-        "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs.",
+        "Testing and integration on a live PLC/SCADA upgrade at Heathrow Airport with operations stakeholders.",
+        "On Telehouse’s data centres Power Management System, produced documentation for fault mitigation and recovery so power can keep flowing across the site if something fails.",
+        "Built a Python MCP server (FastMCP, httpx, REST) so engineers could create and manage SpiraTest cases through AI tools instead of clicking through a UI.",
       ],
     },
     {
@@ -140,22 +140,17 @@ export const content = {
   skillAreas: [
     {
       group: "Solutions engineering",
-      how: "The through-line: sit with the people who run a system, integrate on a live site, ship something they can use.",
+      how: "Sit with the people who run a system, understand the friction, ship something they can actually use.",
       items: [
         {
-          name: "Heathrow and Telehouse",
+          name: "Spira MCP (Firstco)",
           proof:
-            "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders. Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
+            "Built a Python MCP server (FastMCP, httpx, REST) so engineers could create and manage SpiraTest cases through AI tools instead of clicking through a UI — turning a real workflow bottleneck into an agent-usable API.",
         },
         {
-          name: "ELTRAK",
+          name: "Field context (Firstco)",
           proof:
-            "Marine Sales Engineer Intern: customer-facing technical sales supporting marine equipment.",
-        },
-        {
-          name: "GoCourt.gr",
-          proof:
-            "I co-founded a booking product with a friend after you could not simply book a court in Greece for the hour you wanted. It is in pilot.",
+            "Testing and integration on a live PLC/SCADA upgrade at Heathrow Airport with operations stakeholders. On Telehouse’s data centres Power Management System, produced documentation for fault mitigation and recovery so power can keep flowing across the site if something fails.",
         },
       ],
     },
