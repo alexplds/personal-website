@@ -273,8 +273,8 @@
   margin: 0;
   overflow-x: auto;
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.82rem;
-  line-height: 1.7;
+  font-size: 0.78rem;
+  line-height: 1.65;
 }
 
 .intro-code pre:focus-visible {
