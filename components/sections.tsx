@@ -28,7 +28,6 @@ export function HeroSection() {
           <p className="hero-in hero-in-3 mt-5 max-w-xl text-lg text-muted-foreground">
             {content.roleLine}
           </p>
-          <IntroCode />
       </div>
     </section>
   );
@@ -48,6 +47,7 @@ export function WorkSection({ embedded = false }: { embedded?: boolean }) {
           <h2 className="font-heading mt-2 text-3xl">Engineer / Computer Scientist</h2>
         </Reveal>
       )}
+      <IntroCode />
       <WorkDestinations />
     </section>
   );

@@ -4,7 +4,7 @@ const gocourt = content.destinations.find((d) => d.id === "gocourt");
 
 export function IntroCode() {
   return (
-    <div className="intro-code hero-in hero-in-4">
+    <div className="intro-code">
       <p className="intro-code-file">alex.ts</p>
       <pre tabIndex={0} aria-label="A short introduction">
         <code>

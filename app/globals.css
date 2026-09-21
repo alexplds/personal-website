@@ -250,8 +250,8 @@
 }
 
 .intro-code {
-  margin-top: 2rem;
-  max-width: 28.5rem;
+  margin-top: 1.35rem;
+  max-width: 100%;
   padding: 0.85rem 1.15rem 1.05rem;
   border-radius: 1.05rem;
   border: 1px solid rgb(243 241 234 / 12%);

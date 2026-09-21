@@ -11,7 +11,7 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: hero with a short `alex.ts` intro, then a wide Desk / Court split you can drag (red / blue washes). The seam button mixes those rooms into one GoCourt box; Back undoes it. Then contact.
+- Home: hero, then a wide Desk / Court split you can drag. Desk holds the `alex.ts` intro and the Mahara buttons. The seam mixes the rooms into one GoCourt box; Back undoes it. Then contact.
 - Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
 ## Edit content
