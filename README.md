@@ -11,7 +11,7 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: hero, then a wide Desk / Court split you can drag. Desk has the `alex.ts` intro, a short set of prove-it skills (only work you can walk through), and Mahara. Court / Personal life holds sport, court skills, languages, and Journey. The seam mixes the rooms into one GoCourt box; Back undoes it. Then contact.
+- Home: hero, then a wide Desk / Court split you can drag. Desk has the `alex.ts` intro, a short set of prove-it skills (only work you can walk through), and Mahara. Court / Personal life holds the sport note, Skills developed, languages, and Journey. The seam mixes the rooms into one GoCourt box; Back undoes it. Then contact.
 - Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
 ## Edit content

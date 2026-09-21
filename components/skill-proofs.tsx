@@ -12,9 +12,17 @@ type SkillArea = {
   skills?: string;
 };
 
-const skillAreas = content.skillAreas as readonly SkillArea[];
+const deskAreas = content.skillAreas as readonly SkillArea[];
+const courtAreas = content.courtSkillAreas as readonly SkillArea[];
 
-export function SkillProofs() {
+export function SkillProofs({
+  title = "Skills",
+  tone = "desk",
+}: {
+  title?: string;
+  tone?: "desk" | "court";
+}) {
+  const skillAreas = tone === "court" ? courtAreas : deskAreas;
   const [open, setOpen] = useState<string | null>(null);
   const [pos, setPos] = useState({ top: 0, left: 0 });
   const listRef = useRef<HTMLDivElement>(null);
@@ -81,8 +89,8 @@ export function SkillProofs() {
   const area = skillAreas.find((item) => item.group === open);
 
   return (
-    <div className="skill-proofs">
-      <p className="rooms-label">Skills</p>
+    <div className={`skill-proofs${tone === "court" ? " skill-proofs-court" : ""}`}>
+      <p className="rooms-label">{title}</p>
       <div ref={listRef} className="skill-item-list">
         {skillAreas.map((item) => (
           <button
@@ -90,7 +98,7 @@ export function SkillProofs() {
             type="button"
             className={`skill-item${open === item.group ? " is-open" : ""}`}
             aria-expanded={open === item.group}
-            aria-controls={open === item.group ? "skill-popup" : undefined}
+            aria-controls={open === item.group ? `skill-popup-${tone}` : undefined}
             ref={(node) => {
               if (node) buttons.current.set(item.group, node);
               else buttons.current.delete(item.group);
@@ -104,7 +112,7 @@ export function SkillProofs() {
 
       {area ? (
         <div
-          id="skill-popup"
+          id={`skill-popup-${tone}`}
           ref={popupRef}
           className="skill-popup"
           role="dialog"

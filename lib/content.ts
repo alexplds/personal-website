@@ -167,28 +167,31 @@ export const content = {
         "Sales Engineering · Technical Sales · Proposal Writing · Engineering Drawings · Client-facing work",
     },
   ],
-  courtSkills: [
+  courtSkillAreas: [
     {
-      group: "Sports I play",
-      items: ["Tennis", "Football", "Padel"],
+      group: "Football",
+      how: "I played football from the age of 4 to 18. At 15 I played semi-pro.",
+      items: [],
     },
     {
-      group: "On the court",
-      items: ["Timing", "Teammates", "The next point"],
+      group: "Tennis",
+      how: "I have always followed tennis, and I play now.",
+      items: [],
+    },
+    {
+      group: "Padel",
+      how: "I have started playing padel. Tennis and padel are what inspired me to start gocourt.",
+      items: [],
+    },
+    {
+      group: "The next point",
+      how: "Timing, teammates, the next point. The court is still the place I understand fastest.",
+      items: [],
     },
   ],
   sports: {
-    lead: "I have played sport my whole life. The court is still the place I understand fastest.",
-    done: [
-      {
-        title: "Court sports",
-        body: "Tennis, football, and padel. Timing, teammates, the next point.",
-      },
-      {
-        title: "GoCourt.gr",
-        body: "Co-founded with a friend after you could not simply book a court in Greece for the hour you wanted.",
-      },
-    ],
+    quote: "Since I was born I've always loved sports.",
+    body: "I played football from the age of 4 to 18, and at 15 I played semi-pro. I have always followed tennis, and I have now started playing padel too — that is what inspired me to start gocourt.",
   },
   nav: [
     { href: "#work", label: "Work" },

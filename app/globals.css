@@ -587,7 +587,12 @@
 }
 
 .skill-proofs {
+  --skill-tint: var(--desk-tint, rgb(225 6 0));
   margin-top: 1.5rem;
+}
+
+.skill-proofs-court {
+  --skill-tint: var(--court-tint, rgb(37 99 180));
 }
 
 .skill-item-list {
@@ -604,8 +609,8 @@
   height: 2.85rem;
   padding: 0.3rem 0.5rem;
   border-radius: 0.85rem;
-  border: 1px solid color-mix(in oklab, var(--desk-tint, rgb(225 6 0)) 22%, var(--border));
-  background: color-mix(in oklab, var(--card) 88%, rgb(225 6 0));
+  border: 1px solid color-mix(in oklab, var(--skill-tint) 22%, var(--border));
+  background: color-mix(in oklab, var(--card) 88%, var(--skill-tint));
   color: inherit;
   font-size: 0.76rem;
   font-weight: 600;
@@ -616,7 +621,31 @@
 
 .skill-item:hover,
 .skill-item.is-open {
-  background: color-mix(in oklab, var(--card) 72%, rgb(225 6 0));
+  background: color-mix(in oklab, var(--card) 72%, var(--skill-tint));
+}
+
+.sport-note {
+  margin-top: 1.5rem;
+  padding: 1.4rem 1.45rem 1.5rem;
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in oklab, var(--court-tint, rgb(37 99 180)) 22%, var(--border));
+  background: color-mix(in oklab, var(--card) 88%, var(--court-tint, rgb(37 99 180)));
+}
+
+.sport-quote {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.55rem, 2.6vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.sport-copy {
+  margin: 0.9rem 0 0;
+  max-width: 36rem;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
 }
 
 .skill-popup {
