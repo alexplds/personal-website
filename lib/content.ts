@@ -140,121 +140,81 @@ export const content = {
   skillAreas: [
     {
       group: "Solutions engineering",
-      how: "Live sites, people on the ground, and shipping something they can use.",
+      how: "The through-line: sit with the people who run a system, integrate on a live site, ship something they can use.",
       items: [
         {
-          name: "Live integration",
+          name: "Heathrow and Telehouse",
           proof:
             "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders. Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
         },
         {
-          name: "Customer-facing work",
+          name: "ELTRAK",
           proof:
-            "Marine Sales Engineer Intern at ELTRAK: customer-facing technical sales supporting marine equipment. At Firstco I worked with operations stakeholders on live mission-critical infrastructure.",
+            "Marine Sales Engineer Intern: customer-facing technical sales supporting marine equipment.",
         },
         {
           name: "GoCourt.gr",
           proof:
-            "I co-founded gocourt.gr with a friend. It is a booking product in pilot — web work that turns an idea into a URL people can click.",
+            "I co-founded a booking product with a friend after you could not simply book a court in Greece for the hour you wanted. It is in pilot.",
         },
       ],
     },
     {
-      group: "Data analysis",
-      how: "APIs, test data, and the engineering software on the CV.",
+      group: "Live systems",
+      how: "The strongest technical proof: real plant, real risk, not a lab demo.",
       items: [
         {
-          name: "Python",
+          name: "Heathrow",
+          proof:
+            "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure with operations stakeholders.",
+        },
+        {
+          name: "Telehouse",
+          proof:
+            "Power Management System work at Telehouse on ABB AC500 PLCs and Zenon SCADA, with risk mitigation on a live site.",
+        },
+      ],
+    },
+    {
+      group: "Customer-facing",
+      how: "Solutions work is talking to the people who have to live with the system.",
+      items: [
+        {
+          name: "Operations stakeholders",
+          proof:
+            "Heathrow PLC/SCADA upgrade on live airport infrastructure with operations stakeholders.",
+        },
+        {
+          name: "Technical sales",
+          proof:
+            "ELTRAK S.A., Athens: customer-facing technical sales supporting marine equipment.",
+        },
+      ],
+    },
+    {
+      group: "Python & APIs",
+      how: "The data-shaped work I can walk through in an interview. Not a BI internship — a Python service on real test data.",
+      items: [
+        {
+          name: "MCP server",
           proof:
             "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs (FastMCP / httpx).",
         },
         {
-          name: "APIs and data",
+          name: "REST APIs",
           proof:
-            "REST APIs and authenticated API work on that SpiraTest MCP server. PostgreSQL is a software skill on the CV.",
-        },
-        {
-          name: "MATLAB",
-          proof:
-            "MATLAB sits under systems and embedded skills from IMEE and engineering work.",
+            "That service is authenticated API work: create and manage cases, not a slide deck.",
         },
       ],
     },
     {
-      group: "Solutions architecture",
-      how: "How pieces fit: control systems, services, and a mechanical-electrical degree.",
+      group: "GoCourt.gr",
+      how: "A product I shipped, not a coursework brief.",
       items: [
         {
-          name: "PLC / SCADA",
+          name: "Co-founded",
           proof:
-            "ABB AC500 PLCs and Zenon SCADA on the Heathrow upgrade and the Telehouse Power Management System. Arduino / embedded is on the CV.",
-        },
-        {
-          name: "Services",
-          proof:
-            "The MCP server is a small service: authenticated APIs so an agent could create and manage test cases.",
-        },
-        {
-          name: "IMEE",
-          proof:
-            "BEng Integrated Mechanical and Electrical Engineering at the University of Bath. Java and C++ are software skills on the CV.",
-        },
-      ],
-    },
-    {
-      group: "Programming",
-      how: "The languages on the CV, used in placement work and the degree.",
-      items: [
-        {
-          name: "Python",
-          proof:
-            "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs (FastMCP / httpx).",
-        },
-        {
-          name: "Java, C++, JavaScript",
-          proof:
-            "Java, C++, and JavaScript / Node.js are software skills on the CV, alongside Git, Express, and Socket.IO.",
-        },
-      ],
-    },
-    {
-      group: "Testing",
-      how: "Live systems and a test-case service.",
-      items: [
-        {
-          name: "System integration",
-          proof:
-            "Testing and system integration on a PLC/SCADA upgrade for Heathrow Airport, on live mission-critical airport infrastructure.",
-        },
-        {
-          name: "SpiraTest",
-          proof:
-            "A Python MCP server so an AI agent could create and manage SpiraTest cases through authenticated APIs.",
-        },
-      ],
-    },
-    {
-      group: "Web",
-      how: "Turning an idea into a URL.",
-      items: [
-        {
-          name: "GoCourt.gr",
-          proof:
-            "I co-founded gocourt.gr with a friend. Web work is how I turn an idea into a URL. JavaScript / Node.js, REST APIs, and Stripe are software skills on the CV.",
-        },
-      ],
-    },
-    {
-      group: "Embedded",
-      how: "Control hardware and the IMEE toolkit.",
-      items: [
-        {
-          name: "Arduino / embedded",
-          proof: "Arduino / embedded is listed under systems and embedded skills on the CV.",
-        },
-        {
-          name: "MATLAB",
-          proof: "MATLAB sits under systems and embedded skills from IMEE and engineering work.",
+            "I co-founded gocourt.gr with a friend. Booking for people who actually want to play. The site is in pilot.",
         },
       ],
     },
