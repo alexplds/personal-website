@@ -358,9 +358,6 @@
 .rooms-band {
   --desk-tint: rgb(225 6 0);
   --court-tint: rgb(37 99 180);
-  --desk-face: color-mix(in oklab, var(--desk-tint) 16%, var(--card));
-  --court-face: color-mix(in oklab, var(--court-tint) 16%, var(--card));
-  --mix-face: color-mix(in oklab, var(--desk-face) 50%, var(--court-face));
   --mix-hue: color-mix(
     in oklab,
     color-mix(in oklab, var(--desk-tint) 42%, var(--court-tint)) 86%,
@@ -369,9 +366,6 @@
   --mix-open: color-mix(in oklab, var(--mix-hue) 38%, transparent);
   --mix-open-face: color-mix(in oklab, var(--mix-hue) 32%, var(--card));
   --mix-open-line: color-mix(in oklab, var(--mix-hue) 46%, var(--border));
-  --desk-line: color-mix(in oklab, var(--desk-tint) 28%, var(--border));
-  --court-line: color-mix(in oklab, var(--court-tint) 30%, var(--border));
-  --mix-line: color-mix(in oklab, var(--desk-line) 50%, var(--court-line));
   margin-top: 1rem;
   border-block: 1px solid var(--border);
   background: color-mix(in oklab, var(--muted) 35%, var(--background));
@@ -439,28 +433,32 @@
   width: 100%;
   min-height: 2.75rem;
   padding: 0.55rem 0.9rem;
-  border: 1px solid var(--mix-line);
+  border: 1px solid var(--mix-open-line);
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--desk-face), var(--court-face));
+  background:
+    linear-gradient(180deg, var(--mix-open), transparent 52%),
+    var(--card);
   color: var(--foreground);
   font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.1;
   cursor: pointer;
-  box-shadow: 0 2px 10px color-mix(in oklab, var(--mix-face) 55%, transparent);
+  box-shadow: 0 2px 10px color-mix(in oklab, var(--mix-open-face) 45%, transparent);
   transition:
     transform 0.15s ease,
-    filter 0.15s ease,
+    background 0.15s ease,
     opacity 0.25s ease;
 }
 
 .rooms-open:hover {
-  filter: brightness(0.97);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--mix-open) 82%, white), transparent 52%),
+    var(--mix-open-face);
   transform: translateY(-1px);
 }
 
 .rooms-open:focus-visible {
-  outline: 2px solid var(--mix-line);
+  outline: 2px solid var(--mix-open-line);
   outline-offset: 3px;
 }
 
