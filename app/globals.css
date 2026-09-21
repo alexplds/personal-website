@@ -125,14 +125,31 @@
   width: 2rem;
   height: 2rem;
   padding: 0;
-  border: 0;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 0;
   background: transparent;
   color: var(--muted-foreground);
   cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .header-social:hover {
   color: var(--foreground);
+}
+
+.header-social:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.header-social:focus-visible {
+  color: var(--foreground);
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 0.3rem;
 }
 
 .header-social svg {
