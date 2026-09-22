@@ -591,6 +591,19 @@
   margin-top: 1.5rem;
 }
 
+.skill-proofs-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.skill-proofs-hint {
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--muted-foreground) 70%, var(--foreground));
+}
+
 .skill-proofs-court {
   --skill-tint: var(--court-tint, rgb(37 99 180));
 }

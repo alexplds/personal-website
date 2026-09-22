@@ -90,7 +90,10 @@ export function SkillProofs({
 
   return (
     <div className={`skill-proofs${tone === "court" ? " skill-proofs-court" : ""}`}>
-      <p className="rooms-label">{title}</p>
+      <p className="rooms-label skill-proofs-label">
+        {title}
+        <span className="skill-proofs-hint">Click to view</span>
+      </p>
       <div ref={listRef} className="skill-item-list">
         {skillAreas.map((item) => (
           <button
