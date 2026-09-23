@@ -28,7 +28,7 @@ export function DestinationButtons({
               className={`group relative w-full overflow-hidden rounded-2xl border px-5 py-8 text-left transition hover:-translate-y-1 ${
                 dest.animation === "tennis"
                   ? "court-card border-[#2f6b3c]/40"
-                  : "track-card border-[#e10600]/30"
+                  : "track-card border-[rgb(212_168_40)]/30"
               }`}
             >
               <p className="text-xs tracking-wide uppercase opacity-70">{dest.kicker}</p>

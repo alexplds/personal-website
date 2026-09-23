@@ -1225,7 +1225,7 @@
 
 .track-card {
   background:
-    linear-gradient(180deg, rgb(225 6 0 / 12%), transparent 55%),
+    linear-gradient(180deg, color-mix(in oklab, var(--desk-tint, rgb(212 168 40)) 18%, transparent), transparent 55%),
     var(--card);
 }
 
