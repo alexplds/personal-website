@@ -661,6 +661,55 @@
   color: var(--muted-foreground);
 }
 
+.sport-block {
+  container-type: inline-size;
+}
+
+.hobby-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+}
+
+.hobby-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38rem;
+  width: 100%;
+  min-height: 5.35rem;
+  padding: 0.7rem 0.3rem 0.58rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--court-tint, rgb(37 99 180)) 22%, var(--border));
+  background: color-mix(in oklab, var(--card) 88%, var(--court-tint, rgb(37 99 180)));
+  color: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hobby-btn:hover,
+.hobby-btn:focus-visible {
+  background: color-mix(in oklab, var(--card) 72%, var(--court-tint, rgb(37 99 180)));
+}
+
+.hobby-icon {
+  width: 1.7rem;
+  height: 1.7rem;
+  flex-shrink: 0;
+}
+
+@container (max-width: 420px) {
+  .hobby-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .skill-popup {
   position: fixed;
   z-index: 40;
