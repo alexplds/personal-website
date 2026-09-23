@@ -188,8 +188,9 @@ export const content = {
     },
     {
       group: "Team player",
-      how: "Football taught teammates first. I co-founded gocourt with a friend — same habit: you do not win a court alone.",
+      how: "Fourteen years in a football team made me a strong team player — I can fit into most environments and work with many different people. I have seen first-hand how working with others, with good communication, helps you reach a goal. Captaining my team was an important step for my leadership. Co-founding gocourt with a friend showed me how splitting the work makes things more efficient, and that trusting other people is key.",
       items: [],
+      skills: "Communication · Teamwork · Leadership",
     },
   ],
   sports: {
