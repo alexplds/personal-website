@@ -11,15 +11,18 @@ import { Reveal } from "@/components/reveal";
 export function DestinationButtons({
   destinations,
   stacked = true,
+  heading,
 }: {
   destinations: readonly Destination[];
   stacked?: boolean;
+  heading?: string;
 }) {
   const { mode, href, runId, pendingNote, launch, finish, clearNote } = useLaunch();
 
   return (
     <>
-      <div className={`mt-8 grid gap-4 ${stacked ? "grid-cols-1" : "md:grid-cols-3"}`}>
+      {heading ? <p className="rooms-label project-portfolios-label">{heading}</p> : null}
+      <div className={`${heading ? "mt-0" : "mt-8"} grid gap-4 ${stacked ? "grid-cols-1" : "md:grid-cols-3"}`}>
         {destinations.map((dest, i) => (
           <Reveal key={dest.id} delay={i * 90}>
             <button
@@ -49,7 +52,7 @@ const mahara = content.destinations.filter((d) => d.animation === "f1");
 const court = content.destinations.filter((d) => d.animation === "tennis");
 
 export function WorkDestinations() {
-  return <DestinationButtons destinations={mahara} />;
+  return <DestinationButtons destinations={mahara} heading="Engineering Projects Portfolios IMEE" />;
 }
 
 export function PlaySection({ embedded = false }: { embedded?: boolean }) {

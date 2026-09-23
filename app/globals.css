@@ -941,6 +941,10 @@
   transition: opacity 0.35s ease;
 }
 
+.project-portfolios-label {
+  margin-top: 1.75rem;
+}
+
 .rooms-label {
   margin-bottom: 1.25rem;
   font-size: 0.7rem;
