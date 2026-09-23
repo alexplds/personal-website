@@ -170,7 +170,7 @@ export const content = {
   courtSkillAreas: [
     {
       group: "Quick learner",
-      how: "I have always followed tennis, then started playing padel — and that is what inspired me to start gocourt. I pick up a court, then I build from it.",
+      how: "I am always eager to learn. A new program or platform usually takes very little training. That comes from hobbies: football, skiing, tennis, and padel at a high level, and teaching myself Python, Java, and C++ in my free time.",
       items: [],
     },
     {
