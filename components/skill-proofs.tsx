@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { content } from "@/lib/content";
 
 const POPUP_WIDTH = 360;
+const MARGIN = 12;
+const GAP = 10;
 
 type SkillArea = {
   group: string;
@@ -24,7 +26,7 @@ export function SkillProofs({
 }) {
   const skillAreas = tone === "court" ? courtAreas : deskAreas;
   const [open, setOpen] = useState<string | null>(null);
-  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const [pos, setPos] = useState({ top: 0, left: 0, width: POPUP_WIDTH });
   const listRef = useRef<HTMLDivElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
   const buttons = useRef(new Map<string, HTMLButtonElement>());
@@ -33,18 +35,35 @@ export function SkillProofs({
   function place(group: string) {
     const button = buttons.current.get(group);
     if (!button) return;
+
+    const width = Math.min(POPUP_WIDTH, window.innerWidth - MARGIN * 2);
+    const height = popupRef.current?.offsetHeight ?? 160;
     const rect = button.getBoundingClientRect();
-    const width = Math.min(POPUP_WIDTH, window.innerWidth - 24);
-    let left = rect.right + 12;
+    const minLeft = MARGIN;
+    const maxLeft = window.innerWidth - MARGIN - width;
+    const minTop = MARGIN;
+    const maxTop = window.innerHeight - MARGIN - height;
+
+    let left = rect.right + GAP;
     let top = rect.top;
-    if (left + width > window.innerWidth - 12) {
-      left = Math.max(12, rect.left);
-      top = rect.bottom + 10;
+
+    if (left > maxLeft) {
+      left = rect.left - GAP - width;
     }
-    const maxTop = window.innerHeight - 16;
-    top = Math.min(top, maxTop);
-    top = Math.max(12, top);
-    setPos({ top, left });
+    if (left < minLeft) {
+      left = Math.min(Math.max(minLeft, rect.left), maxLeft);
+      top = rect.bottom + GAP;
+    }
+
+    left = Math.min(Math.max(left, minLeft), Math.max(minLeft, maxLeft));
+
+    if (top > maxTop) {
+      const above = rect.top - GAP - height;
+      top = above >= minTop ? above : Math.max(minTop, maxTop);
+    }
+    top = Math.min(Math.max(top, minTop), Math.max(minTop, maxTop));
+
+    setPos({ top, left, width });
   }
 
   function toggle(group: string) {
@@ -55,6 +74,10 @@ export function SkillProofs({
     place(group);
     setOpen(group);
   }
+
+  useLayoutEffect(() => {
+    if (open) place(open);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -121,7 +144,7 @@ export function SkillProofs({
           role="dialog"
           aria-modal="false"
           aria-labelledby={titleId}
-          style={{ top: pos.top, left: pos.left }}
+          style={{ top: pos.top, left: pos.left, width: pos.width }}
         >
           <button type="button" className="skill-popup-close" onClick={() => setOpen(null)} aria-label="Close">
             ×
