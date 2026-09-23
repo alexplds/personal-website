@@ -175,7 +175,7 @@ export const content = {
     },
     {
       group: "Composure",
-      how: "Calm under pressure. At 15 I played semi-pro football. The court is still the place I understand fastest: the next point, not the last one.",
+      how: "Sports at a high level have taught me to make fast decisions, stay calm under pressure, and be resourceful in tough situations. At 15 I played semi-pro football.",
       items: [],
     },
     {
