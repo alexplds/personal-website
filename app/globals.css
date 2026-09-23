@@ -710,8 +710,8 @@
 }
 
 .skill-desk .skill-chips li {
-  border: 1px solid color-mix(in oklab, var(--desk-tint, rgb(225 6 0)) 22%, var(--border));
-  background: color-mix(in oklab, var(--card) 88%, rgb(225 6 0));
+  border: 1px solid color-mix(in oklab, var(--desk-tint, rgb(212 168 40)) 22%, var(--border));
+  background: color-mix(in oklab, var(--card) 88%, var(--desk-tint, rgb(212 168 40)));
 }
 
 .skill-court .skill-chips li {
@@ -891,13 +891,9 @@
 }
 
 .rooms-band {
-  --desk-tint: rgb(225 6 0);
+  --desk-tint: rgb(212 168 40);
   --court-tint: rgb(37 99 180);
-  --mix-hue: color-mix(
-    in oklab,
-    color-mix(in oklab, var(--desk-tint) 42%, var(--court-tint)) 86%,
-    white
-  );
+  --mix-hue: color-mix(in oklab, rgb(47 107 60) 86%, white);
   --mix-open: color-mix(in oklab, var(--mix-hue) 38%, transparent);
   --mix-open-face: color-mix(in oklab, var(--mix-hue) 32%, var(--card));
   --mix-open-line: color-mix(in oklab, var(--mix-hue) 46%, var(--border));
