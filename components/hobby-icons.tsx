@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 
 type IconProps = {
   className?: string;
@@ -22,12 +22,44 @@ function HobbySvg({ className = "", children }: IconProps & { children: ReactNod
 }
 
 export function FootballIcon({ className }: IconProps) {
+  const clipId = `football-clip-${useId().replace(/:/g, "")}`;
+
   return (
-    <HobbySvg className={className}>
-      <circle cx="16" cy="16" r="11.2" />
-      <path d="M16 10.1 19.4 12.6 18.1 16.6h-4.2L12.6 12.6Z" />
-      <path d="M19.4 12.6 23.8 11.2M12.6 12.6 8.2 11.2M13.9 16.6 10.2 20.4M18.1 16.6 21.8 20.4M10.2 20.4 13.4 23.8M21.8 20.4 18.6 23.8M13.4 23.8h5.2" />
-    </HobbySvg>
+    <svg viewBox="0 0 32 32" className={className} aria-hidden="true" fill="none">
+      <defs>
+        <clipPath id={clipId}>
+          <circle cx="16" cy="16" r="13" />
+        </clipPath>
+      </defs>
+      <g
+        clipPath={`url(#${clipId})`}
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      >
+        <path
+          fill="currentColor"
+          stroke="none"
+          d="M16 9.85 21.85 14.1 19.61 20.98h-7.22L10.15 14.1Z"
+        />
+        <path d="M16 9.85 19.7 5.27 25.06 9.17 21.85 14.1" />
+        <path d="M21.85 14.1 27.35 16.2 25.3 22.51 19.61 20.98" />
+        <path d="M19.61 20.98 19.32 26.85h-6.64L12.39 20.98" />
+        <path d="M12.39 20.98 6.7 22.51 4.65 16.2 10.15 14.1" />
+        <path d="M10.15 14.1 6.94 9.17 12.3 5.27 16 9.85" />
+        <path
+          fill="currentColor"
+          stroke="none"
+          d="M29.56 20.41 27.13 22.17 24.7 20.41 25.63 17.56h3Z
+             M16 30.25 13.57 28.49 14.5 25.64h3l.93 2.85Z
+             M2.44 20.41 3.37 17.56h3l.93 2.85-2.43 1.76Z
+             M7.62 4.47h3l.93 2.85-2.43 1.76-2.43-1.76Z
+             M24.38 4.47 25.31 7.32 22.88 9.08 20.45 7.32 21.38 4.47Z"
+        />
+      </g>
+      <circle cx="16" cy="16" r="13" stroke="currentColor" strokeWidth="1.7" />
+    </svg>
   );
 }
 
