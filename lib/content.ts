@@ -194,8 +194,8 @@ export const content = {
     },
   ],
   sports: {
-    quote: "Since I was born I've always loved sports.",
-    body: "I played football from the age of 4 to 18, and at 15 I played semi-pro. I have always followed tennis, and I have now started playing padel too — that is what inspired me to start gocourt.",
+    quote: "Who I am",
+    body: "I grew up in a multicultural environment in Athens, Greece, in a French-speaking household. After the age of 12 I went to English-speaking schools. Sport has always been where I am happiest — it made me lifelong friends, and I have always loved competition.",
   },
   nav: [
     { href: "#work", label: "Work" },
