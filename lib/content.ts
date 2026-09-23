@@ -179,9 +179,10 @@ export const content = {
       items: [],
     },
     {
-      group: "Persistent",
-      how: "I played football from the age of 4 to 18. That is fourteen years of showing up.",
+      group: "Consistency",
+      how: "I played football at a high level from the age of 4 to 18, including semi-pro adult football at 15. That taught me how much consistency matters — discipline, hard work, and showing up pay off in the long term, even when there are no immediate results.",
       items: [],
+      skills: "Consistency · Reliability · Discipline · Persistence",
     },
     {
       group: "Team player",
