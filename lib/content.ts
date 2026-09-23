@@ -176,7 +176,7 @@ export const content = {
     },
     {
       group: "Composure",
-      how: "Sports at a high level have taught me to make fast decisions, stay calm under pressure, and be resourceful in tough situations. At 15 I played semi-pro football. Learning chess and my love of board games have also strengthened my strategic thinking and problem-solving — I see that in tennis, and in my professional life.",
+      how: "Sports at a high level have taught me to make fast decisions, stay calm under pressure, and be resourceful in tough situations. At 15 I played adult semi-pro football, making me used to handling pressure and having responsibility from a young age. Learning chess and my love of board games have also strengthened my strategic thinking and problem-solving — I see that in tennis, and in my professional life.",
       items: [],
       skills: "Fast decision making · Calm under pressure · Resourceful · Strategic thinking · Problem solving",
     },
