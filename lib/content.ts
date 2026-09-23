@@ -182,7 +182,7 @@ export const content = {
     },
     {
       group: "Consistency",
-      how: "I played football at a high level from the age of 4 to 18, including semi-pro adult football at 15. That taught me how much consistency matters — discipline, hard work, and showing up pay off in the long term, even when there are no immediate results.",
+      how: "I played football at a high level from the age of 4 to 18, including semi-pro adult football at 15. That taught me how much consistency matters — discipline, hard work, and showing up pay off in the long term, even when there are no immediate results. Tennis taught me the same thing another way: if you lose a point, the only thing that matters is the next one. I use that in everyday life and at work — when something goes wrong I focus on what I can improve, and what I can do from now on.",
       items: [],
       skills: "Consistency · Reliability · Discipline · Persistence",
     },
