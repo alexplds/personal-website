@@ -170,7 +170,7 @@ export const content = {
   courtSkillAreas: [
     {
       group: "Quick learner",
-      how: "I am always eager to learn. A new program or platform usually takes very little training. That comes from hobbies: football, skiing, tennis, and padel at a high level, and teaching myself Python, Java, and C++ in my free time.",
+      how: "I am always eager to learn. A new program or platform usually takes very little training. This skill has been developed through my hobbies: football, skiing, tennis, and padel at a high level, and teaching myself Python, Java, and C++ in my free time.",
       items: [],
     },
     {
