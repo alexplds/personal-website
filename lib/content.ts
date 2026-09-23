@@ -169,23 +169,23 @@ export const content = {
   ],
   courtSkillAreas: [
     {
-      group: "Football",
-      how: "I played football from the age of 4 to 18. At 15 I played semi-pro.",
+      group: "Quick learner",
+      how: "I have always followed tennis, then started playing padel — and that is what inspired me to start gocourt. I pick up a court, then I build from it.",
       items: [],
     },
     {
-      group: "Tennis",
-      how: "I have always followed tennis, and I play now.",
+      group: "Composure",
+      how: "Calm under pressure. At 15 I played semi-pro football. The court is still the place I understand fastest: the next point, not the last one.",
       items: [],
     },
     {
-      group: "Padel",
-      how: "I have started playing padel. Tennis and padel are what inspired me to start gocourt.",
+      group: "Persistent",
+      how: "I played football from the age of 4 to 18. That is fourteen years of showing up.",
       items: [],
     },
     {
-      group: "The next point",
-      how: "Timing, teammates, the next point. The court is still the place I understand fastest.",
+      group: "Team player",
+      how: "Football taught teammates first. I co-founded gocourt with a friend — same habit: you do not win a court alone.",
       items: [],
     },
   ],
