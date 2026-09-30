@@ -1,25 +1,8 @@
-import { useId, type ReactNode } from "react";
+import { useId } from "react";
 
 type IconProps = {
   className?: string;
 };
-
-function HobbySvg({ className = "", children }: IconProps & { children: ReactNode }) {
-  return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.65"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      {children}
-    </svg>
-  );
-}
 
 export function FootballIcon({ className }: IconProps) {
   const clipId = `football-clip-${useId().replace(/:/g, "")}`;
@@ -56,43 +39,86 @@ export function FootballIcon({ className }: IconProps) {
 
 export function SkiingIcon({ className }: IconProps) {
   return (
-    <HobbySvg className={className}>
-      <circle cx="19.6" cy="7.4" r="2.15" />
-      <path d="M18.1 10.2 14.4 15l-4.2-2.4" />
-      <path d="M14.4 15 17 19.6l5.4-1.8" />
-      <path d="M8.2 13.4 21.4 18.2" />
-      <path d="M5.6 22.2 26.6 26.4" />
-      <path d="M5.2 25.1 26.4 28.2" />
-    </HobbySvg>
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.65"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <circle cx="21.5" cy="6.15" r="2.45" fill="currentColor" stroke="none" />
+      <path
+        fill="currentColor"
+        stroke="none"
+        d="M19.55 8.55 23.1 12.2l-3.55 3.55 1.45 3.55-7.15 3.95-1.25-1.45 5.05-2.85-1.7-3.15 2.45-2.55-3.05-2.15-5.35 2.55-1.05-1.45 6.85-3.25z"
+      />
+      <path d="M10.15 12.85 5.2 20.4" />
+      <path d="M3.15 21.2 28.7 26.45" strokeWidth="2.15" />
+      <path d="M2.75 24.45 28.3 29.7" strokeWidth="2.15" />
+    </svg>
   );
 }
 
 export function TennisPadelIcon({ className }: IconProps) {
   return (
-    <HobbySvg className={className}>
-      <ellipse cx="11.2" cy="11.4" rx="6" ry="7.1" />
-      <path d="M9.4 17.8 7.6 25.4" />
-      <path d="M8.2 18.4h2.6" />
-      <path d="M7.4 11.4h7.6M11.2 6.4v10" />
-      <rect x="17.4" y="5.6" width="8.2" height="10.4" rx="2.1" />
-      <circle cx="19.8" cy="8.8" r="0.85" fill="currentColor" stroke="none" />
-      <circle cx="23.2" cy="8.8" r="0.85" fill="currentColor" stroke="none" />
-      <circle cx="19.8" cy="12.4" r="0.85" fill="currentColor" stroke="none" />
-      <circle cx="23.2" cy="12.4" r="0.85" fill="currentColor" stroke="none" />
-      <path d="M21.5 16 23.1 25.4" />
-      <path d="M21.8 17.8h2.6" />
-    </HobbySvg>
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <g transform="rotate(-22 11.2 16)">
+        <ellipse cx="11.2" cy="10.2" rx="5.35" ry="6.85" />
+        <path d="M8.15 10.2h6.1M11.2 5.55v9.3" />
+        <path d="M9.95 17.05 8.55 26.6" />
+        <path d="M7.35 18.35h3.15" />
+      </g>
+      <g transform="rotate(18 22.2 16)">
+        <rect x="17.55" y="4.85" width="8.5" height="10.7" rx="2.05" />
+        <circle cx="20.2" cy="8.15" r="1" />
+        <circle cx="23.4" cy="8.15" r="1" />
+        <circle cx="20.2" cy="12.05" r="1" />
+        <circle cx="23.4" cy="12.05" r="1" />
+        <path d="M21.8 15.55 23.35 26.6" />
+        <path d="M20.45 17.85h2.9" />
+      </g>
+      <circle cx="16.15" cy="22.85" r="2.35" />
+      <path d="M14.55 21.55c1.1 1.4 2.15 1.4 3.2 0" />
+    </svg>
   );
 }
 
 export function BoardGamesIcon({ className }: IconProps) {
   return (
-    <HobbySvg className={className}>
-      <path d="M10.8 24.6c0-3.4 1.7-5.3 4.4-6.4 1.1-.4 1.6-1.1 1.6-2.1 0-1.4-1.3-2.2-2.7-1.6-.7.3-1.3.3-1.9 0-1.5-.8-1.4-2.6.2-3.3 1.1-.5 2.3-.4 3.4.2 1.7.9 3.3 1 4.8.1.9-.5 1.8-.4 2.4.4.7.9.5 1.9-.4 2.6-1.1.8-1.6 1.8-1.4 3.1.2 1.5 1.2 2.6 2.8 3.2" />
-      <path d="M8.6 24.6h14.8" />
-      <rect x="4.6" y="4.8" width="8.2" height="8.2" rx="1.4" />
-      <circle cx="7" cy="7.2" r="0.7" fill="currentColor" stroke="none" />
-      <circle cx="10.4" cy="10.6" r="0.7" fill="currentColor" stroke="none" />
-    </HobbySvg>
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.55"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <g transform="translate(6.2,1.1) scale(1.08)">
+        <path d="M5 20a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z" />
+        <path d="M16.5 18c1-2 2.5-5 2.5-9a7 7 0 0 0-7-7H6.635a1 1 0 0 0-.768 1.64L7 5l-2.32 5.802a2 2 0 0 0 .95 2.526l2.87 1.456" />
+        <path d="m15 5 1.425-1.425" />
+        <path d="m17 8 1.53-1.53" />
+        <path d="M9.713 12.185 7 18" />
+      </g>
+      <rect x="2.55" y="19.15" width="8.2" height="8.2" rx="1.45" />
+      <circle cx="5.1" cy="21.7" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="8.2" cy="24.8" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="5.1" cy="24.8" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="8.2" cy="21.7" r="0.8" fill="currentColor" stroke="none" />
+    </svg>
   );
 }
