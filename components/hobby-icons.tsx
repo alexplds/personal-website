@@ -68,29 +68,17 @@ export function TennisPadelIcon({ className }: IconProps) {
       viewBox="0 0 32 32"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="1.7"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
       aria-hidden="true"
     >
-      <g transform="rotate(-22 11.2 16)">
-        <ellipse cx="11.2" cy="10.2" rx="5.35" ry="6.85" />
-        <path d="M8.15 10.2h6.1M11.2 5.55v9.3" />
-        <path d="M9.95 17.05 8.55 26.6" />
-        <path d="M7.35 18.35h3.15" />
+      <circle cx="16" cy="16" r="13" />
+      <g transform="rotate(-18 16 16)">
+        <path d="M7.2 7.4c5.8 3.4 5.8 13.8 0 17.2" />
+        <path d="M24.8 7.4c-5.8 3.4-5.8 13.8 0 17.2" />
       </g>
-      <g transform="rotate(18 22.2 16)">
-        <rect x="17.55" y="4.85" width="8.5" height="10.7" rx="2.05" />
-        <circle cx="20.2" cy="8.15" r="1" />
-        <circle cx="23.4" cy="8.15" r="1" />
-        <circle cx="20.2" cy="12.05" r="1" />
-        <circle cx="23.4" cy="12.05" r="1" />
-        <path d="M21.8 15.55 23.35 26.6" />
-        <path d="M20.45 17.85h2.9" />
-      </g>
-      <circle cx="16.15" cy="22.85" r="2.35" />
-      <path d="M14.55 21.55c1.1 1.4 2.15 1.4 3.2 0" />
     </svg>
   );
 }
