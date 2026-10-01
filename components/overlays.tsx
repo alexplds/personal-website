@@ -54,7 +54,7 @@ export function LaunchOverlay({
   useEffect(() => {
     if (!mode) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const wait = reduced ? 700 : mode === "tennis" ? 2300 : 1700;
+    const wait = reduced ? 700 : mode === "tennis" ? 2300 : 1100;
     const t = window.setTimeout(() => doneRef.current(href), wait);
     return () => window.clearTimeout(t);
   }, [mode, href, runId]);
@@ -91,26 +91,17 @@ function TennisScene() {
 
 function F1Scene() {
   return (
-    <div className="relative flex h-full items-center justify-center overflow-hidden bg-[#111]">
-      <div className="speed-lines" aria-hidden="true" />
-      <div className="checkered-bar" aria-hidden="true" />
-      <div className="f1-car" aria-hidden="true">
-        <svg viewBox="0 0 200 56" className="h-10 w-auto">
-          <path
-            d="M22 34 H58 L72 22 H118 L138 34 H176 L170 42 H30 Z"
-            fill="#e10600"
-            stroke="#8a0400"
-            strokeWidth="1.5"
-          />
-          <rect x="86" y="16" width="28" height="12" rx="2" fill="#1a1a1a" />
-          <circle cx="56" cy="44" r="8" fill="#222" stroke="#eee" strokeWidth="2" />
-          <circle cx="150" cy="44" r="8" fill="#222" stroke="#eee" strokeWidth="2" />
-          <path d="M138 34 H172" stroke="#ffb3b3" strokeWidth="2" />
+    <div className="f1-loader-scene">
+      <div className="f1-loader" aria-hidden="true">
+        <span className="f1-loader-ring" />
+        <svg viewBox="0 0 160 48" className="f1-loader-car">
+          <path d="M10 28h36l10-10h42l16 10h32l-6 8H18z" fill="#e10600" />
+          <rect x="68" y="12" width="26" height="10" rx="2" fill="#1a1a1a" />
+          <path d="M136 16h16v16h-8z" fill="#e10600" />
+          <circle cx="44" cy="38" r="7" fill="#222" stroke="#eee" strokeWidth="1.8" />
+          <circle cx="122" cy="38" r="7" fill="#222" stroke="#eee" strokeWidth="1.8" />
         </svg>
       </div>
-      <p className="relative z-10 text-sm tracking-[0.2em] text-white/80 uppercase">
-        Opening portfolio
-      </p>
     </div>
   );
 }
