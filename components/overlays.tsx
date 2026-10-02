@@ -95,28 +95,22 @@ function F1Scene() {
       <div className="f1-loader" aria-hidden="true">
         <span className="f1-loader-ring" />
         <div className="f1-loader-clip">
-          <svg viewBox="0 0 140 48" className="f1-loader-car">
-            <path d="M4 31h22l3 3.5H6z" fill="#ff4d4d" />
-            <path
-              d="M18 30.5 40 20.5h34l16 10 20 .8-2.5 8.2H28z"
-              fill="#e10600"
-            />
-            <path d="M40 20.5h22l-4 10H36z" fill="#ff2d2d" />
-            <rect x="56" y="13" width="24" height="11" rx="4.5" fill="#111" />
-            <path
-              d="M54 22c8-12 28-12 36 0"
-              fill="none"
-              stroke="#f3f1ea"
-              strokeWidth="2.6"
-              strokeLinecap="round"
-            />
-            <rect x="108" y="8" width="22" height="4" rx="1.4" fill="#e10600" />
-            <rect x="126" y="8" width="4.2" height="22" rx="1.2" fill="#c10800" />
-            <rect x="108" y="26" width="20" height="3" rx="1" fill="#ff5a5a" />
-            <circle cx="38" cy="37.5" r="8.4" fill="#141414" stroke="#f3f1ea" strokeWidth="2.3" />
-            <circle cx="38" cy="37.5" r="3.1" fill="#6a6a6a" />
-            <circle cx="104" cy="37.5" r="8.4" fill="#141414" stroke="#f3f1ea" strokeWidth="2.3" />
-            <circle cx="104" cy="37.5" r="3.1" fill="#6a6a6a" />
+          <svg
+            viewBox="0 0 72 28"
+            className="f1-loader-car"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.7"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 17.5h12L24 10h18l7 7.5h16" />
+            <path d="M5 17.5v3.2h9" />
+            <path d="M28 10c2.2-5.4 13.6-5.4 16 0" />
+            <path d="M58 17.5V8h9" />
+            <path d="M56.5 8H67" />
+            <circle cx="20.5" cy="19.2" r="3.7" />
+            <circle cx="52.5" cy="19.2" r="3.7" />
           </svg>
         </div>
       </div>
