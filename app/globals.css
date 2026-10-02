@@ -1315,8 +1315,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 7.5rem;
-  height: 7.5rem;
+  width: 8.25rem;
+  height: 8.25rem;
 }
 
 .f1-loader-ring {
@@ -1328,9 +1328,36 @@
   animation: f1-spin 0.75s linear infinite;
 }
 
+.f1-loader-clip {
+  position: absolute;
+  inset: 7px;
+  overflow: hidden;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .f1-loader-car {
-  width: 4.4rem;
+  width: 4.85rem;
   height: auto;
+  flex-shrink: 0;
+  animation: f1-car-pass 2s cubic-bezier(0.42, 0, 0.2, 1) both;
+}
+
+@keyframes f1-car-pass {
+  0% {
+    transform: translateX(-165%);
+  }
+  34% {
+    transform: translateX(0);
+  }
+  58% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(165%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1342,6 +1369,7 @@
   .tennis-ball-bounce,
   .tennis-ball,
   .f1-loader-ring,
+  .f1-loader-car,
   .reveal {
     animation: none !important;
     transition: none !important;

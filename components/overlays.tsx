@@ -54,7 +54,7 @@ export function LaunchOverlay({
   useEffect(() => {
     if (!mode) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const wait = reduced ? 700 : mode === "tennis" ? 2300 : 1100;
+    const wait = reduced ? 700 : mode === "tennis" ? 2300 : 2100;
     const t = window.setTimeout(() => doneRef.current(href), wait);
     return () => window.clearTimeout(t);
   }, [mode, href, runId]);
@@ -94,13 +94,24 @@ function F1Scene() {
     <div className="f1-loader-scene">
       <div className="f1-loader" aria-hidden="true">
         <span className="f1-loader-ring" />
-        <svg viewBox="0 0 160 48" className="f1-loader-car">
-          <path d="M10 28h36l10-10h42l16 10h32l-6 8H18z" fill="#e10600" />
-          <rect x="68" y="12" width="26" height="10" rx="2" fill="#1a1a1a" />
-          <path d="M136 16h16v16h-8z" fill="#e10600" />
-          <circle cx="44" cy="38" r="7" fill="#222" stroke="#eee" strokeWidth="1.8" />
-          <circle cx="122" cy="38" r="7" fill="#222" stroke="#eee" strokeWidth="1.8" />
-        </svg>
+        <div className="f1-loader-clip">
+          <svg viewBox="0 0 200 64" className="f1-loader-car">
+            <ellipse cx="100" cy="58" rx="62" ry="3.2" fill="#000" opacity="0.28" />
+            <path d="M8 40h28l4 3H10z" fill="#c10800" />
+            <path d="M10 43h24l2 2.2H12z" fill="#ff5a5a" />
+            <path d="M28 38 54 30l10-7h40l22 8 18 1-4 10H36z" fill="#e10600" />
+            <path d="M54 30 64 23h28l-6 8H56z" fill="#ff2a2a" />
+            <rect x="86" y="18" width="28" height="12" rx="5" fill="#141414" />
+            <path d="M84 28c8-14 30-14 38 0" fill="none" stroke="#f3f1ea" strokeWidth="2.2" strokeLinecap="round" />
+            <rect x="154" y="12" width="28" height="3.2" rx="1.4" fill="#e10600" />
+            <rect x="176" y="12" width="3.4" height="28" rx="1" fill="#c10800" />
+            <rect x="154" y="32" width="24" height="2.6" rx="1" fill="#ff5a5a" />
+            <circle cx="52" cy="46" r="10" fill="#1a1a1a" stroke="#f3f1ea" strokeWidth="2" />
+            <circle cx="52" cy="46" r="3.6" fill="#5a5a5a" />
+            <circle cx="148" cy="46" r="10" fill="#1a1a1a" stroke="#f3f1ea" strokeWidth="2" />
+            <circle cx="148" cy="46" r="3.6" fill="#5a5a5a" />
+          </svg>
+        </div>
       </div>
     </div>
   );
