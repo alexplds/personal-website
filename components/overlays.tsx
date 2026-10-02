@@ -92,26 +92,32 @@ function TennisScene() {
 function F1Scene() {
   return (
     <div className="f1-loader-scene">
-      <div className="f1-loader" aria-hidden="true">
-        <span className="f1-loader-ring" />
-        <div className="f1-loader-clip">
-          <svg
-            viewBox="0 0 72 28"
-            className="f1-loader-car"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M5 17.5h12L24 10h18l7 7.5h16" />
-            <path d="M5 17.5v3.2h9" />
-            <path d="M28 10c2.2-5.4 13.6-5.4 16 0" />
-            <path d="M58 17.5V8h9" />
-            <path d="M56.5 8H67" />
-            <circle cx="20.5" cy="19.2" r="3.7" />
-            <circle cx="52.5" cy="19.2" r="3.7" />
+      <div className="f1-loader-card" aria-hidden="true">
+        <div className="f1-loader">
+          <svg className="f1-loader-ring" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="29" className="f1-loader-track" />
+            <circle cx="32" cy="32" r="29" className="f1-loader-head" />
           </svg>
+          <div className="f1-loader-clip">
+            <svg
+              viewBox="0 0 56 22"
+              className="f1-loader-car"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="14.2" cy="16.4" r="3.35" />
+              <circle cx="39.2" cy="16.4" r="3.35" />
+              <path d="M3 13.1h8.4L16.8 7.1h16.6L40 13.1h6.2" />
+              <path d="M3 13.1v2.7h6.4" />
+              <path d="M19.4 7.1c1.7-3.3 10.8-3.3 12.5 0" />
+              <path d="M46.2 13.1V4.5" />
+              <path d="M43.6 4.5h8.4" />
+              <path d="M44.2 6.7h6.6" />
+            </svg>
+          </div>
         </div>
       </div>
     </div>
