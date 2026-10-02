@@ -1336,12 +1336,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgb(243 241 234 / 6%);
 }
 
 .f1-loader-car {
-  width: 4.85rem;
+  width: 6.15rem;
   height: auto;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 35%));
   animation: f1-car-pass 2s cubic-bezier(0.42, 0, 0.2, 1) both;
 }
 
