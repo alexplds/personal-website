@@ -39,35 +39,31 @@ export function TechStack() {
     });
     renderer.setClearColor(0x000000, 0);
 
-    scene.add(new THREE.AmbientLight(0xfff8e8, 0.72));
-    const key = new THREE.DirectionalLight(0xfff4d8, 1.25);
-    key.position.set(4, 5, 6);
-    scene.add(key);
-    const rim = new THREE.DirectionalLight(0x9eb6d8, 0.45);
-    rim.position.set(-5, -2, 3);
-    scene.add(rim);
-
     const globe = new THREE.Group();
     globe.position.y = -0.35;
     globe.quaternion.setFromEuler(new THREE.Euler(0.35, 0.7, 0.15));
     scene.add(globe);
 
-    const feltMap = feltTexture();
-    const felt = new THREE.Mesh(
-      new THREE.SphereGeometry(1.92, 64, 48),
-      new THREE.MeshStandardMaterial({
-        map: feltMap,
-        color: 0xd7e15a,
-        roughness: 0.94,
-        metalness: 0,
+    const shell = new THREE.Mesh(
+      new THREE.SphereGeometry(1.9, 48, 32),
+      new THREE.MeshBasicMaterial({
+        color: 0xb7d4f2,
+        transparent: true,
+        opacity: 0.045,
+        depthWrite: false,
       }),
     );
-    const seam = new THREE.Mesh(seamGeometry(1.99, 0.085), new THREE.MeshStandardMaterial({
-      color: 0xf7f8f2,
-      roughness: 0.55,
-      metalness: 0,
-    }));
-    globe.add(felt, seam);
+    const rings = latitudeRings(1.9);
+    const seam = new THREE.Mesh(
+      seamGeometry(1.94, 0.011),
+      new THREE.MeshBasicMaterial({
+        color: 0xeef8f1,
+        transparent: true,
+        opacity: 0.8,
+        depthWrite: false,
+      }),
+    );
+    globe.add(shell, rings, seam);
 
     const locals = spherePoints(content.techStack.length, 2.42);
     const scratch = new THREE.Vector3();
@@ -155,11 +151,14 @@ export function TechStack() {
       stage.removeEventListener("pointermove", onPointerMove);
       stage.removeEventListener("pointerup", onPointerUp);
       stage.removeEventListener("pointercancel", onPointerUp);
-      felt.geometry.dispose();
-      seam.geometry.dispose();
-      (felt.material as THREE.Material).dispose();
+      globe.traverse((obj) => {
+        if (obj instanceof THREE.Mesh) obj.geometry.dispose();
+      });
+      (shell.material as THREE.Material).dispose();
       (seam.material as THREE.Material).dispose();
-      feltMap.dispose();
+      rings.children.forEach((child) => {
+        if (child instanceof THREE.Mesh) (child.material as THREE.Material).dispose();
+      });
       renderer.dispose();
     };
   }, []);
@@ -192,22 +191,25 @@ export function TechStack() {
   );
 }
 
-function feltTexture() {
-  const canvas = document.createElement("canvas");
-  canvas.width = 256;
-  canvas.height = 256;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return new THREE.CanvasTexture(canvas);
-  ctx.fillStyle = "#d6e15a";
-  ctx.fillRect(0, 0, 256, 256);
-  for (let i = 0; i < 5200; i += 1) {
-    const light = Math.random() > 0.45;
-    ctx.fillStyle = light ? "rgba(255,255,240,0.16)" : "rgba(70,90,20,0.14)";
-    ctx.fillRect(Math.random() * 256, Math.random() * 256, 1.4, 1.4);
-  }
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  return texture;
+function latitudeRings(radius: number) {
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xd5e6f6,
+    transparent: true,
+    opacity: 0.34,
+    depthWrite: false,
+  });
+  const group = new THREE.Group();
+  const axes: Array<[number, number, number]> = [
+    [0, 0, 0],
+    [Math.PI / 2, 0, 0],
+    [0, Math.PI / 2, 0],
+  ];
+  axes.forEach(([x, y, z]) => {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(radius, 0.0075, 8, 120), material);
+    ring.rotation.set(x, y, z);
+    group.add(ring);
+  });
+  return group;
 }
 
 function seamGeometry(radius: number, thickness: number) {
