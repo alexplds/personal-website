@@ -958,6 +958,39 @@
   gap: 0.85rem;
 }
 
+.rooms-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  min-width: 0;
+}
+
+.rooms-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: 1.25rem;
+  padding: 1.45rem 1.35rem 1.15rem;
+}
+
+.rooms-field > .sport-block {
+  display: contents;
+}
+
+.rooms-field .hobby-row {
+  margin-top: auto;
+  padding-top: 1.05rem;
+}
+
+.rooms-rest {
+  min-width: 0;
+  padding: 0 1.35rem;
+}
+
+.rooms-rest > .skill-proofs {
+  margin-top: 0;
+}
+
 .rooms-pane {
   min-width: 0;
   border-radius: 1.25rem;
@@ -1161,6 +1194,7 @@
 
 .rooms-board.is-mixed .rooms-desk,
 .rooms-board.is-mixed .rooms-court,
+.rooms-board.is-mixed .rooms-rest,
 .rooms-board.is-mixed .rooms-seam {
   opacity: 0;
   pointer-events: none;
@@ -1190,28 +1224,52 @@
 @media (min-width: 960px) {
   .rooms-board {
     position: relative;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: var(--desk, 50%) minmax(0, 1fr);
+    grid-template-rows: auto auto;
     align-items: stretch;
-    gap: 0;
-    min-height: min(72vh, 46rem);
+    column-gap: 0.7rem;
+    row-gap: 1.35rem;
   }
 
-  .rooms-desk {
-    flex: 0 0 var(--desk, 50%);
+  .rooms-col {
+    display: contents;
   }
 
-  .rooms-court {
-    flex: 1 1 auto;
+  .rooms-field.rooms-desk,
+  .rooms-rest.rooms-col-desk,
+  .rooms-col-desk > .rooms-rest {
+    grid-column: 1;
+  }
+
+  .rooms-field.rooms-court,
+  .rooms-col-court > .rooms-rest {
+    grid-column: 2;
+  }
+
+  .rooms-field {
+    grid-row: 1;
+    height: 100%;
+  }
+
+  .rooms-rest {
+    grid-row: 2;
   }
 
   .rooms-seam {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: var(--desk, 50%);
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    grid-column: 1 / -1;
+    grid-row: 1;
     z-index: 3;
     width: 2.6rem;
-    translate: -50% 0;
+    height: auto;
+    align-self: stretch;
+    justify-self: start;
+    margin-left: calc(var(--desk, 50%) + 0.35rem - 1.3rem);
+    translate: none;
     cursor: col-resize;
     touch-action: none;
   }
@@ -1232,7 +1290,8 @@
     cursor: col-resize;
   }
 
-  .rooms-board-dragging .rooms-pane {
+  .rooms-board-dragging .rooms-field,
+  .rooms-board-dragging .rooms-rest {
     pointer-events: none;
   }
 
@@ -1258,6 +1317,13 @@
   .rooms-board.is-mixed .rooms-mixer-court {
     width: 100%;
     height: 100%;
+  }
+
+  .rooms-mixer,
+  .rooms-mix {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    inset: 0;
   }
 }
 

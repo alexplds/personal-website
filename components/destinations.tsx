@@ -55,12 +55,15 @@ export function WorkDestinations() {
   return <DestinationButtons destinations={mahara} heading="Engineering Projects Portfolios IMEE" />;
 }
 
-export function PlaySection({ embedded = false }: { embedded?: boolean }) {
-  return (
-    <section
-      id={embedded ? undefined : "play"}
-      className={embedded ? "" : "scroll-mt-20 px-5 py-16"}
-    >
+export function PlaySection({
+  embedded = false,
+  part = "all",
+}: {
+  embedded?: boolean;
+  part?: "all" | "field" | "rest";
+}) {
+  const field = (
+    <>
       {embedded ? (
         <h2 className="font-heading text-2xl">Personal life</h2>
       ) : (
@@ -70,9 +73,23 @@ export function PlaySection({ embedded = false }: { embedded?: boolean }) {
         </Reveal>
       )}
       <Sports />
+    </>
+  );
+  const rest = (
+    <>
       <SkillProofs title="Skills developed" tone="court" />
       <LanguageFields />
       <Journey />
+    </>
+  );
+
+  if (part === "field") return field;
+  if (part === "rest") return rest;
+
+  return (
+    <section id="play" className="scroll-mt-20 px-5 py-16">
+      {field}
+      {rest}
     </section>
   );
 }

@@ -35,12 +35,15 @@ export function HeroSection() {
   );
 }
 
-export function WorkSection({ embedded = false }: { embedded?: boolean }) {
-  return (
-    <section
-      id={embedded ? undefined : "work"}
-      className={embedded ? "" : "scroll-mt-20 px-5 py-16"}
-    >
+export function WorkSection({
+  embedded = false,
+  part = "all",
+}: {
+  embedded?: boolean;
+  part?: "all" | "field" | "rest";
+}) {
+  const field = (
+    <>
       {embedded ? (
         <h2 className="font-heading text-2xl">Engineer / Computer Scientist</h2>
       ) : (
@@ -51,8 +54,22 @@ export function WorkSection({ embedded = false }: { embedded?: boolean }) {
       )}
       <IntroCode />
       <TechLanguages />
+    </>
+  );
+  const rest = (
+    <>
       <SkillProofs />
       <WorkDestinations />
+    </>
+  );
+
+  if (part === "field") return field;
+  if (part === "rest") return rest;
+
+  return (
+    <section id="work" className="scroll-mt-20 px-5 py-16">
+      {field}
+      {rest}
     </section>
   );
 }

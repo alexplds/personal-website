@@ -24,7 +24,12 @@ export default function Home() {
         <div className="mx-auto max-w-4xl">
           <HeroSection />
         </div>
-        <RoomsSplit desk={<WorkSection embedded />} court={<PlaySection embedded />} />
+        <RoomsSplit
+          deskField={<WorkSection embedded part="field" />}
+          deskRest={<WorkSection embedded part="rest" />}
+          courtField={<PlaySection embedded part="field" />}
+          courtRest={<PlaySection embedded part="rest" />}
+        />
         <div className="mx-auto max-w-4xl">
           <ContactSection />
         </div>

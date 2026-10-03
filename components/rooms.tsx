@@ -14,11 +14,15 @@ function prefersReducedMotion() {
 }
 
 export function RoomsSplit({
-  desk,
-  court,
+  deskField,
+  deskRest,
+  courtField,
+  courtRest,
 }: {
-  desk: ReactNode;
-  court: ReactNode;
+  deskField: ReactNode;
+  deskRest: ReactNode;
+  courtField: ReactNode;
+  courtRest: ReactNode;
 }) {
   const boardRef = useRef<HTMLDivElement>(null);
   const openRef = useRef<HTMLButtonElement>(null);
@@ -154,9 +158,12 @@ export function RoomsSplit({
         className={boardClass}
         style={{ "--desk": `${pct}%` } as CSSProperties}
       >
-        <div id="work" className="rooms-pane rooms-desk scroll-mt-20">
-          <p className="rooms-label">Desk</p>
-          {desk}
+        <div className="rooms-col rooms-col-desk">
+          <div id="work" className="rooms-field rooms-desk scroll-mt-20">
+            <p className="rooms-label">Desk</p>
+            {deskField}
+          </div>
+          <div className="rooms-rest">{deskRest}</div>
         </div>
 
         <div
@@ -191,9 +198,12 @@ export function RoomsSplit({
           </button>
         </div>
 
-        <div className="rooms-pane rooms-court scroll-mt-20">
-          <p className="rooms-label">Court</p>
-          {court}
+        <div className="rooms-col rooms-col-court">
+          <div className="rooms-field rooms-court scroll-mt-20">
+            <p className="rooms-label">Court</p>
+            {courtField}
+          </div>
+          <div className="rooms-rest">{courtRest}</div>
         </div>
 
         <div className="rooms-mixer" aria-hidden="true">
