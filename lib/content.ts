@@ -203,6 +203,12 @@ export const content = {
     { id: "tennis-padel", label: "Tennis & Padel" },
     { id: "board-games", label: "Board Games" },
   ],
+  programmingLanguages: [
+    { id: "python", label: "Python" },
+    { id: "javascript", label: "JavaScript" },
+    { id: "java", label: "Java" },
+    { id: "cpp", label: "C++" },
+  ],
   nav: [
     { href: "#work", label: "Work" },
     { href: "#play", label: "Intersection" },

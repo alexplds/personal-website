@@ -668,8 +668,8 @@
   min-height: 5.35rem;
   padding: 0.7rem 0.3rem 0.58rem;
   border-radius: 0.85rem;
-  border: 1px solid color-mix(in oklab, var(--court-tint, rgb(37 99 180)) 22%, var(--border));
-  background: color-mix(in oklab, var(--card) 88%, var(--court-tint, rgb(37 99 180)));
+  border: 1px solid color-mix(in oklab, var(--hobby-tint, var(--court-tint, rgb(37 99 180))) 22%, var(--border));
+  background: color-mix(in oklab, var(--card) 88%, var(--hobby-tint, var(--court-tint, rgb(37 99 180))));
   color: inherit;
   font-size: 0.68rem;
   font-weight: 600;
@@ -681,7 +681,12 @@
 
 .hobby-btn:hover,
 .hobby-btn:focus-visible {
-  background: color-mix(in oklab, var(--card) 72%, var(--court-tint, rgb(37 99 180)));
+  background: color-mix(in oklab, var(--card) 72%, var(--hobby-tint, var(--court-tint, rgb(37 99 180))));
+}
+
+.hobby-row-desk {
+  --hobby-tint: var(--desk-tint, rgb(212 168 40));
+  margin-top: 1.5rem;
 }
 
 .hobby-icon {
