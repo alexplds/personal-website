@@ -3,7 +3,6 @@ import { CopyEmail } from "@/components/copy-email";
 import { PlaySection, WorkDestinations } from "@/components/destinations";
 import { IntroCode } from "@/components/intro-code";
 import { SkillProofs } from "@/components/skill-proofs";
-import { TechLanguages } from "@/components/tech-languages";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
 
@@ -53,7 +52,6 @@ export function WorkSection({
         </Reveal>
       )}
       <IntroCode />
-      <TechLanguages />
     </>
   );
   const rest = (

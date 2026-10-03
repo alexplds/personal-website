@@ -955,10 +955,18 @@
   max-width: 92rem;
   margin: 0 auto 4rem;
   padding: 0 1rem;
-  gap: 0.85rem;
+  gap: 1.35rem;
 }
 
-.rooms-col {
+.rooms-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.rooms-below {
   display: flex;
   flex-direction: column;
   gap: 1.35rem;
@@ -1084,7 +1092,7 @@
 
 .rooms-mixer {
   position: absolute;
-  inset: 0 1rem;
+  inset: 0;
   z-index: 4;
   overflow: hidden;
   border-radius: 1.25rem;
@@ -1126,7 +1134,7 @@
 
 .rooms-mix {
   position: absolute;
-  inset: 0 1rem;
+  inset: 0;
   z-index: 6;
   display: flex;
   flex-direction: column;
@@ -1194,7 +1202,6 @@
 
 .rooms-board.is-mixed .rooms-desk,
 .rooms-board.is-mixed .rooms-court,
-.rooms-board.is-mixed .rooms-rest,
 .rooms-board.is-mixed .rooms-seam {
   opacity: 0;
   pointer-events: none;
@@ -1222,38 +1229,27 @@
 }
 
 @media (min-width: 960px) {
-  .rooms-board {
-    position: relative;
+  .rooms-stage,
+  .rooms-below {
     display: grid;
     grid-template-columns: var(--desk, 50%) minmax(0, 1fr);
-    grid-template-rows: auto auto;
-    align-items: stretch;
     column-gap: 0.7rem;
-    row-gap: 1.35rem;
-  }
-
-  .rooms-col {
-    display: contents;
+    align-items: stretch;
   }
 
   .rooms-field.rooms-desk,
-  .rooms-rest.rooms-col-desk,
-  .rooms-col-desk > .rooms-rest {
+  .rooms-below > .rooms-rest:first-child {
     grid-column: 1;
   }
 
   .rooms-field.rooms-court,
-  .rooms-col-court > .rooms-rest {
+  .rooms-below > .rooms-rest:last-child {
     grid-column: 2;
   }
 
   .rooms-field {
     grid-row: 1;
     height: 100%;
-  }
-
-  .rooms-rest {
-    grid-row: 2;
   }
 
   .rooms-seam {
@@ -1322,7 +1318,7 @@
   .rooms-mixer,
   .rooms-mix {
     grid-column: 1 / -1;
-    grid-row: 1 / -1;
+    grid-row: 1;
     inset: 0;
   }
 }

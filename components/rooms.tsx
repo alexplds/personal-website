@@ -25,6 +25,7 @@ export function RoomsSplit({
   courtRest: ReactNode;
 }) {
   const boardRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const openRef = useRef<HTMLButtonElement>(null);
   const backRef = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef<number>(0);
@@ -91,7 +92,7 @@ export function RoomsSplit({
   }, []);
 
   const moveTo = useCallback((clientX: number) => {
-    const board = boardRef.current;
+    const board = stageRef.current;
     if (!board) return;
     const rect = board.getBoundingClientRect();
     if (rect.width < 8) return;
@@ -158,76 +159,77 @@ export function RoomsSplit({
         className={boardClass}
         style={{ "--desk": `${pct}%` } as CSSProperties}
       >
-        <div className="rooms-col rooms-col-desk">
+        <div ref={stageRef} className="rooms-stage">
           <div id="work" className="rooms-field rooms-desk scroll-mt-20">
             <p className="rooms-label">Desk</p>
             {deskField}
           </div>
-          <div className="rooms-rest">{deskRest}</div>
-        </div>
 
-        <div
-          role="separator"
-          tabIndex={layer ? -1 : 0}
-          className="rooms-seam"
-          aria-hidden={layer}
-          aria-label="Resize desk and court"
-          aria-orientation="vertical"
-          aria-controls="work"
-          aria-valuemin={MIN}
-          aria-valuemax={MAX}
-          aria-valuenow={Math.round(pct)}
-          aria-valuetext={`${Math.round(pct)} percent desk`}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={endDrag}
-          onPointerCancel={endDrag}
-          onDoubleClick={() => setPct(START)}
-          onKeyDown={onKeyDown}
-        >
-          <button
-            ref={openRef}
-            type="button"
-            className="rooms-open"
-            onClick={() => setMix(true)}
-            onPointerDown={(event) => event.stopPropagation()}
+          <div
+            role="separator"
             tabIndex={layer ? -1 : 0}
+            className="rooms-seam"
+            aria-hidden={layer}
+            aria-label="Resize desk and court"
+            aria-orientation="vertical"
+            aria-controls="work"
+            aria-valuemin={MIN}
+            aria-valuemax={MAX}
+            aria-valuenow={Math.round(pct)}
+            aria-valuetext={`${Math.round(pct)} percent desk`}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onDoubleClick={() => setPct(START)}
+            onKeyDown={onKeyDown}
           >
-            <span className="rooms-open-kicker">Open</span>
-            GoCourt
-          </button>
-        </div>
+            <button
+              ref={openRef}
+              type="button"
+              className="rooms-open"
+              onClick={() => setMix(true)}
+              onPointerDown={(event) => event.stopPropagation()}
+              tabIndex={layer ? -1 : 0}
+            >
+              <span className="rooms-open-kicker">Open</span>
+              GoCourt
+            </button>
+          </div>
 
-        <div className="rooms-col rooms-col-court">
           <div className="rooms-field rooms-court scroll-mt-20">
             <p className="rooms-label">Court</p>
             {courtField}
           </div>
+
+          <div className="rooms-mixer" aria-hidden="true">
+            <div className="rooms-mixer-desk" />
+            <div className="rooms-mixer-court" />
+          </div>
+
+          <div
+            id="play"
+            className="rooms-mix"
+            role="region"
+            aria-hidden={!spread}
+            inert={spread ? undefined : true}
+            aria-label="Intersection — GoCourt"
+          >
+            <button ref={backRef} type="button" className="rooms-back" onClick={() => setMix(false)}>
+              <span aria-hidden="true">←</span> Back
+            </button>
+            <p className="rooms-label">Intersection</p>
+            <h2 className="font-heading text-3xl md:text-4xl">GoCourt</h2>
+            <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
+              {content.intersection}
+            </p>
+            <IntersectionSection embedded />
+          </div>
+        </div>
+
+        <div className="rooms-below">
+          <div className="rooms-rest">{deskRest}</div>
           <div className="rooms-rest">{courtRest}</div>
-        </div>
-
-        <div className="rooms-mixer" aria-hidden="true">
-          <div className="rooms-mixer-desk" />
-          <div className="rooms-mixer-court" />
-        </div>
-
-        <div
-          id="play"
-          className="rooms-mix"
-          role="region"
-          aria-hidden={!spread}
-          inert={spread ? undefined : true}
-          aria-label="Intersection — GoCourt"
-        >
-          <button ref={backRef} type="button" className="rooms-back" onClick={() => setMix(false)}>
-            <span aria-hidden="true">←</span> Back
-          </button>
-          <p className="rooms-label">Intersection</p>
-          <h2 className="font-heading text-3xl md:text-4xl">GoCourt</h2>
-          <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-            {content.intersection}
-          </p>
-          <IntersectionSection embedded />
         </div>
       </div>
     </section>

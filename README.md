@@ -11,7 +11,7 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: hero, then a wide Desk / Court split you can drag. The yellow desk field and blue court field hold only the intro (`alex.ts` / Who I am) and the icon cards underneath, with Open GoCourt on the seam between them. Skills, Mahara, languages, and Journey stay in the columns below those fields. The seam mixes the rooms into one GoCourt box; Back undoes it. Then contact.
+- Home: hero, then a wide Desk / Court split you can drag. The yellow desk field holds `alex.ts`. The blue court field holds Who I am and the hobby icons. Open GoCourt replaces those two boxes with one panel of the same size. Skills, Mahara, languages, and Journey stay in the columns below. Back undoes the mix. Then contact.
 - Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
 ## Edit content

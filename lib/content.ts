@@ -195,7 +195,7 @@ export const content = {
   ],
   sports: {
     quote: "Who I am",
-    body: "I grew up in a multicultural environment in Athens, Greece, in a French-speaking household. After the age of 12 I went to English-speaking schools. Sport has always been where I am happiest — it made me lifelong friends, and I have always loved competition.",
+    body: "I grew up in a multicultural environment in Athens, Greece, in a French-speaking household. Sport has always been where I am happiest — it made me lifelong friends, and I have always loved competition.",
   },
   hobbies: [
     { id: "football", label: "Football" },
