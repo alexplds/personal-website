@@ -41,7 +41,7 @@ export function TechStack() {
 
     const globe = new THREE.Group();
     globe.position.y = -0.35;
-    globe.quaternion.setFromEuler(new THREE.Euler(0.35, 0.7, 0.15));
+    globe.quaternion.setFromEuler(new THREE.Euler(0.05, 0.42, 0));
     scene.add(globe);
 
     const shell = new THREE.Mesh(
@@ -54,16 +54,29 @@ export function TechStack() {
       }),
     );
     const rings = latitudeRings(1.9);
+    const seamGeo = seamGeometry(1.94, 0.012);
     const seam = new THREE.Mesh(
-      seamGeometry(1.94, 0.011),
+      seamGeo,
       new THREE.MeshBasicMaterial({
-        color: 0xeef8f1,
+        color: 0xf4fff8,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.9,
         depthWrite: false,
       }),
     );
-    globe.add(shell, rings, seam);
+    const seamFar = new THREE.Mesh(
+      seamGeo,
+      new THREE.MeshBasicMaterial({
+        color: 0xd7e8f4,
+        transparent: true,
+        opacity: 0.28,
+        depthWrite: false,
+        depthTest: false,
+      }),
+    );
+    seamFar.renderOrder = 0;
+    seam.renderOrder = 1;
+    globe.add(shell, rings, seamFar, seam);
 
     const locals = spherePoints(content.techStack.length, 2.42);
     const scratch = new THREE.Vector3();
@@ -156,6 +169,7 @@ export function TechStack() {
       });
       (shell.material as THREE.Material).dispose();
       (seam.material as THREE.Material).dispose();
+      (seamFar.material as THREE.Material).dispose();
       rings.children.forEach((child) => {
         if (child instanceof THREE.Mesh) (child.material as THREE.Material).dispose();
       });
@@ -195,7 +209,7 @@ function latitudeRings(radius: number) {
   const material = new THREE.MeshBasicMaterial({
     color: 0xd5e6f6,
     transparent: true,
-    opacity: 0.34,
+    opacity: 0.22,
     depthWrite: false,
   });
   const group = new THREE.Group();
@@ -217,7 +231,9 @@ function seamGeometry(radius: number, thickness: number) {
   const steps = 280;
   for (let i = 0; i < steps; i += 1) {
     const t = (i / steps) * Math.PI * 2;
-    points.push(new THREE.Vector3(Math.cos(t), Math.sin(t), 0.72 * Math.cos(2 * t)).normalize().multiplyScalar(radius));
+    points.push(
+      new THREE.Vector3(0.95 * Math.sin(2 * t), Math.sin(t), Math.cos(t)).normalize().multiplyScalar(radius),
+    );
   }
   const curve = new THREE.CatmullRomCurve3(points, true);
   return new THREE.TubeGeometry(curve, 280, thickness, 10, true);
