@@ -1,4 +1,5 @@
 import { RoomsSplit } from "@/components/rooms";
+import { TechStack } from "@/components/tech-stack";
 import { SiteHeader } from "@/components/site-header";
 import { SportTrail } from "@/components/sport-trail";
 import {
@@ -30,6 +31,7 @@ export default function Home() {
           courtField={<PlaySection embedded part="field" />}
           courtRest={<PlaySection embedded part="rest" />}
         />
+        <TechStack />
         <div className="mx-auto max-w-4xl">
           <ContactSection />
         </div>
