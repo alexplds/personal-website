@@ -27,7 +27,6 @@ export function TechStack() {
     if (!stageNode || !canvas) return;
     const stage: HTMLDivElement = stageNode;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 40);
     camera.position.z = 7.15;
@@ -40,42 +39,43 @@ export function TechStack() {
     });
     renderer.setClearColor(0x000000, 0);
 
+    scene.add(new THREE.AmbientLight(0xfff8e8, 0.72));
+    const key = new THREE.DirectionalLight(0xfff4d8, 1.25);
+    key.position.set(4, 5, 6);
+    scene.add(key);
+    const rim = new THREE.DirectionalLight(0x9eb6d8, 0.45);
+    rim.position.set(-5, -2, 3);
+    scene.add(rim);
+
     const globe = new THREE.Group();
     globe.position.y = -0.35;
+    globe.quaternion.setFromEuler(new THREE.Euler(0.35, 0.7, 0.15));
     scene.add(globe);
 
-    const wire = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.92, 2),
-      new THREE.MeshBasicMaterial({
-        color: 0x7eb0e8,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.38,
+    const feltMap = feltTexture();
+    const felt = new THREE.Mesh(
+      new THREE.SphereGeometry(1.92, 64, 48),
+      new THREE.MeshStandardMaterial({
+        map: feltMap,
+        color: 0xd7e15a,
+        roughness: 0.94,
+        metalness: 0,
       }),
     );
-    const inner = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.58, 1),
-      new THREE.MeshBasicMaterial({
-        color: 0x9ec4ef,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.16,
-      }),
-    );
-    const dots = new THREE.Points(
-      new THREE.IcosahedronGeometry(1.92, 2),
-      new THREE.PointsMaterial({ color: 0xd5e6f8, size: 0.028, transparent: true, opacity: 0.7 }),
-    );
-    globe.add(wire, inner, dots);
+    const seam = new THREE.Mesh(seamGeometry(1.99, 0.085), new THREE.MeshStandardMaterial({
+      color: 0xf7f8f2,
+      roughness: 0.55,
+      metalness: 0,
+    }));
+    globe.add(felt, seam);
 
-    const locals = spherePoints(content.techStack.length, 2.32);
+    const locals = spherePoints(content.techStack.length, 2.42);
     const scratch = new THREE.Vector3();
-    let rotY = 0.55;
-    let rotX = 0.18;
+    const dragAxis = new THREE.Vector3();
+    const dragStep = new THREE.Quaternion();
     let dragging = false;
     let lastX = 0;
     let lastY = 0;
-    let frame = 0;
 
     function resize() {
       const width = stage.clientWidth;
@@ -88,7 +88,6 @@ export function TechStack() {
     }
 
     function paint() {
-      globe.rotation.set(rotX, rotY, 0);
       renderer.render(scene, camera);
 
       const width = stage.clientWidth;
@@ -96,7 +95,7 @@ export function TechStack() {
       content.techStack.forEach((_, index) => {
         const node = badgeRefs.current[index];
         if (!node) return;
-        scratch.copy(locals[index]).applyEuler(globe.rotation).add(globe.position);
+        scratch.copy(locals[index]).applyQuaternion(globe.quaternion).add(globe.position);
         const depth = scratch.z;
         scratch.project(camera);
         const x = (scratch.x * 0.5 + 0.5) * width;
@@ -111,12 +110,6 @@ export function TechStack() {
       });
     }
 
-    function tick() {
-      if (!dragging && !reduced) rotY += 0.0024;
-      paint();
-      frame = window.requestAnimationFrame(tick);
-    }
-
     function onPointerDown(event: PointerEvent) {
       dragging = true;
       lastX = event.clientX;
@@ -126,10 +119,16 @@ export function TechStack() {
 
     function onPointerMove(event: PointerEvent) {
       if (!dragging) return;
-      rotY += (event.clientX - lastX) * 0.005;
-      rotX = THREE.MathUtils.clamp(rotX + (event.clientY - lastY) * 0.004, -0.6, 0.7);
+      const dx = event.clientX - lastX;
+      const dy = event.clientY - lastY;
       lastX = event.clientX;
       lastY = event.clientY;
+      const distance = Math.hypot(dx, dy);
+      if (distance < 0.4) return;
+      dragAxis.set(dy, dx, 0).normalize();
+      dragStep.setFromAxisAngle(dragAxis, distance * 0.007);
+      globe.quaternion.premultiply(dragStep);
+      paint();
     }
 
     function onPointerUp(event: PointerEvent) {
@@ -139,9 +138,11 @@ export function TechStack() {
 
     resize();
     paint();
-    frame = window.requestAnimationFrame(tick);
 
-    const observer = new ResizeObserver(resize);
+    const observer = new ResizeObserver(() => {
+      resize();
+      paint();
+    });
     observer.observe(stage);
     stage.addEventListener("pointerdown", onPointerDown);
     stage.addEventListener("pointermove", onPointerMove);
@@ -149,18 +150,16 @@ export function TechStack() {
     stage.addEventListener("pointercancel", onPointerUp);
 
     return () => {
-      window.cancelAnimationFrame(frame);
       observer.disconnect();
       stage.removeEventListener("pointerdown", onPointerDown);
       stage.removeEventListener("pointermove", onPointerMove);
       stage.removeEventListener("pointerup", onPointerUp);
       stage.removeEventListener("pointercancel", onPointerUp);
-      wire.geometry.dispose();
-      inner.geometry.dispose();
-      dots.geometry.dispose();
-      (wire.material as THREE.Material).dispose();
-      (inner.material as THREE.Material).dispose();
-      (dots.material as THREE.Material).dispose();
+      felt.geometry.dispose();
+      seam.geometry.dispose();
+      (felt.material as THREE.Material).dispose();
+      (seam.material as THREE.Material).dispose();
+      feltMap.dispose();
       renderer.dispose();
     };
   }, []);
@@ -191,6 +190,35 @@ export function TechStack() {
       </div>
     </section>
   );
+}
+
+function feltTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return new THREE.CanvasTexture(canvas);
+  ctx.fillStyle = "#d6e15a";
+  ctx.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 5200; i += 1) {
+    const light = Math.random() > 0.45;
+    ctx.fillStyle = light ? "rgba(255,255,240,0.16)" : "rgba(70,90,20,0.14)";
+    ctx.fillRect(Math.random() * 256, Math.random() * 256, 1.4, 1.4);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function seamGeometry(radius: number, thickness: number) {
+  const points: THREE.Vector3[] = [];
+  const steps = 280;
+  for (let i = 0; i < steps; i += 1) {
+    const t = (i / steps) * Math.PI * 2;
+    points.push(new THREE.Vector3(Math.cos(t), Math.sin(t), 0.72 * Math.cos(2 * t)).normalize().multiplyScalar(radius));
+  }
+  const curve = new THREE.CatmullRomCurve3(points, true);
+  return new THREE.TubeGeometry(curve, 280, thickness, 10, true);
 }
 
 function BadgeMark({ item }: { item: StackItem }) {
