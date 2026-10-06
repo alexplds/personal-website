@@ -5,20 +5,26 @@ import { Reveal } from "@/components/reveal";
 export function HeroSection() {
   const [firstName, ...lastParts] = content.name.split(" ");
   const lastName = lastParts.join(" ");
+  const iAt = lastName.indexOf("i");
 
   return (
     <section id="top" className="hero">
       <div className="page-wrap hero-grid">
         <div>
           <p className="hero-in section-kicker">{content.location}</p>
-          <h1 className="font-heading hero-in hero-in-2 hero-name">
+          <h1 className="font-heading hero-in hero-in-2 hero-name" aria-label={content.name}>
             <span className="block">{firstName}</span>
-            <span className="inline-flex items-start whitespace-nowrap">
-              {lastName}
-              <span className="name-light-wrap hidden md:inline-block" aria-hidden="true">
-                <span className="name-light-glow" />
-                <span className="name-light" />
+            <span className="whitespace-nowrap">
+              {lastName.slice(0, iAt)}
+              <span className="name-i">
+                <span className="md:hidden">i</span>
+                <span className="hidden md:inline">ı</span>
+                <span className="name-light-wrap hidden md:block" aria-hidden="true">
+                  <span className="name-light-glow" />
+                  <span className="name-light" />
+                </span>
               </span>
+              {lastName.slice(iAt + 1)}
             </span>
           </h1>
         </div>
@@ -47,7 +53,7 @@ export function ContactSection() {
     <section id="contact" className="contact scroll-mt-20">
       <div className="page-wrap contact-grid">
         <Reveal>
-          <p className="section-kicker">04 / Contact</p>
+          <p className="section-kicker">05 / Contact</p>
           <h2 className="font-heading section-title">Say hello</h2>
           <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
             If you want to talk sport, a product, or a role, email is the fastest path.

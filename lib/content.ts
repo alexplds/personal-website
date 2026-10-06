@@ -9,7 +9,7 @@ export const content = {
   linkedinLabel: "linkedin.com/in/alexpolychroniadis",
   roleLine: "Engineer, builder, and lifelong athlete",
   intersection:
-    "I have always loved two things at once: computer science, and sport. In Greece you could not simply book a court for the hour you wanted — it was calls, guesswork, and hoping someone was there. That gap is why gocourt.gr exists. I co-founded it with a friend. The site is where those two loves meet: a booking product that lets people play when they actually want to play.",
+    "GoCourt is where my two passions meet: computer science and sport. Playing racquet sports regularly in Greece, I kept running into the same problem — you could not simply book a court for the hour you wanted. It was phone calls, guesswork, and hoping the fifth club you called had a court free. That gap is why I co-founded gocourt.gr with a friend. Talking to clubs, we found we could be just as useful to them, so we built an owner dashboard that helps with their everyday tasks and needs. It is now live in pilot with clubs around Athens, and the goal stays simple: less time arranging a game, more time playing it.",
   heroLead:
     "I grew up between languages and cultures. Sport taught me how to compete; engineering taught me how to build. This site is the short version of that path.",
   story: [
@@ -33,7 +33,6 @@ export const content = {
     { name: "Greek", level: "Native", flag: "gr", origin: "Greece" },
     { name: "English", level: "Fluent", flag: "gb", origin: "the United Kingdom" },
     { name: "French", level: "Fluent", flag: "fr", origin: "France" },
-    { name: "Italian", level: "Starting to learn", flag: "it", origin: "Italy" },
   ],
   journey: [
     {
@@ -61,7 +60,7 @@ export const content = {
       bullets: [
         "Testing and integration on a live PLC/SCADA upgrade at Heathrow Airport with operations stakeholders.",
         "On Telehouse’s data centres Power Management System, produced documentation for fault mitigation and recovery so power can keep flowing across the site if something fails.",
-        "Built a Python MCP server (FastMCP, httpx, REST) so engineers could create and manage SpiraTest cases through AI tools instead of clicking through a UI.",
+        "Initiated an LLM and agentic solution on the Heathrow project after seeing how useful one could be for its testing work: a Python MCP server (FastMCP, httpx, REST) so engineers could create and manage SpiraTest cases through AI tools instead of clicking through a UI.",
       ],
     },
     {
@@ -70,7 +69,8 @@ export const content = {
       period: "August – September 2024",
       place: "Athens",
       bullets: [
-        "Customer-facing technical sales supporting marine equipment.",
+        "Worked with clients and engineering on marine equipment (motors, generators, cranes), turning customer asks into clear technical offers.",
+        "Built priced proposals in CAT and Palfinger and supported a large shipboard install from drawings.",
       ],
     },
   ],
@@ -195,7 +195,7 @@ export const content = {
   ],
   sports: {
     quote: "Who I am",
-    body: "I grew up in a multicultural environment in Athens, Greece, in a French-speaking household. Sport has always been where I am happiest — it made me lifelong friends, and I have always loved competition.",
+    body: "Raised in Athens in a French-speaking home. Sport is where I am happiest — it gave me lifelong friends and a love of competition.",
   },
   hobbies: [
     { id: "football", label: "Football" },
@@ -242,26 +242,10 @@ export const content = {
     },
     {
       id: "spiratest-mcp",
-      kicker: "AI tooling · Firstco",
+      kicker: "AI tooling · Heathrow PLC/SCADA upgrade · Firstco",
       title: "SpiraTest MCP server",
-      body: "A Python MCP server so engineers can create and manage SpiraTest test cases through AI tools instead of clicking through a UI.",
-      tags: ["Python", "MCP", "FastMCP", "httpx", "REST APIs"],
-      links: [],
-    },
-    {
-      id: "heathrow",
-      kicker: "Systems integration · Firstco",
-      title: "Heathrow PLC/SCADA upgrade",
-      body: "Testing and integration on a live PLC/SCADA upgrade at Heathrow Airport, working alongside operations stakeholders.",
-      tags: ["PLC", "SCADA", "Integration testing"],
-      links: [],
-    },
-    {
-      id: "telehouse",
-      kicker: "Critical power · Firstco",
-      title: "Telehouse power management",
-      body: "Fault mitigation and recovery documentation for Telehouse’s data centre Power Management System, so power can keep flowing across the site if something fails.",
-      tags: ["Power management", "Fault mitigation", "Recovery"],
+      body: "Built under the Heathrow Airport PLC/SCADA upgrade, where I worked on an LLM and agentic solution to the project’s test management problem. The result is a Python MCP server that lets engineers create and manage SpiraTest test cases through AI tools instead of clicking through a UI.",
+      tags: ["Python", "MCP", "LLMs", "AI agents", "FastMCP", "REST APIs"],
       links: [],
     },
     {
@@ -275,11 +259,20 @@ export const content = {
         { destination: "year2", label: "Year 2 portfolio" },
       ],
     },
+    {
+      id: "f1-in-schools",
+      kicker: "Motorsport engineering · Team",
+      title: "F1 in Schools",
+      body: "Part of the team that won the F1 in Schools national championship in Greece and qualified for the World Finals in Singapore. I worked as the team’s FEA and CFD analyst, simulating the car’s structure and aerodynamics.",
+      tags: ["CFD", "FEA", "Aerodynamics", "Simulation"],
+      links: [],
+    },
   ],
   nav: [
     { href: "#about", label: "About" },
     { href: "#projects", label: "Projects" },
     { href: "#skills", label: "Skills" },
+    { href: "#experience", label: "Experience" },
     { href: "#contact", label: "Contact" },
   ],
   seo: {

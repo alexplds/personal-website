@@ -12,6 +12,16 @@ const PINNED_QUERY =
 
 const GOCOURT_AT = 0.98;
 
+// Points where a fast scroll is caught and briefly held: the pinned desk/court
+// halves, and the fully revealed GoCourt panel.
+const STOPS = [0, 0.76];
+// A hold lasts until the wheel goes quiet (momentum spent), within these bounds.
+const HOLD_MIN = 380;
+const HOLD_MAX = 900;
+const HOLD_QUIET = 160;
+// Only wheel steps at least this big count as a hard scroll worth catching.
+const FAST_DELTA = 30;
+
 function clamp(n: number) {
   return Math.min(1, Math.max(0, n));
 }
@@ -96,6 +106,49 @@ export function RoomsStory() {
       if (!frame) frame = requestAnimationFrame(render);
     }
 
+    let holdStart = 0;
+    let lastWheel = 0;
+
+    function stopY(at: number) {
+      const rect = section.getBoundingClientRect();
+      const top = parseFloat(getComputedStyle(sticky).top) || 0;
+      const travel = rect.height - sticky.offsetHeight;
+      return window.scrollY + rect.top - top + travel * at;
+    }
+
+    function onWheel(event: WheelEvent) {
+      if (!pinned || event.ctrlKey) return;
+      const now = performance.now();
+      const sinceLast = now - lastWheel;
+      lastWheel = now;
+
+      if (holdStart) {
+        const held = now - holdStart;
+        if (held < HOLD_MAX && (held < HOLD_MIN || sinceLast < HOLD_QUIET)) {
+          event.preventDefault();
+          return;
+        }
+        holdStart = 0;
+      }
+
+      const unit =
+        event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
+      const delta = event.deltaY * unit;
+      if (Math.abs(delta) < FAST_DELTA) return;
+      const from = window.scrollY;
+      const to = from + delta;
+      for (const at of STOPS) {
+        const y = stopY(at);
+        const crosses = (from < y - 1 && to > y) || (from > y + 1 && to < y);
+        if (crosses) {
+          event.preventDefault();
+          window.scrollTo({ top: y, behavior: "instant" });
+          holdStart = now;
+          return;
+        }
+      }
+    }
+
     function goTo(at: number) {
       if (!pinned) {
         (at > 0.5 ? gocourt : halves).scrollIntoView();
@@ -144,6 +197,7 @@ export function RoomsStory() {
     resizeObserver.observe(sticky);
     query.addEventListener("change", setMode);
     window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("hashchange", onHash);
     section.addEventListener("focusin", onFocus);
 
@@ -152,6 +206,7 @@ export function RoomsStory() {
       resizeObserver.disconnect();
       query.removeEventListener("change", setMode);
       window.removeEventListener("scroll", schedule);
+      window.removeEventListener("wheel", onWheel);
       window.removeEventListener("hashchange", onHash);
       section.removeEventListener("focusin", onFocus);
     };

@@ -20,6 +20,7 @@ export function Sports() {
         <p className="sport-quote">{content.sports.quote}</p>
         <p className="sport-copy">{content.sports.body}</p>
       </div>
+      <p className="court-label">Hobbies</p>
       <div className="hobby-row" role="list">
         {content.hobbies.map((hobby) => {
           const Icon = hobbyIcons[hobby.id];
@@ -31,6 +32,21 @@ export function Sports() {
           );
         })}
       </div>
+      <p className="court-label">Languages</p>
+      <ul className="lang-row">
+        {content.languages.map((lang) => (
+          <li key={lang.name} className="lang-chip">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/flags/${lang.flag}.svg`}
+              alt={`Flag of ${lang.origin}`}
+              className="lang-flag"
+            />
+            <span className="lang-name">{lang.name}</span>
+            <span className="lang-level">{lang.level}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

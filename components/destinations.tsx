@@ -21,16 +21,23 @@ export function DestinationButtons({
             <button
               type="button"
               onClick={() => launch(dest)}
-              className={`group relative w-full overflow-hidden rounded-2xl border px-5 py-8 text-left transition hover:-translate-y-1 ${
+              aria-label={`Visit ${dest.title} (opens in a new tab)`}
+              className={`group relative w-full overflow-hidden rounded-2xl border px-5 py-5 text-left transition hover:-translate-y-1 ${
                 dest.animation === "tennis"
                   ? "court-card border-[#2f6b3c]/40"
                   : "track-card border-[rgb(212_168_40)]/30"
               }`}
             >
+              <span className="dest-arrow" aria-hidden="true">
+                ↗
+              </span>
               <p className="text-xs tracking-wide uppercase opacity-70">{dest.kicker}</p>
               <p className="font-heading mt-2 text-2xl">{dest.title}</p>
-              <p className="mt-3 text-sm text-muted-foreground">{dest.hint}</p>
-              <span className="mt-6 inline-block text-sm underline underline-offset-4">Open</span>
+              <p className="mt-2 text-sm text-muted-foreground">{dest.hint}</p>
+              <span className="cta-pill dest-cta mt-4">
+                Visit {new URL(dest.href).hostname.replace(/^www\./, "")}
+                <span aria-hidden="true">↗</span>
+              </span>
             </button>
           </Reveal>
         ))}

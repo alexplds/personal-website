@@ -1,3 +1,4 @@
+import { ExperienceSection } from "@/components/experience";
 import { ProjectsSection } from "@/components/projects";
 import { RoomsStory } from "@/components/rooms";
 import { TechStack } from "@/components/tech-stack";
@@ -21,6 +22,7 @@ export default function Home() {
         <RoomsStory />
         <ProjectsSection />
         <TechStack />
+        <ExperienceSection />
         <ContactSection />
       </main>
       <SiteFooter />

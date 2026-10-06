@@ -344,47 +344,6 @@
   }
 }
 
-@keyframes tennis-x {
-  0% {
-    transform: translateX(-40vw);
-  }
-  100% {
-    transform: translateX(38vw);
-  }
-}
-
-@keyframes tennis-y {
-  0% {
-    transform: translateY(16vh);
-    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  22% {
-    transform: translateY(-17vh);
-    animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19);
-  }
-  44% {
-    transform: translateY(18vh);
-    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  66% {
-    transform: translateY(-13vh);
-    animation-timing-function: cubic-bezier(0.55, 0.06, 0.68, 0.19);
-  }
-  88% {
-    transform: translateY(10vh);
-    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
-  }
-  100% {
-    transform: translateY(-6vh);
-  }
-}
-
-@keyframes tennis-spin {
-  to {
-    transform: rotate(540deg);
-  }
-}
-
 @keyframes f1-spin {
   to {
     transform: rotate(360deg);
@@ -856,8 +815,8 @@
 }
 
 .sport-note {
-  margin-top: 1.5rem;
-  padding: 1.4rem 1.45rem 1.5rem;
+  margin-top: 1.25rem;
+  padding: 1rem 1.15rem 1.05rem;
   border-radius: 1.15rem;
   border: 1px solid color-mix(in oklab, var(--court-tint, rgb(37 99 180)) 22%, var(--border));
   background: color-mix(in oklab, var(--card) 88%, var(--court-tint, rgb(37 99 180)));
@@ -866,16 +825,16 @@
 .sport-quote {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.55rem, 2.6vw, 2rem);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
   line-height: 1.15;
   letter-spacing: -0.03em;
 }
 
 .sport-copy {
-  margin: 0.9rem 0 0;
+  margin: 0.5rem 0 0;
   max-width: 36rem;
-  font-size: 0.98rem;
-  line-height: 1.55;
+  font-size: 0.85rem;
+  line-height: 1.5;
   color: var(--muted-foreground);
 }
 
@@ -895,10 +854,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.38rem;
+  gap: 0.3rem;
   width: 100%;
-  min-height: 5.35rem;
-  padding: 0.7rem 0.3rem 0.58rem;
+  min-height: 4.1rem;
+  padding: 0.55rem 0.3rem 0.45rem;
   border-radius: 0.85rem;
   border: 1px solid color-mix(in oklab, var(--hobby-tint, var(--court-tint, rgb(37 99 180))) 22%, var(--border));
   background: color-mix(in oklab, var(--card) 88%, var(--hobby-tint, var(--court-tint, rgb(37 99 180))));
@@ -922,14 +881,68 @@
 }
 
 .hobby-icon {
-  width: 2.15rem;
-  height: 2.15rem;
+  width: 1.65rem;
+  height: 1.65rem;
   flex-shrink: 0;
 }
 
+.court-label {
+  margin: 1rem 0 0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.lang-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin: 0.55rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lang-chip {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 0.55rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--court-tint, rgb(37 99 180)) 22%, var(--border));
+  background: color-mix(in oklab, var(--card) 88%, var(--court-tint, rgb(37 99 180)));
+  text-align: left;
+}
+
+.lang-flag {
+  display: block;
+  grid-row: span 2;
+  width: 1.5rem;
+  height: 1rem;
+  border-radius: 0.15rem;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgb(20 20 20 / 12%);
+}
+
+.lang-name {
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.lang-level {
+  font-size: 0.64rem;
+  line-height: 1.2;
+  color: var(--muted-foreground);
+}
+
 @container (max-width: 420px) {
-  .hobby-row {
-    grid-template-columns: 1fr 1fr;
+  .hobby-btn {
+    padding-inline: 0.15rem;
+    font-size: 0.62rem;
   }
 }
 
@@ -1041,10 +1054,16 @@
   color: var(--muted-foreground);
 }
 
-.name-light-wrap {
+.name-i {
   position: relative;
-  top: -2.15rem;
-  margin-left: 1.15rem;
+  display: inline-block;
+}
+
+.name-light-wrap {
+  position: absolute;
+  left: 50%;
+  top: 0.02em;
+  margin-left: -11px;
   width: 22px;
   height: 22px;
   flex-shrink: 0;
@@ -1218,7 +1237,7 @@
 
 .story-half-title {
   margin: 0.8rem 0 0;
-  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  font-size: clamp(2rem, 2.7vw, 2.9rem);
   line-height: 1.05;
   letter-spacing: -0.025em;
 }
@@ -1309,6 +1328,10 @@
   .story-halves {
     grid-template-columns: 1fr 1fr;
   }
+
+  .story-half {
+    align-items: flex-start;
+  }
 }
 
 @media (min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
@@ -1385,7 +1408,7 @@
   }
 
   .story-half {
-    padding-block: 2.5rem 4.5rem;
+    padding-block: max(2.5rem, calc(50svh - 16rem)) 4.5rem;
     background: none;
   }
 
@@ -1445,6 +1468,37 @@
   color: var(--muted-foreground);
 }
 
+.dest-arrow {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid color-mix(in oklab, var(--foreground) 22%, transparent);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  transition:
+    translate 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.group:hover .dest-arrow,
+.group:focus-visible .dest-arrow {
+  translate: 2px -2px;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.dest-cta {
+  height: 2.35rem;
+  padding: 0 1.1rem;
+  font-size: 0.78rem;
+  pointer-events: none;
+}
+
 .court-card {
   background:
     linear-gradient(180deg, rgb(47 107 60 / 16%), transparent 60%),
@@ -1455,40 +1509,6 @@
   background:
     linear-gradient(180deg, color-mix(in oklab, var(--desk-tint, rgb(212 168 40)) 18%, transparent), transparent 55%),
     var(--card);
-}
-
-.tennis-ball-track {
-  position: absolute;
-  top: 42%;
-  left: 50%;
-  width: 26px;
-  height: 26px;
-  margin-left: -13px;
-  will-change: transform;
-  animation: tennis-x 2.2s cubic-bezier(0.37, 0, 0.63, 1) both;
-}
-
-.tennis-ball-bounce {
-  will-change: transform;
-  animation: tennis-y 2.2s both;
-}
-
-.tennis-ball,
-.tennis-ball-photo {
-  width: 26px;
-  height: 26px;
-  will-change: transform;
-  animation: tennis-spin 2.2s linear both;
-}
-
-.tennis-ball-photo {
-  display: block;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 10px rgb(0 0 0 / 28%));
-}
-
-.court-lines {
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 30%);
 }
 
 .f1-loader-scene {
@@ -1564,6 +1584,29 @@
   animation: f1-car-pass 2s cubic-bezier(0.42, 0, 0.2, 1) both;
 }
 
+.f1-loader-ball {
+  display: block;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex-shrink: 0;
+  animation: tennis-ball-pass 2s cubic-bezier(0.42, 0, 0.2, 1) both;
+}
+
+@keyframes tennis-ball-pass {
+  0% {
+    transform: translateX(-220%) rotate(-360deg);
+  }
+  34% {
+    transform: translateX(0) rotate(0deg);
+  }
+  58% {
+    transform: translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateX(220%) rotate(360deg);
+  }
+}
+
 @keyframes f1-car-pass {
   0% {
     transform: translateX(-165%);
@@ -1584,12 +1627,10 @@
   .float-ball,
   .name-light-wrap,
   .name-light,
-  .tennis-ball-track,
-  .tennis-ball-bounce,
-  .tennis-ball,
   .f1-loader-ring,
   .f1-loader-head,
   .f1-loader-car,
+  .f1-loader-ball,
   .reveal {
     animation: none !important;
     transition: none !important;
@@ -1610,9 +1651,26 @@
   list-style: none;
 }
 
+@media (min-width: 768px) {
+  .projects-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.projects-list > li {
+  display: flex;
+}
+
+.projects-list > li > .reveal {
+  display: flex;
+  width: 100%;
+}
+
 .project-card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1.25rem;
+  width: 100%;
   padding: clamp(1.5rem, 3vw, 2.5rem);
   border: 1px solid var(--border);
   border-radius: 1.25rem;
@@ -1683,9 +1741,73 @@
   margin-top: 1.5rem;
 }
 
+.experience {
+  padding-block: clamp(4.5rem, 9vw, 8rem) clamp(2rem, 4vw, 3rem);
+}
+
+.experience-list {
+  margin: clamp(2rem, 4vw, 3.25rem) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.experience-item {
+  display: grid;
+  gap: 0.9rem;
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
+  border-bottom: 1px solid var(--border);
+}
+
+.experience-meta p {
+  margin: 0;
+}
+
+.experience-period {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #4f7f1f;
+}
+
+.dark .experience-period {
+  color: #cdf27a;
+}
+
+.experience-place {
+  margin-top: 0.35rem !important;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+.experience-role {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.experience-org {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.experience-bullets {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 46rem;
+  margin: 1.1rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+
 @media (min-width: 960px) {
-  .project-card {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  .experience-item {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
     gap: 3rem;
   }
 }
