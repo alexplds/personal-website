@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { content } from "@/lib/content";
-import { Button } from "@/components/ui/button";
 
 export function CopyEmail() {
   const [copied, setCopied] = useState(false);
@@ -18,8 +17,8 @@ export function CopyEmail() {
   }
 
   return (
-    <Button type="button" variant="outline" onClick={copy}>
+    <button type="button" className="cta-pill cta-pill-ghost" onClick={copy}>
       {copied ? "Copied" : "Copy email"}
-    </Button>
+    </button>
   );
 }

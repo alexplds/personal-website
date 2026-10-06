@@ -11,7 +11,12 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: hero, then a wide Desk / Court split you can drag. The yellow desk field holds `alex.ts`. The blue court field holds Who I am and the hobby icons. Open GoCourt replaces those two boxes with one panel of the same size. Skills, Mahara, languages, and Journey stay in the columns below. Back undoes the mix. Then a see-through tennis sphere drawn in light lines. Drag turns it in any direction; it stays still until you do. The marks are Python, JavaScript, Java, C++, React, Node.js, PostgreSQL, Git, and the tools around them. Then contact.
+- Home: the page uses the full width of the screen, and each part fades in as you scroll to it. The header links to four numbered sections.
+  - Hero: one full screen with just the name, a short line, and two buttons.
+  - 01 About: a full-screen half/half that stays pinned while you scroll. The gold Desk half holds `alex.ts`; the blue Court half holds Who I am and the sports icons. Scrolling mixes those two colours like paint into green, and the GoCourt panel takes over. `#play` jumps to GoCourt. On phones, smaller windows, or with reduced motion, the halves and GoCourt simply stack.
+  - 02 Projects: numbered cards from `content.projects` — GoCourt, the SpiraTest MCP server, Heathrow, Telehouse, and the Mahara studio work.
+  - 03 Skills: a big light green tennis ball with a white seam and twenty tools spread around it; the main ones face you and the rest sit behind. Drag turns it in any direction to explore; it stays still until you do. The tools live in `content.techStack`.
+  - 04 Contact.
 - Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
 
 ## Edit content

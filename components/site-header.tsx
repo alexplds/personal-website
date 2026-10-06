@@ -14,10 +14,18 @@ function LinkedInMark() {
 export function SiteHeader() {
   return (
     <header className="no-print sticky top-0 z-40 bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-4xl items-center justify-between gap-3 px-5">
+      <div className="page-wrap relative flex h-14 items-center justify-between gap-3">
         <a href="#top" className="text-sm font-medium tracking-tight">
           {content.shortName}
         </a>
+        <nav className="header-nav" aria-label="Sections">
+          {content.nav.map((item, index) => (
+            <a key={item.href} href={item.href} className="header-nav-link">
+              <span className="header-nav-index">{String(index + 1).padStart(2, "0")} /</span>
+              {item.label}
+            </a>
+          ))}
+        </nav>
         <div className="header-socials">
           <a
             className="header-social"

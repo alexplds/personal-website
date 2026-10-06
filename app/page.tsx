@@ -1,14 +1,9 @@
-import { RoomsSplit } from "@/components/rooms";
+import { ProjectsSection } from "@/components/projects";
+import { RoomsStory } from "@/components/rooms";
 import { TechStack } from "@/components/tech-stack";
 import { SiteHeader } from "@/components/site-header";
 import { SportTrail } from "@/components/sport-trail";
-import {
-  ContactSection,
-  HeroSection,
-  PlaySection,
-  SiteFooter,
-  WorkSection,
-} from "@/components/sections";
+import { ContactSection, HeroSection, SiteFooter } from "@/components/sections";
 
 export default function Home() {
   return (
@@ -22,19 +17,11 @@ export default function Home() {
       <SiteHeader />
       <SportTrail />
       <main>
-        <div className="mx-auto max-w-4xl">
-          <HeroSection />
-        </div>
-        <RoomsSplit
-          deskField={<WorkSection embedded part="field" />}
-          deskRest={<WorkSection embedded part="rest" />}
-          courtField={<PlaySection embedded part="field" />}
-          courtRest={<PlaySection embedded part="rest" />}
-        />
+        <HeroSection />
+        <RoomsStory />
+        <ProjectsSection />
         <TechStack />
-        <div className="mx-auto max-w-4xl">
-          <ContactSection />
-        </div>
+        <ContactSection />
       </main>
       <SiteFooter />
     </div>

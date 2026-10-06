@@ -1,236 +1,218 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef } from "react";
 import { IntersectionSection } from "@/components/destinations";
+import { IntroCode } from "@/components/intro-code";
+import { Sports } from "@/components/sports";
 import { content } from "@/lib/content";
 
-const MIN = 28;
-const MAX = 72;
-const START = 50;
-const MIX_MS = 720;
+// Must match the pinned .story media query in globals.css.
+const PINNED_QUERY =
+  "(min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)";
 
-function prefersReducedMotion() {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const GOCOURT_AT = 0.98;
+
+function clamp(n: number) {
+  return Math.min(1, Math.max(0, n));
 }
 
-export function RoomsSplit({
-  deskField,
-  deskRest,
-  courtField,
-  courtRest,
-}: {
-  deskField: ReactNode;
-  deskRest: ReactNode;
-  courtField: ReactNode;
-  courtRest: ReactNode;
-}) {
-  const boardRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const openRef = useRef<HTMLButtonElement>(null);
-  const backRef = useRef<HTMLButtonElement>(null);
-  const closeTimer = useRef<number>(0);
-  const [pct, setPct] = useState(START);
-  const [dragging, setDragging] = useState(false);
-  const [layer, setLayer] = useState(false);
-  const [spread, setSpread] = useState(false);
+function smooth(edge0: number, edge1: number, x: number) {
+  const t = clamp((x - edge0) / (edge1 - edge0));
+  return t * t * (3 - 2 * t);
+}
 
-  const setMix = useCallback((next: boolean, instant = false) => {
-    window.clearTimeout(closeTimer.current);
+export function RoomsStory() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const halvesRef = useRef<HTMLDivElement>(null);
+  const gocourtRef = useRef<HTMLDivElement>(null);
+  const blendRef = useRef<HTMLParagraphElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+  const hintRef = useRef<HTMLParagraphElement>(null);
 
-    if (next) {
-      setLayer(true);
-      if (instant || prefersReducedMotion()) {
-        setSpread(true);
-      } else {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => setSpread(true));
-        });
-      }
-      if (window.location.hash !== "#play") {
-        history.replaceState(null, "", "#play");
-      }
+  useEffect(() => {
+    const sectionNode = sectionRef.current;
+    const stickyNode = stickyRef.current;
+    const halvesNode = halvesRef.current;
+    const gocourtNode = gocourtRef.current;
+    const blendNode = blendRef.current;
+    const resultNode = resultRef.current;
+    const hintNode = hintRef.current;
+    if (
+      !sectionNode ||
+      !stickyNode ||
+      !halvesNode ||
+      !gocourtNode ||
+      !blendNode ||
+      !resultNode ||
+      !hintNode
+    ) {
       return;
     }
+    const section: HTMLElement = sectionNode;
+    const sticky: HTMLDivElement = stickyNode;
+    const halves: HTMLDivElement = halvesNode;
+    const gocourt: HTMLDivElement = gocourtNode;
+    const blend: HTMLParagraphElement = blendNode;
+    const result: HTMLDivElement = resultNode;
+    const hint: HTMLParagraphElement = hintNode;
 
-    setSpread(false);
-    if (instant || prefersReducedMotion()) {
-      setLayer(false);
-    } else {
-      closeTimer.current = window.setTimeout(() => setLayer(false), MIX_MS);
-    }
-    if (window.location.hash === "#play") {
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-    }
-    window.setTimeout(() => openRef.current?.focus(), instant ? 0 : 80);
-  }, []);
+    const query = window.matchMedia(PINNED_QUERY);
+    let pinned = false;
+    let frame = 0;
 
-  useEffect(() => {
-    function onHash() {
-      if (window.location.hash === "#play") setMix(true);
-      else {
-        setSpread(false);
-        setLayer(false);
+    function measure() {
+      const rect = section.getBoundingClientRect();
+      const top = parseFloat(getComputedStyle(sticky).top) || 0;
+      const travel = rect.height - sticky.offsetHeight;
+      return {
+        progress: travel > 0 ? clamp((top - rect.top) / travel) : 0,
+        visible: rect.bottom > 0 && rect.top < window.innerHeight,
+      };
+    }
+
+    function render() {
+      frame = 0;
+      if (!pinned) return;
+      const { progress } = measure();
+      const meet = smooth(0.04, 0.36, progress);
+      const fade = smooth(0.16, 0.34, progress);
+      const green = smooth(0.34, 0.58, progress);
+      const line = smooth(0.3, 0.46, progress);
+      const reveal = smooth(0.52, 0.74, progress);
+
+      halves.style.opacity = String(1 - fade);
+      hint.style.opacity = String(1 - fade);
+      gocourt.style.opacity = String(Math.max(line, reveal));
+      blend.style.opacity = line.toFixed(3);
+      result.style.opacity = reveal.toFixed(3);
+      result.style.transform = `translateY(${((1 - reveal) * 14).toFixed(1)}px)`;
+      sticky.style.setProperty("--story-meet", meet.toFixed(3));
+      sticky.style.setProperty("--story-green", green.toFixed(3));
+      sticky.dataset.phase = reveal > 0.55 ? "gocourt" : fade > 0.35 ? "mix" : "halves";
+    }
+
+    function schedule() {
+      if (!frame) frame = requestAnimationFrame(render);
+    }
+
+    function goTo(at: number) {
+      if (!pinned) {
+        (at > 0.5 ? gocourt : halves).scrollIntoView();
+        return;
       }
+      const rect = section.getBoundingClientRect();
+      const top = parseFloat(getComputedStyle(sticky).top) || 0;
+      const travel = rect.height - sticky.offsetHeight;
+      window.scrollTo({ top: window.scrollY + rect.top - top + travel * at });
     }
-    if (window.location.hash === "#play") queueMicrotask(() => setMix(true, true));
+
+    function setMode() {
+      pinned = query.matches;
+      if (pinned) {
+        schedule();
+        return;
+      }
+      halves.style.opacity = "";
+      hint.style.opacity = "";
+      gocourt.style.opacity = "";
+      gocourt.style.transform = "";
+      blend.style.opacity = "";
+      result.style.opacity = "";
+      result.style.transform = "";
+      sticky.style.removeProperty("--story-meet");
+      sticky.style.removeProperty("--story-green");
+      delete sticky.dataset.phase;
+    }
+
+    function onFocus(event: FocusEvent) {
+      if (!pinned) return;
+      const target = event.target as Node;
+      if (gocourt.contains(target) && sticky.dataset.phase !== "gocourt")
+        goTo(GOCOURT_AT);
+      else if (halves.contains(target) && sticky.dataset.phase !== "halves") goTo(0);
+    }
+
+    function onHash() {
+      if (window.location.hash === "#play") goTo(GOCOURT_AT);
+    }
+
+    const resizeObserver = new ResizeObserver(schedule);
+
+    setMode();
+    onHash();
+    resizeObserver.observe(sticky);
+    query.addEventListener("change", setMode);
+    window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
-  }, [setMix]);
+    section.addEventListener("focusin", onFocus);
 
-  useEffect(() => {
-    if (!spread) return;
-    backRef.current?.focus();
-    function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setMix(false);
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [spread, setMix]);
-
-  useEffect(() => {
-    return () => window.clearTimeout(closeTimer.current);
+    return () => {
+      cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
+      query.removeEventListener("change", setMode);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("hashchange", onHash);
+      section.removeEventListener("focusin", onFocus);
+    };
   }, []);
-
-  const moveTo = useCallback((clientX: number) => {
-    const board = stageRef.current;
-    if (!board) return;
-    const rect = board.getBoundingClientRect();
-    if (rect.width < 8) return;
-    const next = ((clientX - rect.left) / rect.width) * 100;
-    setPct(Math.min(MAX, Math.max(MIN, next)));
-  }, []);
-
-  function onPointerDown(event: React.PointerEvent<HTMLDivElement>) {
-    if (layer || window.innerWidth < 960) return;
-    event.preventDefault();
-    setDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
-    moveTo(event.clientX);
-  }
-
-  function onPointerMove(event: React.PointerEvent<HTMLDivElement>) {
-    if (!dragging) return;
-    moveTo(event.clientX);
-  }
-
-  function endDrag(event: React.PointerEvent<HTMLDivElement>) {
-    if (!dragging) return;
-    setDragging(false);
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-  }
-
-  function onKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (layer) return;
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      setPct((n) => Math.max(MIN, n - 3));
-    } else if (event.key === "ArrowRight") {
-      event.preventDefault();
-      setPct((n) => Math.min(MAX, n + 3));
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      setPct(START);
-    }
-  }
-
-  const boardClass = [
-    "rooms-board",
-    dragging ? "rooms-board-dragging" : "",
-    layer ? "is-mixing" : "",
-    spread ? "is-mixed" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
 
   return (
-    <section className="rooms-band" aria-label="Desk, court, and intersection">
-      <div className="rooms-intro">
-        <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Rooms</p>
-        <h2 className="font-heading mt-2 text-3xl">Desk and court</h2>
-        <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-          Drag the seam left or right. The button on the seam mixes the two rooms into GoCourt.
-        </p>
-      </div>
+    <section
+      ref={sectionRef}
+      id="about"
+      className="story"
+      aria-label="Desk, court, and GoCourt"
+    >
+      <div ref={stickyRef} className="story-sticky">
+        <div className="story-backdrop" aria-hidden="true">
+          <span className="story-glow story-glow-desk" />
+          <span className="story-glow story-glow-court" />
+          <span className="story-glow story-glow-green" />
+        </div>
 
-      <div
-        ref={boardRef}
-        className={boardClass}
-        style={{ "--desk": `${pct}%` } as CSSProperties}
-      >
-        <div ref={stageRef} className="rooms-stage">
-          <div id="work" className="rooms-field rooms-desk scroll-mt-20">
-            <p className="rooms-label">Desk</p>
-            {deskField}
+        <div ref={halvesRef} className="story-halves">
+          <div id="work" className="story-half story-desk">
+            <div className="story-half-inner">
+              <p className="section-kicker">01 / About · Desk</p>
+              <h2 className="font-heading story-half-title">
+                Engineer / Computer Scientist
+              </h2>
+              <IntroCode />
+            </div>
           </div>
-
-          <div
-            role="separator"
-            tabIndex={layer ? -1 : 0}
-            className="rooms-seam"
-            aria-hidden={layer}
-            aria-label="Resize desk and court"
-            aria-orientation="vertical"
-            aria-controls="work"
-            aria-valuemin={MIN}
-            aria-valuemax={MAX}
-            aria-valuenow={Math.round(pct)}
-            aria-valuetext={`${Math.round(pct)} percent desk`}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-            onDoubleClick={() => setPct(START)}
-            onKeyDown={onKeyDown}
-          >
-            <button
-              ref={openRef}
-              type="button"
-              className="rooms-open"
-              onClick={() => setMix(true)}
-              onPointerDown={(event) => event.stopPropagation()}
-              tabIndex={layer ? -1 : 0}
-            >
-              <span className="rooms-open-kicker">Open</span>
-              GoCourt
-            </button>
+          <div className="story-half story-court">
+            <div className="story-half-inner">
+              <p className="section-kicker">Court</p>
+              <h2 className="font-heading story-half-title">Personal life</h2>
+              <Sports />
+            </div>
           </div>
+        </div>
 
-          <div className="rooms-field rooms-court scroll-mt-20">
-            <p className="rooms-label">Court</p>
-            {courtField}
-          </div>
-
-          <div className="rooms-mixer" aria-hidden="true">
-            <div className="rooms-mixer-desk" />
-            <div className="rooms-mixer-court" />
-          </div>
-
-          <div
-            id="play"
-            className="rooms-mix"
-            role="region"
-            aria-hidden={!spread}
-            inert={spread ? undefined : true}
-            aria-label="Intersection — GoCourt"
-          >
-            <button ref={backRef} type="button" className="rooms-back" onClick={() => setMix(false)}>
-              <span aria-hidden="true">←</span> Back
-            </button>
-            <p className="rooms-label">Intersection</p>
-            <h2 className="font-heading text-3xl md:text-4xl">GoCourt</h2>
-            <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-              {content.intersection}
+        <div ref={gocourtRef} className="story-gocourt">
+          <div className="story-half-inner">
+            <p ref={blendRef} className="story-blend-line">
+              <span className="story-blend-desk">Engineering</span>
+              <span className="story-blend-plus" aria-hidden="true">
+                +
+              </span>
+              <span className="story-blend-court">Personal life</span>
             </p>
-            <IntersectionSection embedded />
+            <div ref={resultRef} className="story-result-block">
+              <h2 className="font-heading story-half-title">GoCourt</h2>
+              <p className="story-result">The result of the two.</p>
+              <div className="story-gocourt-card">
+                <p className="story-gocourt-copy">{content.intersection}</p>
+              </div>
+              <IntersectionSection />
+            </div>
           </div>
         </div>
 
-        <div className="rooms-below">
-          <div className="rooms-rest">{deskRest}</div>
-          <div className="rooms-rest">{courtRest}</div>
-        </div>
+        <p ref={hintRef} className="story-hint" aria-hidden="true">
+          Scroll to mix
+        </p>
       </div>
     </section>
   );

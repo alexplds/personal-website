@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Destination } from "@/lib/content";
 
 type Mode = Destination["animation"] | null;
@@ -61,14 +62,15 @@ export function LaunchOverlay({
 
   if (!mode) return null;
 
-  return (
+  return createPortal(
     <div
       className="no-print fixed inset-0 z-[80] overflow-hidden"
       role="dialog"
       aria-label={mode === "tennis" ? "Opening GoCourt" : "Opening portfolio"}
     >
       {mode === "tennis" ? <TennisScene /> : <F1Scene />}
-    </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -132,12 +134,13 @@ export function PendingNote({
   onClose: () => void;
 }) {
   if (!note) return null;
-  return (
+  return createPortal(
     <div className="fixed right-4 bottom-4 z-50 max-w-sm rounded-lg border border-border bg-card px-4 py-3 text-sm shadow-lg">
       <p>{note}</p>
       <button type="button" className="mt-2 text-xs underline" onClick={onClose}>
         Close
       </button>
-    </div>
+    </div>,
+    document.body,
   );
 }

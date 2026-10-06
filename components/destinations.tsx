@@ -1,28 +1,21 @@
 "use client";
 
 import { content, type Destination } from "@/lib/content";
-import { Journey } from "@/components/journey";
-import { LanguageFields } from "@/components/languages";
-import { SkillProofs } from "@/components/skill-proofs";
-import { Sports } from "@/components/sports";
 import { LaunchOverlay, PendingNote, useLaunch } from "@/components/overlays";
 import { Reveal } from "@/components/reveal";
 
 export function DestinationButtons({
   destinations,
   stacked = true,
-  heading,
 }: {
   destinations: readonly Destination[];
   stacked?: boolean;
-  heading?: string;
 }) {
   const { mode, href, runId, pendingNote, launch, finish, clearNote } = useLaunch();
 
   return (
     <>
-      {heading ? <p className="rooms-label project-portfolios-label">{heading}</p> : null}
-      <div className={`${heading ? "mt-0" : "mt-8"} grid gap-4 ${stacked ? "grid-cols-1" : "md:grid-cols-3"}`}>
+      <div className={`mt-8 grid gap-4 ${stacked ? "grid-cols-1" : "md:grid-cols-3"}`}>
         {destinations.map((dest, i) => (
           <Reveal key={dest.id} delay={i * 90}>
             <button
@@ -48,65 +41,8 @@ export function DestinationButtons({
   );
 }
 
-const mahara = content.destinations.filter((d) => d.animation === "f1");
 const court = content.destinations.filter((d) => d.animation === "tennis");
 
-export function WorkDestinations() {
-  return <DestinationButtons destinations={mahara} heading="Engineering Projects Portfolios IMEE" />;
-}
-
-export function PlaySection({
-  embedded = false,
-  part = "all",
-}: {
-  embedded?: boolean;
-  part?: "all" | "field" | "rest";
-}) {
-  const field = (
-    <>
-      {embedded ? (
-        <h2 className="font-heading text-2xl">Personal life</h2>
-      ) : (
-        <Reveal>
-          <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">Play</p>
-          <h2 className="font-heading mt-2 text-3xl">Personal life</h2>
-        </Reveal>
-      )}
-      <Sports />
-    </>
-  );
-  const rest = (
-    <>
-      <SkillProofs title="Skills developed" tone="court" />
-      <LanguageFields />
-      <Journey />
-    </>
-  );
-
-  if (part === "field") return field;
-  if (part === "rest") return rest;
-
-  return (
-    <section id="play" className="scroll-mt-20 px-5 py-16">
-      {field}
-      {rest}
-    </section>
-  );
-}
-
-export function IntersectionSection({ embedded = false }: { embedded?: boolean }) {
-  if (embedded) {
-    return <DestinationButtons destinations={court} />;
-  }
-
-  return (
-    <div id="play" className="rooms-pane rooms-intersection scroll-mt-20">
-      <p className="rooms-label">Intersection</p>
-      <h2 className="font-heading text-2xl">Intersection</h2>
-      <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-muted-foreground">
-        {content.intersection}
-      </p>
-      <DestinationButtons destinations={court} />
-    </div>
-  );
+export function IntersectionSection() {
+  return <DestinationButtons destinations={court} />;
 }
