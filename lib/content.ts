@@ -216,7 +216,7 @@ export const content = {
   ],
   sports: {
     quote: "Who I am",
-    body: "Raised in Athens in a multicultural environment, speaking Greek, French, and English. Sport is where I am happiest — it gave me lifelong friends and a love of competition.",
+    body: "Raised in Athens in a multicultural environment, speaking Greek, French, and English. Sport is where I am the happiest, playing competitive football from a very young age.",
   },
   hobbies: [
     { id: "football", label: "Football" },
