@@ -16,17 +16,17 @@ export function IntroCode() {
           <span className="intro-str">&quot;{content.location}&quot;</span>
           {",\n"}
           {"  "}
-          <span className="intro-key intro-key-desk">degree</span>
+          <span className="intro-key intro-key-yellow">degree</span>
           {": "}
           <span className="intro-str">&quot;Mechanical and Electrical Engineering&quot;</span>
           {",\n"}
           {"  "}
-          <span className="intro-key intro-key-desk">experience</span>
+          <span className="intro-key intro-key-yellow">experience</span>
           {": "}
           <span className="intro-str">&quot;Engineer at Firstco / control systems&quot;</span>
           {",\n"}
           {"  "}
-          <span className="intro-key intro-key-based">passion</span>
+          <span className="intro-key intro-key-yellow">passion</span>
           {": "}
           <span className="intro-str">&quot;Computer Science and Artificial Intelligence&quot;</span>
           {",\n"}
@@ -36,7 +36,7 @@ export function IntroCode() {
           <span className="intro-str">&quot;Sports&quot;</span>
           {",\n"}
           {"  "}
-          <span className="intro-key intro-key-mix">result</span>
+          <span className="intro-key intro-key-green">result</span>
           {": "}
           <span className="intro-str">&quot;{gocourt?.title ?? "GoCourt.gr"}&quot;</span>
           {" "}

@@ -26,10 +26,6 @@ export default function CVPage() {
             {content.email}
           </a>
           {" · "}
-          <a className="underline underline-offset-4" href={content.phoneHref}>
-            {content.phone}
-          </a>
-          {" · "}
           <a
             className="underline underline-offset-4"
             href={content.linkedin}

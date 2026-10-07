@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Mail } from "lucide-react";
 import { content } from "@/lib/content";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -40,9 +39,6 @@ export function SiteHeader() {
             <Mail />
           </a>
           <ThemeToggle />
-          <Link href="/cv" className="header-cv">
-            View CV
-          </Link>
         </div>
       </div>
     </header>

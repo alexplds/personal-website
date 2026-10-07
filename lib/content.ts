@@ -3,15 +3,14 @@ export const content = {
   shortName: "Alex P.",
   location: "London, UK",
   email: "Alexandros.polychroniadis@gmail.com",
-  phone: "[phone removed]",
-  phoneHref: "tel:[phone removed]",
   linkedin: "https://linkedin.com/in/alexpolychroniadis",
   linkedinLabel: "linkedin.com/in/alexpolychroniadis",
-  roleLine: "Engineer, builder, and lifelong athlete",
+  roleLine: "AI · CS · Engineering · Data · Sports",
+  roleParts: ["AI", "CS", "Engineering", "Data", "Sports"],
   intersection:
     "GoCourt is where my two passions meet: computer science and sport. Playing racquet sports regularly in Greece, I kept running into the same problem — you could not simply book a court for the hour you wanted. It was phone calls, guesswork, and hoping the fifth club you called had a court free. That gap is why I co-founded gocourt.gr with a friend. Talking to clubs, we found we could be just as useful to them, so we built an owner dashboard that helps with their everyday tasks and needs. It is now live in pilot with clubs around Athens, and the goal stays simple: less time arranging a game, more time playing it.",
   heroLead:
-    "I grew up between languages and cultures. Sport taught me how to compete; engineering taught me how to build. This site is the short version of that path.",
+    "Raised in Athens between Greek, French, and English. I study engineering at Bath, and I have played sport at a high level since I was a child.",
   story: [
     {
       id: "home",
@@ -71,6 +70,28 @@ export const content = {
       bullets: [
         "Worked with clients and engineering on marine equipment (motors, generators, cranes), turning customer asks into clear technical offers.",
         "Built priced proposals in CAT and Palfinger and supported a large shipboard install from drawings.",
+      ],
+    },
+  ],
+  earlyInternships: [
+    {
+      org: "pH7 Advertising",
+      role: "Client service intern",
+      period: "June 2023",
+      place: "Athens",
+      bullets: [
+        "Sat in on client meetings, built presentations, and helped run projects and social media for multinational brands.",
+        "Helped organise a staff and partner event for Unilever Hellas.",
+      ],
+    },
+    {
+      org: "Atlético Madrid camp",
+      role: "Coach",
+      period: "July 2023",
+      place: "Athens",
+      bullets: [
+        "Coached under-10s and settled arguments between the kids.",
+        "Spotted players for academy trials in Spain.",
       ],
     },
   ],
@@ -195,7 +216,7 @@ export const content = {
   ],
   sports: {
     quote: "Who I am",
-    body: "Raised in Athens in a French-speaking home. Sport is where I am happiest — it gave me lifelong friends and a love of competition.",
+    body: "Raised in Athens in a multicultural environment, speaking Greek, French, and English. Sport is where I am happiest — it gave me lifelong friends and a love of competition.",
   },
   hobbies: [
     { id: "football", label: "Football" },
@@ -227,7 +248,7 @@ export const content = {
     { label: "Git/GitHub", icon: "git" },
     { label: "GitHub Actions", icon: "githubactions" },
     { label: "Cloudflare", icon: "cloudflare" },
-    { label: "Google Maps", icon: "googlemaps" },
+    { label: "Google Maps API", icon: "googlemaps" },
     { label: "Claude Code", icon: "claude" },
     { label: "Cursor", icon: "cursor" },
   ],

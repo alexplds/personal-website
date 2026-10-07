@@ -29,11 +29,16 @@ export function HeroSection() {
           </h1>
         </div>
         <div className="hero-aside hero-in hero-in-3">
-          <p className="hero-role">{content.roleLine}</p>
-          <p className="hero-lead">{content.heroLead}</p>
+          <p className="hero-role">
+            {content.roleParts.map((part) => (
+              <span key={part} className="hero-role-part">
+                {part}
+              </span>
+            ))}
+          </p>
           <div className="hero-actions">
-            <a href="#projects" className="cta-pill">
-              See projects
+            <a href="/cv" className="cta-pill">
+              View CV
             </a>
             <a href="#contact" className="cta-pill cta-pill-ghost">
               Get in touch
@@ -51,47 +56,29 @@ export function HeroSection() {
 export function ContactSection() {
   return (
     <section id="contact" className="contact scroll-mt-20">
-      <div className="page-wrap contact-grid">
+      <div className="page-wrap">
         <Reveal>
           <p className="section-kicker">05 / Contact</p>
-          <h2 className="font-heading section-title">Say hello</h2>
-          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-            If you want to talk sport, a product, or a role, email is the fastest path.
-          </p>
+          <h2 className="font-heading contact-title">Contact</h2>
         </Reveal>
-        <Reveal delay={90}>
-          <dl className="space-y-3 text-[15px]">
+        <Reveal delay={70}>
+          <dl className="contact-list">
             <div>
-              <dt className="text-xs tracking-wide text-muted-foreground uppercase">Email</dt>
+              <dt>Email</dt>
               <dd>
-                <a className="underline underline-offset-4" href={`mailto:${content.email}`}>
-                  {content.email}
-                </a>
+                <a href={`mailto:${content.email}`}>{content.email}</a>
               </dd>
             </div>
             <div>
-              <dt className="text-xs tracking-wide text-muted-foreground uppercase">Phone</dt>
+              <dt>LinkedIn</dt>
               <dd>
-                <a className="underline underline-offset-4" href={content.phoneHref}>
-                  {content.phone}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="text-xs tracking-wide text-muted-foreground uppercase">LinkedIn</dt>
-              <dd>
-                <a
-                  className="underline underline-offset-4"
-                  href={content.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={content.linkedin} target="_blank" rel="noopener noreferrer">
                   {content.linkedinLabel}
                 </a>
               </dd>
             </div>
           </dl>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="contact-actions">
             <a href={`mailto:${content.email}`} className="cta-pill">
               Email me
             </a>
