@@ -37,7 +37,12 @@ export function HeroSection() {
             ))}
           </p>
           <div className="hero-actions">
-            <a href="/cv" className="cta-pill">
+            <a
+              href="/Alex-Polychroniadis-CV.pdf"
+              className="cta-pill"
+              target="_blank"
+              rel="noopener"
+            >
               View CV
             </a>
             <a href="#contact" className="cta-pill cta-pill-ghost">

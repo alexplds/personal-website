@@ -85,9 +85,16 @@ export function TechStack() {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
-      const halfWidth = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect;
+      const halfHeight = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+      const halfWidth = halfHeight * camera.aspect;
       const reach = ORBIT_RADIUS + 0.6;
-      camera.position.z = Math.max(7.15, reach * Math.sqrt(1 + 1 / (halfWidth * halfWidth)));
+      // Badges sit half outside the orbit, so keep the top and bottom ones inside the stage too.
+      const reachY = ORBIT_RADIUS + 0.3;
+      camera.position.z = Math.max(
+        7.15,
+        reach * Math.sqrt(1 + 1 / (halfWidth * halfWidth)),
+        reachY * Math.sqrt(1 + 1 / (halfHeight * halfHeight)),
+      );
       camera.updateProjectionMatrix();
     }
 
@@ -174,8 +181,11 @@ export function TechStack() {
     <section id="skills" className="tech-stack page-wrap scroll-mt-14" aria-label="Tech stack">
       <div className="tech-stack-frame">
         <Reveal className="tech-stack-heading">
-          <p>03 / Tech stack</p>
-          <h2>My skills</h2>
+          <p className="section-kicker">03 / Skills</p>
+          <h2 className="font-heading section-title">Technical skills</h2>
+          <p className="tech-stack-lead">
+            The languages, frameworks and tools I use to build and ship.
+          </p>
         </Reveal>
         <div ref={stageRef} className="tech-stack-stage">
           <canvas ref={canvasRef} aria-hidden="true" />

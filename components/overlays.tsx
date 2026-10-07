@@ -23,7 +23,11 @@ export function useLaunch() {
   function finish(url: string) {
     setMode(null);
     if (url) {
-      window.open(url, "_blank", "noopener,noreferrer");
+      // The animation runs before this, so some browsers (Safari especially) no
+      // longer count it as a click and block the new tab. Fall back to this tab.
+      const tab = window.open(url, "_blank");
+      if (tab) tab.opener = null;
+      else window.location.assign(url);
       setPendingNote("");
       return;
     }

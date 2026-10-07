@@ -237,6 +237,7 @@ export const content = {
     { label: "Node.js", icon: "nodedotjs" },
     { label: "PostgreSQL", icon: "postgresql" },
     { label: "MCP", icon: "modelcontextprotocol" },
+    { label: "LLMs", icon: "llm" },
     { label: "Java", icon: "java" },
     { label: "C++", icon: "cplusplus" },
     { label: "Swift", icon: "swift" },

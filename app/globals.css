@@ -1949,29 +1949,16 @@
 .tech-stack-heading {
   position: relative;
   z-index: 2;
-  padding: 2.2rem 1.5rem 0;
-  text-align: center;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
   pointer-events: none;
 }
 
-.tech-stack-heading p {
-  margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgb(214 224 240 / 72%);
-}
-
-.tech-stack-heading h2 {
-  margin: 0.35rem 0 0;
-  font-family: var(--font-heading), ui-serif, serif;
-  font-size: clamp(2.7rem, 6vw, 4.4rem);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  background: linear-gradient(90deg, #f7f4ee 0%, #f7f4ee 38%, #8eb6ef 72%, #b9a6f2 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.tech-stack-lead {
+  max-width: 34rem;
+  margin: 0.9rem 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
 }
 
 .tech-stack-stage {
@@ -2083,7 +2070,7 @@
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgb(214 224 240 / 55%);
+  color: var(--muted-foreground);
 }
 
 @media (max-width: 720px) {

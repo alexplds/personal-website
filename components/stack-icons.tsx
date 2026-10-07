@@ -1,9 +1,10 @@
-import { Coffee, Network, type LucideIcon } from "lucide-react";
+import { BrainCircuit, Coffee, Network, type LucideIcon } from "lucide-react";
 import { brandIcons } from "@/components/brand-icons";
 
 const glyphIcons = {
   java: Coffee,
   rest: Network,
+  llm: BrainCircuit,
 } satisfies Record<string, LucideIcon>;
 
 type GlyphId = keyof typeof glyphIcons;
