@@ -37,11 +37,12 @@ export function TechStack() {
     const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 40);
     camera.position.z = 7.15;
 
+    const compact = window.matchMedia("(max-width: 720px)").matches;
     const renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true,
-      powerPreference: "high-performance",
+      antialias: !compact,
+      powerPreference: compact ? "low-power" : "high-performance",
     });
     renderer.setClearColor(0x000000, 0);
 
@@ -50,7 +51,7 @@ export function TechStack() {
     scene.add(globe);
 
     const shell = new THREE.Mesh(
-      new THREE.SphereGeometry(BALL_RADIUS, 64, 48),
+      new THREE.SphereGeometry(BALL_RADIUS, compact ? 36 : 64, compact ? 28 : 48),
       new THREE.ShaderMaterial({
         transparent: true,
         depthWrite: false,
@@ -62,7 +63,7 @@ export function TechStack() {
         fragmentShader: FELT_FRAGMENT,
       }),
     );
-    const seamGeo = seamGeometry(BALL_RADIUS + 0.01, 0.048);
+    const seamGeo = seamGeometry(BALL_RADIUS + 0.01, 0.048, compact ? 256 : 512);
     const seamFar = new THREE.Mesh(seamGeo, seamMaterial(0xf4f9ea, 1, false));
     const seam = new THREE.Mesh(seamGeo, seamMaterial(0xf8fbf0, 0.96, true));
     seamFar.renderOrder = 0;
@@ -82,7 +83,7 @@ export function TechStack() {
       const width = stage.clientWidth;
       const height = stage.clientHeight;
       if (width < 2 || height < 2) return;
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, compact ? 1.5 : 2));
       renderer.setSize(width, height, false);
       camera.aspect = width / height;
       const halfHeight = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
@@ -122,17 +123,37 @@ export function TechStack() {
       });
     }
 
+    let gesture = false;
+    let originX = 0;
+    let originY = 0;
+
     function onPointerDown(event: PointerEvent) {
-      dragging = true;
-      lastX = event.clientX;
-      lastY = event.clientY;
-      stage.setPointerCapture(event.pointerId);
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      gesture = true;
+      dragging = event.pointerType === "mouse";
+      originX = lastX = event.clientX;
+      originY = lastY = event.clientY;
+      if (dragging) stage.setPointerCapture(event.pointerId);
     }
 
     function onPointerMove(event: PointerEvent) {
-      if (!dragging) return;
+      if (!gesture && !dragging) return;
       const dx = event.clientX - lastX;
       const dy = event.clientY - lastY;
+      if (gesture && !dragging) {
+        const adx = Math.abs(event.clientX - originX);
+        const ady = Math.abs(event.clientY - originY);
+        if (adx < 10 && ady < 10) return;
+        gesture = false;
+        // A vertical finger movement is a page scroll. Leave it to the browser.
+        if (ady >= adx) return;
+        dragging = true;
+        lastX = event.clientX;
+        lastY = event.clientY;
+        stage.setPointerCapture(event.pointerId);
+        return;
+      }
+      if (!dragging) return;
       lastX = event.clientX;
       lastY = event.clientY;
       const distance = Math.hypot(dx, dy);
@@ -144,6 +165,7 @@ export function TechStack() {
     }
 
     function onPointerUp(event: PointerEvent) {
+      gesture = false;
       dragging = false;
       if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
     }
@@ -295,8 +317,7 @@ function seamPoint(t: number, target: THREE.Vector3) {
   );
 }
 
-function seamGeometry(radius: number, halfWidth: number) {
-  const steps = 512;
+function seamGeometry(radius: number, halfWidth: number, steps = 512) {
   const spread = halfWidth / radius;
   const point = new THREE.Vector3();
   const ahead = new THREE.Vector3();

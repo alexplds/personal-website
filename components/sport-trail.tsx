@@ -65,8 +65,13 @@ export function SportTrail() {
 
   useEffect(() => {
     let frame = 0;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function measure() {
+      if (reduced.matches) {
+        setPose(idle);
+        return;
+      }
       const x = gutterX();
       const play = document.getElementById("play");
       if (x == null) {
@@ -104,10 +109,12 @@ export function SportTrail() {
     measure();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
+    reduced.addEventListener("change", onScroll);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      reduced.removeEventListener("change", onScroll);
     };
   }, []);
 

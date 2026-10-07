@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Mail } from "lucide-react";
 import { content } from "@/lib/content";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -11,10 +14,34 @@ function LinkedInMark() {
 }
 
 export function SiteHeader() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    function close() {
+      setOpen(false);
+    }
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") close();
+    }
+    function onResize() {
+      if (window.matchMedia("(min-width: 900px)").matches) close();
+    }
+    window.addEventListener("hashchange", close);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("hashchange", close);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
+
   return (
-    <header className="no-print sticky top-0 z-40 bg-background/85 backdrop-blur-md">
+    <header
+      className={`no-print sticky top-0 z-40 backdrop-blur-md ${open ? "bg-background" : "bg-background/85"}`}
+    >
       <div className="page-wrap relative flex h-14 items-center justify-between gap-3">
-        <a href="#top" className="text-sm font-medium tracking-tight">
+        <a href="#top" className="header-brand text-sm font-medium tracking-tight">
           {content.shortName}
         </a>
         <nav className="header-nav" aria-label="Sections">
@@ -39,8 +66,40 @@ export function SiteHeader() {
             <Mail />
           </a>
           <ThemeToggle />
+          <button
+            type="button"
+            className="header-social mobile-nav-toggle"
+            aria-expanded={open}
+            aria-controls="mobile-section-nav"
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? "Close" : "Menu"}
+          </button>
         </div>
       </div>
+      {open ? (
+        <>
+          <button
+            type="button"
+            className="mobile-nav-backdrop"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+          />
+          <nav id="mobile-section-nav" className="mobile-nav-panel" aria-label="Sections">
+            {content.nav.map((item, index) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="mobile-nav-link"
+                onClick={() => setOpen(false)}
+              >
+                <span className="header-nav-index">{String(index + 1).padStart(2, "0")}</span>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </>
+      ) : null}
     </header>
   );
 }

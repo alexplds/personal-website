@@ -153,9 +153,9 @@ export function PendingNote({
 }) {
   if (!note) return null;
   return createPortal(
-    <div className="fixed right-4 bottom-4 z-50 max-w-sm rounded-lg border border-border bg-card px-4 py-3 text-sm shadow-lg">
+    <div className="fixed right-4 bottom-4 z-50 w-[min(24rem,calc(100vw-2rem))] rounded-lg border border-border bg-card px-4 py-3 text-sm shadow-lg">
       <p>{note}</p>
-      <button type="button" className="mt-2 text-xs underline" onClick={onClose}>
+      <button type="button" className="mt-2 inline-flex min-h-11 items-center text-xs underline" onClick={onClose}>
         Close
       </button>
     </div>,

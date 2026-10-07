@@ -22,7 +22,7 @@ export function DestinationButtons({
               type="button"
               onClick={() => launch(dest)}
               aria-label={`Visit ${dest.title} (opens in a new tab)`}
-              className={`group relative w-full overflow-hidden rounded-2xl border px-5 py-5 text-left transition hover:-translate-y-1 ${
+              className={`group relative w-full overflow-hidden rounded-2xl border px-5 py-5 text-left transition [@media(hover:hover)]:hover:-translate-y-1 ${
                 dest.animation === "tennis"
                   ? "court-card border-[#2f6b3c]/40"
                   : "track-card border-[rgb(212_168_40)]/30"

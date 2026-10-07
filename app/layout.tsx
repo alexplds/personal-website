@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { DM_Sans, Source_Serif_4 } from "next/font/google";
 import { content } from "@/lib/content";
@@ -15,6 +15,11 @@ const heading = Source_Serif_4({
   subsets: ["latin"],
   weight: ["600"],
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: content.seo.title,

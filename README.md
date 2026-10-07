@@ -13,10 +13,10 @@ Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
 ## What is on the page
 
-The header links to five numbered sections, plus LinkedIn, email and a light/dark toggle.
+The header links to five numbered sections, plus LinkedIn, email and a light/dark toggle. On a narrow screen those section links sit in Menu; LinkedIn, email and the theme toggle stay in the header.
 
 - **Hero**: the name, with a glowing tennis ball as the dot on the first "i" of Polychroniadis, the role line, and **View CV** / **Get in touch** buttons.
-- **01 About**: a pinned half/half on desktop. The gold Desk half holds `alex.ts`; the blue Court half holds Who I am, four hobbies and three languages. Scrolling mixes the two colours into green and the GoCourt panel takes over, with the story and a button to the site. A hard wheel scroll is briefly caught when the section pins and when GoCourt is fully revealed. `#play` jumps to GoCourt. On phones, small windows or with reduced motion, the halves and GoCourt simply stack.
+- **01 About**: a pinned half/half on desktop. The gold Desk half holds `alex.ts`; the blue Court half holds Who I am, four hobbies and three languages. Scrolling mixes the two colours into green and the GoCourt panel takes over, with the story and a button to the site. A hard wheel scroll is briefly caught when the section pins and when GoCourt is fully revealed. `#play` jumps to GoCourt. On phones, tablets, small windows or with reduced motion, the halves and GoCourt simply stack.
 - **02 Projects**: a 2×2 grid of cards: GoCourt, the SpiraTest MCP server (built on the Heathrow PLC/SCADA upgrade), Engineering studio work (Mahara portfolios) and F1 in Schools.
 - **03 Skills**: a 3D tennis ball (three.js) with 21 tools spread around it. Drag to turn it.
 - **04 Experience**: Firstco and ELTRAK.
@@ -30,7 +30,7 @@ Almost all text lives in [`lib/content.ts`](lib/content.ts): hero, story, hobbie
 
 ## CV
 
-**View CV** opens [`public/Alex-Polychroniadis-CV.pdf`](public/Alex-Polychroniadis-CV.pdf), and `/cv` redirects there (set in [`next.config.ts`](next.config.ts)). To update the CV, replace the PDF and keep the same file name.
+**View CV** opens `/cv`, a page built from the same text as the site. It reflows on a phone and prints to a clean PDF. **Download PDF** on that page is the one-page file [`public/Alex-Polychroniadis-CV.pdf`](public/Alex-Polychroniadis-CV.pdf). To update that file, replace it and keep the same name.
 
 ## Deploy
 
