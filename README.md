@@ -1,6 +1,6 @@
 # Alex Polychroniadis
 
-Personal site and printable CV for software / Forward Deployed–style roles.
+Personal site for Alex Polychroniadis: engineering student, co-founder of [gocourt.gr](https://www.gocourt.gr), and placement engineer at Firstco.
 
 ## Run locally
 
@@ -11,28 +11,31 @@ npm run dev
 
 Open [http://127.0.0.1:43217](http://127.0.0.1:43217).
 
-- Home: the page uses the full width of the screen, and each part fades in as you scroll to it. The header links to four numbered sections.
-  - Hero: one full screen with just the name, a short line, and two buttons.
-  - 01 About: a full-screen half/half that stays pinned while you scroll. The gold Desk half holds `alex.ts`; the blue Court half holds Who I am and the sports icons. Scrolling mixes those two colours like paint into green, and the GoCourt panel takes over. `#play` jumps to GoCourt. On phones, smaller windows, or with reduced motion, the halves and GoCourt simply stack.
-  - 02 Projects: numbered cards from `content.projects` — GoCourt, the SpiraTest MCP server, Heathrow, Telehouse, and the Mahara studio work.
-  - 03 Skills: a big light green tennis ball with a white seam and twenty tools spread around it; the main ones face you and the rest sit behind. Drag turns it in any direction to explore; it stays still until you do. The tools live in `content.techStack`.
-  - 04 Contact.
-- Printable CV: [http://127.0.0.1:43217/cv](http://127.0.0.1:43217/cv) — use **Save as PDF**
+## What is on the page
+
+The header links to five numbered sections, plus LinkedIn, email and a light/dark toggle.
+
+- **Hero**: the name, with a glowing tennis ball as the dot on the first "i" of Polychroniadis, the role line, and **View CV** / **Get in touch** buttons.
+- **01 About**: a pinned half/half on desktop. The gold Desk half holds `alex.ts`; the blue Court half holds Who I am, four hobbies and three languages. Scrolling mixes the two colours into green and the GoCourt panel takes over, with the story and a button to the site. A hard wheel scroll is briefly caught when the section pins and when GoCourt is fully revealed. `#play` jumps to GoCourt. On phones, small windows or with reduced motion, the halves and GoCourt simply stack.
+- **02 Projects**: a 2×2 grid of cards: GoCourt, the SpiraTest MCP server (built on the Heathrow PLC/SCADA upgrade), Engineering studio work (Mahara portfolios) and F1 in Schools.
+- **03 Skills**: a 3D tennis ball (three.js) with 21 tools spread around it. Drag to turn it.
+- **04 Experience**: Firstco and ELTRAK.
+- **05 Contact**.
+
+The GoCourt and Year 1 / Year 2 portfolio buttons play a short loader first (a rolling tennis ball, or an F1 car crossing a ring), then open the site in a new tab. If the browser blocks the new tab, it opens in the current one.
 
 ## Edit content
 
-All facts live in [`lib/content.ts`](lib/content.ts). The homepage and `/cv` both read from that file.
+Almost all text lives in [`lib/content.ts`](lib/content.ts): hero, story, hobbies, languages, projects, experience, tech stack and the link destinations.
 
-Year 1 and Year 2 buttons show a circular loader: an F1 car drives into the ring and out the other side, then the Mahara views open. GoCourt opens `https://www.gocourt.gr` after the tennis rally.
+## CV
 
-The header has LinkedIn, email, a theme toggle, and a **View CV** pill (inverted against the current theme). That opens the printable page at `/cv`. To add a PDF later, drop `public/Alex_Polychroniadis_CV.pdf` and link it from there.
+**View CV** opens [`public/Alex-Polychroniadis-CV.pdf`](public/Alex-Polychroniadis-CV.pdf), and `/cv` redirects there (set in [`next.config.ts`](next.config.ts)). To update the CV, replace the PDF and keep the same file name.
 
 ## Deploy
 
-**Vercel:** import the repo, framework Next.js, default build (`next build`). No env vars required.
-
-**Cloudflare Pages:** framework Next.js, build command `npx @cloudflare/next-on-pages` *or* use the OpenNext Cloudflare adapter if you already use that elsewhere. A static-ish App Router deploy also works via `npx opennextjs-cloudflare` — the site has no database or auth.
+**Vercel**: import the repo with the default Next.js settings. No environment variables are needed, and every push to `main` redeploys.
 
 ## Stack
 
-Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui.
+Next.js (App Router), TypeScript, Tailwind CSS, three.js, shadcn/ui.
