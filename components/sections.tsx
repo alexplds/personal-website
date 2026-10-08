@@ -17,9 +17,8 @@ export function HeroSection() {
             <span className="whitespace-nowrap">
               {lastName.slice(0, iAt)}
               <span className="name-i">
-                <span className="md:hidden">i</span>
-                <span className="hidden md:inline">ı</span>
-                <span className="name-light-wrap hidden md:block" aria-hidden="true">
+                ı
+                <span className="name-light-wrap" aria-hidden="true">
                   <span className="name-light-glow" />
                   <span className="name-light" />
                 </span>
