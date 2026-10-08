@@ -1286,6 +1286,46 @@
   box-shadow: 0 0 18px 6px rgb(110 198 126 / 45%);
 }
 
+/* Phone type is much smaller, so the fixed 22px ball sat on the stem. */
+@media (max-width: 767px) {
+  .name-light-wrap {
+    top: -0.08em;
+    margin-left: -0.15em;
+    width: 0.3em;
+    height: 0.3em;
+  }
+
+  .name-light {
+    width: 0.3em;
+    height: 0.3em;
+    box-shadow: 0 0 0.28em 0.08em rgb(47 107 60 / 35%);
+  }
+
+  .name-light::before,
+  .name-light::after {
+    width: 0.26em;
+    height: 0.27em;
+    border-width: 1px;
+  }
+
+  .name-light::before {
+    left: -0.16em;
+  }
+
+  .name-light::after {
+    right: -0.16em;
+  }
+
+  .name-light-glow {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+
+  .dark .name-light {
+    box-shadow: 0 0 0.4em 0.12em rgb(110 198 126 / 45%);
+  }
+}
+
 .sport-trail {
   position: fixed;
   inset: 0;
