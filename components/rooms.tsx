@@ -9,6 +9,8 @@ import { content } from "@/lib/content";
 // Must match the pinned .story media query in globals.css.
 const PINNED_QUERY =
   "(min-width: 1024px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)";
+// Must match the vertical .story media query in globals.css.
+const VERTICAL_QUERY = "(max-width: 1023px) and (prefers-reduced-motion: no-preference)";
 
 const GOCOURT_AT = 0.98;
 
@@ -26,6 +28,65 @@ function clamp(n: number) {
   return Math.min(1, Math.max(0, n));
 }
 
+function clampRange(n: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, n));
+}
+
+type StorySpan = { start: number; end: number; overflow: number };
+
+type VerticalTimeline = {
+  desk: StorySpan;
+  mix1: StorySpan;
+  court: StorySpan;
+  mix2: StorySpan;
+  gocourt: StorySpan;
+  travel: number;
+  viewH: number;
+};
+
+function spanT(span: StorySpan, y: number) {
+  const length = span.end - span.start;
+  if (length <= 0) return y >= span.end ? 1 : 0;
+  return clamp((y - span.start) / length);
+}
+
+// Pan tall copy up during a reading beat, then hold at the end.
+function readShift(span: StorySpan, y: number) {
+  if (span.overflow <= 0) return 0;
+  return -Math.min(span.overflow, Math.max(0, y - span.start));
+}
+
+function buildTimeline(
+  viewH: number,
+  deskH: number,
+  courtH: number,
+  goH: number,
+): VerticalTimeline {
+  const mix = Math.round(clampRange(viewH * 0.78, 280, 680));
+  const restFor = (overflow: number) =>
+    overflow > 12
+      ? Math.round(Math.min(viewH * 0.16, 110))
+      : Math.round(Math.min(viewH * 0.46, 360));
+
+  let cursor = 0;
+  const take = (overflow: number) => {
+    const start = cursor;
+    cursor += overflow + restFor(overflow);
+    return { start, end: cursor, overflow };
+  };
+  const desk = take(Math.max(0, deskH - viewH));
+  const mix1Start = cursor;
+  cursor += mix;
+  const mix1 = { start: mix1Start, end: cursor, overflow: 0 };
+  const court = take(Math.max(0, courtH - viewH));
+  const mix2Start = cursor;
+  cursor += mix;
+  const mix2 = { start: mix2Start, end: cursor, overflow: 0 };
+  const gocourt = take(Math.max(0, goH - viewH));
+  cursor += Math.round(Math.min(viewH * 0.08, 64));
+  return { desk, mix1, court, mix2, gocourt, travel: cursor, viewH };
+}
+
 function smooth(edge0: number, edge1: number, x: number) {
   const t = clamp((x - edge0) / (edge1 - edge0));
   return t * t * (3 - 2 * t);
@@ -35,6 +96,8 @@ export function RoomsStory() {
   const sectionRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const halvesRef = useRef<HTMLDivElement>(null);
+  const deskRef = useRef<HTMLDivElement>(null);
+  const courtRef = useRef<HTMLDivElement>(null);
   const gocourtRef = useRef<HTMLDivElement>(null);
   const blendRef = useRef<HTMLParagraphElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -44,6 +107,8 @@ export function RoomsStory() {
     const sectionNode = sectionRef.current;
     const stickyNode = stickyRef.current;
     const halvesNode = halvesRef.current;
+    const deskNode = deskRef.current;
+    const courtNode = courtRef.current;
     const gocourtNode = gocourtRef.current;
     const blendNode = blendRef.current;
     const resultNode = resultRef.current;
@@ -52,6 +117,8 @@ export function RoomsStory() {
       !sectionNode ||
       !stickyNode ||
       !halvesNode ||
+      !deskNode ||
+      !courtNode ||
       !gocourtNode ||
       !blendNode ||
       !resultNode ||
@@ -62,14 +129,30 @@ export function RoomsStory() {
     const section: HTMLElement = sectionNode;
     const sticky: HTMLDivElement = stickyNode;
     const halves: HTMLDivElement = halvesNode;
+    const desk: HTMLDivElement = deskNode;
+    const court: HTMLDivElement = courtNode;
     const gocourt: HTMLDivElement = gocourtNode;
     const blend: HTMLParagraphElement = blendNode;
     const result: HTMLDivElement = resultNode;
     const hint: HTMLParagraphElement = hintNode;
 
     const query = window.matchMedia(PINNED_QUERY);
+    const verticalQuery = window.matchMedia(VERTICAL_QUERY);
+    const deskGlowNode = sticky.querySelector<HTMLElement>(".story-glow-desk");
+    const courtGlowNode = sticky.querySelector<HTMLElement>(".story-glow-court");
+    const greenGlowNode = sticky.querySelector<HTMLElement>(".story-glow-green");
+    if (!deskGlowNode || !courtGlowNode || !greenGlowNode) return;
+    const deskGlowEl: HTMLElement = deskGlowNode;
+    const courtGlowEl: HTMLElement = courtGlowNode;
+    const greenGlowEl: HTMLElement = greenGlowNode;
+
     let pinned = false;
+    let vertical = false;
     let frame = 0;
+    let verticalTimeline: VerticalTimeline | null = null;
+    let cachedStickyTop = 0;
+    let rebuildWindow = 0;
+    let rebuildCount = 0;
 
     function measure() {
       const rect = section.getBoundingClientRect();
@@ -81,9 +164,7 @@ export function RoomsStory() {
       };
     }
 
-    function render() {
-      frame = 0;
-      if (!pinned) return;
+    function renderPinned() {
       const { progress } = measure();
       const meet = smooth(0.04, 0.36, progress);
       const fade = smooth(0.16, 0.34, progress);
@@ -100,6 +181,189 @@ export function RoomsStory() {
       sticky.style.setProperty("--story-meet", meet.toFixed(3));
       sticky.style.setProperty("--story-green", green.toFixed(3));
       sticky.dataset.phase = reveal > 0.55 ? "gocourt" : fade > 0.35 ? "mix" : "halves";
+    }
+
+    function place(el: HTMLElement, shift: number, opacity: number) {
+      el.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
+      el.style.opacity = opacity.toFixed(3);
+    }
+
+    function renderVertical() {
+      const timeline = verticalTimeline;
+      if (!timeline) return;
+      const rectTop = section.getBoundingClientRect().top;
+      const y = clampRange(cachedStickyTop - rectTop, 0, timeline.travel);
+      const lift = Math.min(84, timeline.viewH * 0.12);
+
+      let deskOpacity = 1;
+      let deskShift = readShift(timeline.desk, y);
+      if (y >= timeline.mix1.end) {
+        deskOpacity = 0;
+        deskShift = -timeline.desk.overflow - lift;
+      } else if (y >= timeline.mix1.start) {
+        const t = spanT(timeline.mix1, y);
+        const fade = smooth(0.04, 0.62, t);
+        deskOpacity = 1 - fade;
+        deskShift = -timeline.desk.overflow - fade * lift;
+      }
+
+      let courtOpacity = 0;
+      let courtShift = lift;
+      if (y >= timeline.mix2.end) {
+        courtOpacity = 0;
+        courtShift = -timeline.court.overflow - lift;
+      } else if (y >= timeline.mix2.start) {
+        const t = spanT(timeline.mix2, y);
+        const fade = smooth(0, 0.58, t);
+        courtOpacity = 1 - fade;
+        courtShift = -timeline.court.overflow - fade * lift;
+      } else if (y >= timeline.court.start) {
+        courtOpacity = 1;
+        courtShift = readShift(timeline.court, y);
+      } else if (y >= timeline.mix1.start) {
+        const t = spanT(timeline.mix1, y);
+        courtOpacity = smooth(0.22, 0.86, t);
+        courtShift = (1 - smooth(0.12, 0.82, t)) * lift;
+      }
+
+      const mix2T = y < timeline.mix2.start ? 0 : spanT(timeline.mix2, y);
+      const line = y < timeline.mix2.start ? 0 : smooth(0.14, 0.58, mix2T);
+      const reveal = y < timeline.mix2.start ? 0 : smooth(0.4, 0.94, mix2T);
+      const gocourtOpacity = y >= timeline.mix2.end ? 1 : Math.max(line, reveal);
+      let gocourtShift = (1 - (y >= timeline.mix2.end ? 1 : reveal)) * Math.min(22, lift);
+      if (y >= timeline.gocourt.start) gocourtShift = readShift(timeline.gocourt, y);
+
+      place(desk, deskShift, deskOpacity);
+      place(court, courtShift, courtOpacity);
+      place(gocourt, gocourtShift, gocourtOpacity);
+      blend.style.opacity = (y >= timeline.mix2.end ? 1 : line).toFixed(3);
+      result.style.opacity = (y >= timeline.mix2.end ? 1 : reveal).toFixed(3);
+      result.style.transform = `translate3d(0, ${((1 - (y >= timeline.mix2.end ? 1 : reveal)) * 14).toFixed(1)}px, 0)`;
+
+      desk.style.pointerEvents = deskOpacity > 0.55 ? "auto" : "none";
+      court.style.pointerEvents = courtOpacity > 0.55 ? "auto" : "none";
+      gocourt.style.pointerEvents = gocourtOpacity > 0.55 ? "auto" : "none";
+
+      let meet = 0;
+      let deskGlow = 1;
+      let courtGlow = 0;
+      let green = 0;
+      if (y >= timeline.mix2.end) {
+        meet = 1;
+        deskGlow = 0;
+        courtGlow = 0;
+        green = 1;
+      } else if (y >= timeline.mix2.start) {
+        const t = spanT(timeline.mix2, y);
+        meet = 1;
+        deskGlow = 0;
+        courtGlow = 1 - smooth(0.02, 0.7, t);
+        green = smooth(0.08, 0.88, t);
+      } else if (y >= timeline.court.start) {
+        meet = 1;
+        deskGlow = 0;
+        courtGlow = 1;
+        green = 0;
+      } else if (y >= timeline.mix1.start) {
+        const t = spanT(timeline.mix1, y);
+        meet = smooth(0.05, 0.55, t);
+        deskGlow = 1 - smooth(0.08, 0.72, t);
+        courtGlow = smooth(0.16, 0.78, t);
+        const rise = smooth(0.1, 0.42, t);
+        const fall = 1 - smooth(0.55, 0.92, t);
+        green = rise * fall * 0.82;
+      }
+
+      hint.style.opacity = (
+        1 - smooth(timeline.viewH * 0.04, timeline.viewH * 0.28, y)
+      ).toFixed(3);
+      const glowTravel = timeline.viewH * 0.2;
+      deskGlowEl.style.opacity = deskGlow.toFixed(3);
+      deskGlowEl.style.transform = `translate3d(0, ${(meet * glowTravel).toFixed(1)}px, 0)`;
+      courtGlowEl.style.opacity = courtGlow.toFixed(3);
+      courtGlowEl.style.transform = `translate3d(0, ${(-meet * glowTravel).toFixed(1)}px, 0)`;
+      greenGlowEl.style.opacity = green.toFixed(3);
+    }
+
+    function clearPinnedInline() {
+      halves.style.opacity = "";
+      hint.style.opacity = "";
+      gocourt.style.opacity = "";
+      gocourt.style.transform = "";
+      blend.style.opacity = "";
+      result.style.opacity = "";
+      result.style.transform = "";
+      sticky.style.removeProperty("--story-meet");
+      sticky.style.removeProperty("--story-green");
+      delete sticky.dataset.phase;
+    }
+
+    function clearVerticalInline() {
+      section.style.height = "";
+      delete section.dataset.story;
+      for (const el of [desk, court, gocourt, hint]) {
+        el.style.opacity = "";
+        el.style.transform = "";
+        el.style.pointerEvents = "";
+      }
+      blend.style.opacity = "";
+      result.style.opacity = "";
+      result.style.transform = "";
+      for (const el of [deskGlowEl, courtGlowEl, greenGlowEl]) {
+        el.style.opacity = "";
+        el.style.transform = "";
+      }
+      verticalTimeline = null;
+    }
+
+    function rebuildVertical() {
+      if (!vertical) return;
+      const now = performance.now();
+      if (now - rebuildWindow > 400) {
+        rebuildWindow = now;
+        rebuildCount = 0;
+      }
+      rebuildCount += 1;
+      if (rebuildCount > 6) return;
+      section.dataset.story = "vertical";
+      const viewH = sticky.clientHeight;
+      if (viewH < 120) return;
+      cachedStickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+      const previous = verticalTimeline;
+      const yBefore = previous
+        ? clampRange(
+            cachedStickyTop - section.getBoundingClientRect().top,
+            0,
+            previous.travel,
+          )
+        : 0;
+      const ratio = previous && previous.travel > 0 ? yBefore / previous.travel : 0;
+      const next = buildTimeline(
+        viewH,
+        desk.offsetHeight,
+        court.offsetHeight,
+        gocourt.offsetHeight,
+      );
+      verticalTimeline = next;
+      const px = Math.round(viewH + next.travel);
+      const current = Number.parseFloat(section.style.height);
+      if (!Number.isFinite(current) || Math.abs(current - px) > 1) {
+        section.style.height = `${px}px`;
+      }
+      if (previous && ratio > 0.001) {
+        const rect = section.getBoundingClientRect();
+        const target = window.scrollY + rect.top - cachedStickyTop + ratio * next.travel;
+        if (Math.abs(target - window.scrollY) > 2) {
+          window.scrollTo({ top: target, behavior: "instant" });
+        }
+      }
+      renderVertical();
+    }
+
+    function render() {
+      frame = 0;
+      if (pinned) renderPinned();
+      else if (vertical) renderVertical();
     }
 
     function schedule() {
@@ -149,7 +413,22 @@ export function RoomsStory() {
       }
     }
 
+    function goToVertical(at: number) {
+      const timeline = verticalTimeline;
+      if (!timeline) {
+        (at > 0.5 ? gocourt : halves).scrollIntoView();
+        return;
+      }
+      const rect = section.getBoundingClientRect();
+      const y = at > 0.5 ? timeline.gocourt.start : 0;
+      window.scrollTo({ top: window.scrollY + rect.top - cachedStickyTop + y });
+    }
+
     function goTo(at: number) {
+      if (vertical) {
+        goToVertical(at);
+        return;
+      }
       if (!pinned) {
         (at > 0.5 ? gocourt : halves).scrollIntoView();
         return;
@@ -162,25 +441,65 @@ export function RoomsStory() {
 
     function setMode() {
       pinned = query.matches;
+      vertical = !pinned && verticalQuery.matches;
       if (pinned) {
+        clearVerticalInline();
         schedule();
         return;
       }
-      halves.style.opacity = "";
-      hint.style.opacity = "";
-      gocourt.style.opacity = "";
-      gocourt.style.transform = "";
-      blend.style.opacity = "";
-      result.style.opacity = "";
-      result.style.transform = "";
-      sticky.style.removeProperty("--story-meet");
-      sticky.style.removeProperty("--story-green");
-      delete sticky.dataset.phase;
+      clearPinnedInline();
+      if (vertical) {
+        rebuildVertical();
+        return;
+      }
+      clearVerticalInline();
+    }
+
+    function revealFocused(target: Node) {
+      const timeline = verticalTimeline;
+      if (!timeline || !(target instanceof HTMLElement)) return;
+      let panel: HTMLElement | null = null;
+      let span: StorySpan | null = null;
+      if (desk.contains(target)) {
+        panel = desk;
+        span = timeline.desk;
+      } else if (court.contains(target)) {
+        panel = court;
+        span = timeline.court;
+      } else if (gocourt.contains(target)) {
+        panel = gocourt;
+        span = timeline.gocourt;
+      }
+      if (!panel || !span) return;
+
+      const stickyRect = sticky.getBoundingClientRect();
+      const elRect = target.getBoundingClientRect();
+      if (
+        elRect.height > 0 &&
+        elRect.top >= stickyRect.top + 4 &&
+        elRect.bottom <= stickyRect.bottom - 4
+      ) {
+        return;
+      }
+
+      const panelRect = panel.getBoundingClientRect();
+      const transform = getComputedStyle(panel).transform;
+      const shift = transform && transform !== "none" ? new DOMMatrix(transform).m42 : 0;
+      const layoutTop = elRect.top - panelRect.top - shift;
+      const desired = clampRange(layoutTop - 32, 0, span.overflow);
+      const rect = section.getBoundingClientRect();
+      window.scrollTo({
+        top: window.scrollY + rect.top - cachedStickyTop + span.start + desired,
+      });
     }
 
     function onFocus(event: FocusEvent) {
-      if (!pinned) return;
       const target = event.target as Node;
+      if (vertical) {
+        revealFocused(target);
+        return;
+      }
+      if (!pinned) return;
       if (gocourt.contains(target) && sticky.dataset.phase !== "gocourt")
         goTo(GOCOURT_AT);
       else if (halves.contains(target) && sticky.dataset.phase !== "halves") goTo(0);
@@ -190,21 +509,41 @@ export function RoomsStory() {
       if (window.location.hash === "#play") goTo(GOCOURT_AT);
     }
 
-    const resizeObserver = new ResizeObserver(schedule);
+    const resizeObserver = new ResizeObserver(() => {
+      if (vertical) rebuildVertical();
+      else schedule();
+    });
 
-    setMode();
+    function syncWheel() {
+      window.removeEventListener("wheel", onWheel);
+      if (pinned) window.addEventListener("wheel", onWheel, { passive: false });
+    }
+
+    const setModeAndWheel = () => {
+      setMode();
+      syncWheel();
+    };
+
+    setModeAndWheel();
     onHash();
     resizeObserver.observe(sticky);
-    query.addEventListener("change", setMode);
+    resizeObserver.observe(desk);
+    resizeObserver.observe(court);
+    resizeObserver.observe(gocourt);
+    query.addEventListener("change", setModeAndWheel);
+    verticalQuery.addEventListener("change", setModeAndWheel);
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("hashchange", onHash);
     section.addEventListener("focusin", onFocus);
+    void document.fonts?.ready.then(() => {
+      if (vertical) rebuildVertical();
+    });
 
     return () => {
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
-      query.removeEventListener("change", setMode);
+      query.removeEventListener("change", setModeAndWheel);
+      verticalQuery.removeEventListener("change", setModeAndWheel);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("hashchange", onHash);
@@ -227,7 +566,7 @@ export function RoomsStory() {
         </div>
 
         <div ref={halvesRef} className="story-halves">
-          <div id="work" className="story-half story-desk">
+          <div ref={deskRef} id="work" className="story-half story-desk">
             <div className="story-half-inner">
               <p className="section-kicker">01 / About · Desk</p>
               <h2 className="font-heading story-half-title">
@@ -236,7 +575,7 @@ export function RoomsStory() {
               <IntroCode />
             </div>
           </div>
-          <div className="story-half story-court">
+          <div ref={courtRef} className="story-half story-court">
             <div className="story-half-inner">
               <p className="section-kicker">Court</p>
               <h2 className="font-heading story-half-title">Personal life</h2>
