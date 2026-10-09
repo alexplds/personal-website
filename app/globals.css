@@ -2284,46 +2284,6 @@
   }
 }
 
-.experience-item-compact {
-  gap: 0.55rem;
-  padding-block: 1.35rem 1.5rem;
-}
-
-.experience-item-compact .experience-role {
-  font-size: clamp(1.25rem, 2vw, 1.55rem);
-}
-
-.experience-split {
-  display: grid;
-  gap: 1.25rem;
-  margin-top: 0.85rem;
-}
-
-.experience-split-role {
-  margin: 0.15rem 0 0;
-  font-size: 0.82rem;
-  color: var(--muted-foreground);
-}
-
-.experience-item-compact .experience-org {
-  margin-top: 0;
-  font-size: 0.92rem;
-}
-
-.experience-item-compact .experience-bullets {
-  gap: 0.3rem;
-  margin-top: 0.45rem;
-  font-size: 0.88rem;
-  line-height: 1.55;
-}
-
-@media (min-width: 720px) {
-  .experience-split {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.75rem;
-  }
-}
-
 .contact {
   padding-block: clamp(3rem, 6vw, 4.5rem) clamp(2.5rem, 5vw, 3.5rem);
 }

@@ -31,30 +31,6 @@ export function ExperienceSection() {
               </Reveal>
             </li>
           ))}
-          <li>
-            <article className="experience-item experience-item-compact">
-              <div className="experience-meta">
-                <p className="experience-period">June – July 2023</p>
-                <p className="experience-place">Athens</p>
-              </div>
-              <div>
-                <h3 className="font-heading experience-role">Starting up</h3>
-                <div className="experience-split">
-                  {content.earlyInternships.map((job) => (
-                    <div key={job.org}>
-                      <p className="experience-org">{job.org}</p>
-                      <p className="experience-split-role">{job.role}</p>
-                      <ul className="experience-bullets">
-                        {job.bullets.map((bullet) => (
-                          <li key={bullet}>{bullet}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </article>
-          </li>
         </ol>
       </div>
     </section>
