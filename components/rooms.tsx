@@ -202,7 +202,7 @@ export function RoomsStory() {
         deskShift = -timeline.desk.overflow - lift;
       } else if (y >= timeline.mix1.start) {
         const t = spanT(timeline.mix1, y);
-        const fade = smooth(0.04, 0.62, t);
+        const fade = smooth(0.02, 0.52, t);
         deskOpacity = 1 - fade;
         deskShift = -timeline.desk.overflow - fade * lift;
       }
@@ -222,8 +222,8 @@ export function RoomsStory() {
         courtShift = readShift(timeline.court, y);
       } else if (y >= timeline.mix1.start) {
         const t = spanT(timeline.mix1, y);
-        courtOpacity = smooth(0.22, 0.86, t);
-        courtShift = (1 - smooth(0.12, 0.82, t)) * lift;
+        courtOpacity = smooth(0.16, 0.72, t);
+        courtShift = (1 - smooth(0.1, 0.78, t)) * lift;
       }
 
       const mix2T = y < timeline.mix2.start ? 0 : spanT(timeline.mix2, y);

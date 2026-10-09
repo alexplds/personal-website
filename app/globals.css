@@ -1729,30 +1729,48 @@
   }
 
   .story[data-story="vertical"] .story-glow-desk {
-    background: radial-gradient(
-      140% 68% at 50% 16%,
-      color-mix(in oklab, var(--desk-blob) 94%, transparent),
-      transparent 72%
-    );
+    background:
+      radial-gradient(
+        130% 78% at 50% 38%,
+        color-mix(in oklab, var(--desk-blob) 96%, transparent),
+        transparent 72%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--desk-blob) 62%, transparent),
+        color-mix(in oklab, var(--desk-blob) 34%, transparent)
+      );
   }
 
   .story[data-story="vertical"] .story-glow-court {
     opacity: 0;
-    background: radial-gradient(
-      140% 68% at 50% 84%,
-      color-mix(in oklab, var(--court-blob) 94%, transparent),
-      transparent 72%
-    );
+    background:
+      radial-gradient(
+        130% 78% at 50% 62%,
+        color-mix(in oklab, var(--court-blob) 96%, transparent),
+        transparent 72%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--court-blob) 28%, transparent),
+        color-mix(in oklab, var(--court-blob) 64%, transparent)
+      );
   }
 
   .story[data-story="vertical"] .story-glow-green {
     opacity: 0;
-    background: radial-gradient(
-      96% 78% at 50% 48%,
-      color-mix(in oklab, var(--gocourt-green) 82%, transparent) 0%,
-      color-mix(in oklab, var(--gocourt-blob) 92%, transparent) 46%,
-      transparent 72%
-    );
+    background:
+      radial-gradient(
+        120% 90% at 50% 46%,
+        color-mix(in oklab, var(--gocourt-green) 86%, transparent) 0%,
+        color-mix(in oklab, var(--gocourt-blob) 94%, transparent) 52%,
+        transparent 78%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--gocourt-blob) 70%, transparent),
+        color-mix(in oklab, var(--gocourt-green) 36%, transparent)
+      );
   }
 
   .story[data-story="vertical"] .story-halves {
@@ -1769,8 +1787,9 @@
     top: 0;
     right: 0;
     left: 0;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
+    min-height: 100%;
     width: auto;
     max-width: 100%;
     padding: 1.2rem max(1.15rem, env(safe-area-inset-right)) 1.5rem
