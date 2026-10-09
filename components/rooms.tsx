@@ -35,10 +35,7 @@ function clampRange(n: number, min: number, max: number) {
 type StorySpan = { start: number; end: number; overflow: number };
 
 type VerticalTimeline = {
-  desk: StorySpan;
-  mix1: StorySpan;
-  court: StorySpan;
-  mix2: StorySpan;
+  mix: StorySpan;
   gocourt: StorySpan;
   travel: number;
   viewH: number;
@@ -56,35 +53,17 @@ function readShift(span: StorySpan, y: number) {
   return -Math.min(span.overflow, Math.max(0, y - span.start));
 }
 
-function buildTimeline(
-  viewH: number,
-  deskH: number,
-  courtH: number,
-  goH: number,
-): VerticalTimeline {
-  const mix = Math.round(clampRange(viewH * 0.78, 280, 680));
-  const restFor = (overflow: number) =>
+function buildTimeline(viewH: number, goH: number): VerticalTimeline {
+  const mixLength = Math.round(clampRange(viewH * 2.4, 900, 2200));
+  const overflow = Math.max(0, goH - viewH);
+  const rest =
     overflow > 12
       ? Math.round(Math.min(viewH * 0.16, 110))
-      : Math.round(Math.min(viewH * 0.46, 360));
-
-  let cursor = 0;
-  const take = (overflow: number) => {
-    const start = cursor;
-    cursor += overflow + restFor(overflow);
-    return { start, end: cursor, overflow };
-  };
-  const desk = take(Math.max(0, deskH - viewH));
-  const mix1Start = cursor;
-  cursor += mix;
-  const mix1 = { start: mix1Start, end: cursor, overflow: 0 };
-  const court = take(Math.max(0, courtH - viewH));
-  const mix2Start = cursor;
-  cursor += mix;
-  const mix2 = { start: mix2Start, end: cursor, overflow: 0 };
-  const gocourt = take(Math.max(0, goH - viewH));
-  cursor += Math.round(Math.min(viewH * 0.08, 64));
-  return { desk, mix1, court, mix2, gocourt, travel: cursor, viewH };
+      : Math.round(Math.min(viewH * 0.22, 160));
+  const mix = { start: 0, end: mixLength, overflow: 0 };
+  const gocourt = { start: mixLength, end: mixLength + overflow + rest, overflow };
+  const travel = gocourt.end + Math.round(Math.min(viewH * 0.06, 48));
+  return { mix, gocourt, travel, viewH };
 }
 
 function smooth(edge0: number, edge1: number, x: number) {
@@ -98,6 +77,8 @@ export function RoomsStory() {
   const halvesRef = useRef<HTMLDivElement>(null);
   const deskRef = useRef<HTMLDivElement>(null);
   const courtRef = useRef<HTMLDivElement>(null);
+  const mixRef = useRef<HTMLDivElement>(null);
+  const mixPinRef = useRef<HTMLDivElement>(null);
   const gocourtRef = useRef<HTMLDivElement>(null);
   const blendRef = useRef<HTMLParagraphElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -109,6 +90,8 @@ export function RoomsStory() {
     const halvesNode = halvesRef.current;
     const deskNode = deskRef.current;
     const courtNode = courtRef.current;
+    const mixNode = mixRef.current;
+    const mixPinNode = mixPinRef.current;
     const gocourtNode = gocourtRef.current;
     const blendNode = blendRef.current;
     const resultNode = resultRef.current;
@@ -119,6 +102,8 @@ export function RoomsStory() {
       !halvesNode ||
       !deskNode ||
       !courtNode ||
+      !mixNode ||
+      !mixPinNode ||
       !gocourtNode ||
       !blendNode ||
       !resultNode ||
@@ -131,6 +116,8 @@ export function RoomsStory() {
     const halves: HTMLDivElement = halvesNode;
     const desk: HTMLDivElement = deskNode;
     const court: HTMLDivElement = courtNode;
+    const mix: HTMLDivElement = mixNode;
+    const mixPin: HTMLDivElement = mixPinNode;
     const gocourt: HTMLDivElement = gocourtNode;
     const blend: HTMLParagraphElement = blendNode;
     const result: HTMLDivElement = resultNode;
@@ -183,106 +170,39 @@ export function RoomsStory() {
       sticky.dataset.phase = reveal > 0.55 ? "gocourt" : fade > 0.35 ? "mix" : "halves";
     }
 
-    function place(el: HTMLElement, shift: number, opacity: number) {
-      el.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
-      el.style.opacity = opacity.toFixed(3);
-    }
-
     function renderVertical() {
       const timeline = verticalTimeline;
       if (!timeline) return;
-      const rectTop = section.getBoundingClientRect().top;
+      const rectTop = mix.getBoundingClientRect().top;
       const y = clampRange(cachedStickyTop - rectTop, 0, timeline.travel);
-      const lift = Math.min(84, timeline.viewH * 0.12);
+      const mixLen = timeline.mix.end - timeline.mix.start;
+      const progress = mixLen > 0 ? clamp((y - timeline.mix.start) / mixLen) : 1;
+      const meet = smooth(0.04, 0.36, progress);
+      const fade = smooth(0.16, 0.34, progress);
+      const green = smooth(0.34, 0.58, progress);
+      const line = smooth(0.3, 0.46, progress);
+      const reveal = smooth(0.52, 0.74, progress);
 
-      let deskOpacity = 1;
-      let deskShift = readShift(timeline.desk, y);
-      if (y >= timeline.mix1.end) {
-        deskOpacity = 0;
-        deskShift = -timeline.desk.overflow - lift;
-      } else if (y >= timeline.mix1.start) {
-        const t = spanT(timeline.mix1, y);
-        const fade = smooth(0.02, 0.52, t);
-        deskOpacity = 1 - fade;
-        deskShift = -timeline.desk.overflow - fade * lift;
+      halves.style.opacity = String(1 - fade);
+      hint.style.opacity = String(1 - fade);
+      gocourt.style.opacity = String(Math.max(line, reveal));
+      blend.style.opacity = line.toFixed(3);
+      result.style.opacity = reveal.toFixed(3);
+      result.style.transform = `translateY(${((1 - reveal) * 14).toFixed(1)}px)`;
+      const pan = y >= timeline.gocourt.start ? readShift(timeline.gocourt, y) : 0;
+      gocourt.style.transform = pan ? `translate3d(0, ${pan.toFixed(1)}px, 0)` : "";
+      desk.style.transform = "";
+      court.style.transform = "";
+      desk.style.pointerEvents = "";
+      court.style.pointerEvents = "";
+      gocourt.style.pointerEvents = reveal > 0.55 ? "auto" : "none";
+      mixPin.dataset.phase = reveal > 0.55 ? "gocourt" : fade > 0.35 ? "mix" : "halves";
+      mixPin.style.setProperty("--story-meet", meet.toFixed(3));
+      mixPin.style.setProperty("--story-green", green.toFixed(3));
+      for (const el of [deskGlowEl, courtGlowEl, greenGlowEl]) {
+        el.style.opacity = "";
+        el.style.transform = "";
       }
-
-      let courtOpacity = 0;
-      let courtShift = lift;
-      if (y >= timeline.mix2.end) {
-        courtOpacity = 0;
-        courtShift = -timeline.court.overflow - lift;
-      } else if (y >= timeline.mix2.start) {
-        const t = spanT(timeline.mix2, y);
-        const fade = smooth(0, 0.58, t);
-        courtOpacity = 1 - fade;
-        courtShift = -timeline.court.overflow - fade * lift;
-      } else if (y >= timeline.court.start) {
-        courtOpacity = 1;
-        courtShift = readShift(timeline.court, y);
-      } else if (y >= timeline.mix1.start) {
-        const t = spanT(timeline.mix1, y);
-        courtOpacity = smooth(0.16, 0.72, t);
-        courtShift = (1 - smooth(0.1, 0.78, t)) * lift;
-      }
-
-      const mix2T = y < timeline.mix2.start ? 0 : spanT(timeline.mix2, y);
-      const line = y < timeline.mix2.start ? 0 : smooth(0.14, 0.58, mix2T);
-      const reveal = y < timeline.mix2.start ? 0 : smooth(0.4, 0.94, mix2T);
-      const gocourtOpacity = y >= timeline.mix2.end ? 1 : Math.max(line, reveal);
-      let gocourtShift = (1 - (y >= timeline.mix2.end ? 1 : reveal)) * Math.min(22, lift);
-      if (y >= timeline.gocourt.start) gocourtShift = readShift(timeline.gocourt, y);
-
-      place(desk, deskShift, deskOpacity);
-      place(court, courtShift, courtOpacity);
-      place(gocourt, gocourtShift, gocourtOpacity);
-      blend.style.opacity = (y >= timeline.mix2.end ? 1 : line).toFixed(3);
-      result.style.opacity = (y >= timeline.mix2.end ? 1 : reveal).toFixed(3);
-      result.style.transform = `translate3d(0, ${((1 - (y >= timeline.mix2.end ? 1 : reveal)) * 14).toFixed(1)}px, 0)`;
-
-      desk.style.pointerEvents = deskOpacity > 0.55 ? "auto" : "none";
-      court.style.pointerEvents = courtOpacity > 0.55 ? "auto" : "none";
-      gocourt.style.pointerEvents = gocourtOpacity > 0.55 ? "auto" : "none";
-
-      let meet = 0;
-      let deskGlow = 1;
-      let courtGlow = 0;
-      let green = 0;
-      if (y >= timeline.mix2.end) {
-        meet = 1;
-        deskGlow = 0;
-        courtGlow = 0;
-        green = 1;
-      } else if (y >= timeline.mix2.start) {
-        const t = spanT(timeline.mix2, y);
-        meet = 1;
-        deskGlow = 0;
-        courtGlow = 1 - smooth(0.02, 0.7, t);
-        green = smooth(0.08, 0.88, t);
-      } else if (y >= timeline.court.start) {
-        meet = 1;
-        deskGlow = 0;
-        courtGlow = 1;
-        green = 0;
-      } else if (y >= timeline.mix1.start) {
-        const t = spanT(timeline.mix1, y);
-        meet = smooth(0.05, 0.55, t);
-        deskGlow = 1 - smooth(0.08, 0.72, t);
-        courtGlow = smooth(0.16, 0.78, t);
-        const rise = smooth(0.1, 0.42, t);
-        const fall = 1 - smooth(0.55, 0.92, t);
-        green = rise * fall * 0.82;
-      }
-
-      hint.style.opacity = (
-        1 - smooth(timeline.viewH * 0.04, timeline.viewH * 0.28, y)
-      ).toFixed(3);
-      const glowTravel = timeline.viewH * 0.2;
-      deskGlowEl.style.opacity = deskGlow.toFixed(3);
-      deskGlowEl.style.transform = `translate3d(0, ${(meet * glowTravel).toFixed(1)}px, 0)`;
-      courtGlowEl.style.opacity = courtGlow.toFixed(3);
-      courtGlowEl.style.transform = `translate3d(0, ${(-meet * glowTravel).toFixed(1)}px, 0)`;
-      greenGlowEl.style.opacity = green.toFixed(3);
     }
 
     function clearPinnedInline() {
@@ -300,7 +220,11 @@ export function RoomsStory() {
 
     function clearVerticalInline() {
       section.style.height = "";
+      mix.style.height = "";
       delete section.dataset.story;
+      delete mixPin.dataset.phase;
+      mixPin.style.removeProperty("--story-meet");
+      mixPin.style.removeProperty("--story-green");
       for (const el of [desk, court, gocourt, hint]) {
         el.style.opacity = "";
         el.style.transform = "";
@@ -326,32 +250,29 @@ export function RoomsStory() {
       rebuildCount += 1;
       if (rebuildCount > 6) return;
       section.dataset.story = "vertical";
-      const viewH = sticky.clientHeight;
+      desk.style.opacity = "";
+      desk.style.transform = "";
+      desk.style.pointerEvents = "";
+      court.style.opacity = "";
+      court.style.transform = "";
+      court.style.pointerEvents = "";
+      const viewH = mixPin.clientHeight;
       if (viewH < 120) return;
-      cachedStickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
+      cachedStickyTop = parseFloat(getComputedStyle(mixPin).top) || 0;
       const previous = verticalTimeline;
       const yBefore = previous
-        ? clampRange(
-            cachedStickyTop - section.getBoundingClientRect().top,
-            0,
-            previous.travel,
-          )
+        ? clampRange(cachedStickyTop - mix.getBoundingClientRect().top, 0, previous.travel)
         : 0;
       const ratio = previous && previous.travel > 0 ? yBefore / previous.travel : 0;
-      const next = buildTimeline(
-        viewH,
-        desk.offsetHeight,
-        court.offsetHeight,
-        gocourt.offsetHeight,
-      );
+      const next = buildTimeline(viewH, gocourt.offsetHeight);
       verticalTimeline = next;
       const px = Math.round(viewH + next.travel);
-      const current = Number.parseFloat(section.style.height);
+      const current = Number.parseFloat(mix.style.height);
       if (!Number.isFinite(current) || Math.abs(current - px) > 1) {
-        section.style.height = `${px}px`;
+        mix.style.height = `${px}px`;
       }
       if (previous && ratio > 0.001) {
-        const rect = section.getBoundingClientRect();
+        const rect = mix.getBoundingClientRect();
         const target = window.scrollY + rect.top - cachedStickyTop + ratio * next.travel;
         if (Math.abs(target - window.scrollY) > 2) {
           window.scrollTo({ top: target, behavior: "instant" });
@@ -419,7 +340,7 @@ export function RoomsStory() {
         (at > 0.5 ? gocourt : halves).scrollIntoView();
         return;
       }
-      const rect = section.getBoundingClientRect();
+      const rect = mix.getBoundingClientRect();
       const y = at > 0.5 ? timeline.gocourt.start : 0;
       window.scrollTo({ top: window.scrollY + rect.top - cachedStickyTop + y });
     }
@@ -457,39 +378,26 @@ export function RoomsStory() {
 
     function revealFocused(target: Node) {
       const timeline = verticalTimeline;
-      if (!timeline || !(target instanceof HTMLElement)) return;
-      let panel: HTMLElement | null = null;
-      let span: StorySpan | null = null;
-      if (desk.contains(target)) {
-        panel = desk;
-        span = timeline.desk;
-      } else if (court.contains(target)) {
-        panel = court;
-        span = timeline.court;
-      } else if (gocourt.contains(target)) {
-        panel = gocourt;
-        span = timeline.gocourt;
-      }
-      if (!panel || !span) return;
+      if (!timeline || !(target instanceof HTMLElement) || !gocourt.contains(target)) return;
 
-      const stickyRect = sticky.getBoundingClientRect();
+      const pinRect = mixPin.getBoundingClientRect();
       const elRect = target.getBoundingClientRect();
       if (
         elRect.height > 0 &&
-        elRect.top >= stickyRect.top + 4 &&
-        elRect.bottom <= stickyRect.bottom - 4
+        elRect.top >= pinRect.top + 4 &&
+        elRect.bottom <= pinRect.bottom - 4
       ) {
         return;
       }
 
-      const panelRect = panel.getBoundingClientRect();
-      const transform = getComputedStyle(panel).transform;
+      const panelRect = gocourt.getBoundingClientRect();
+      const transform = getComputedStyle(gocourt).transform;
       const shift = transform && transform !== "none" ? new DOMMatrix(transform).m42 : 0;
       const layoutTop = elRect.top - panelRect.top - shift;
-      const desired = clampRange(layoutTop - 32, 0, span.overflow);
-      const rect = section.getBoundingClientRect();
+      const desired = clampRange(layoutTop - 32, 0, timeline.gocourt.overflow);
+      const rect = mix.getBoundingClientRect();
       window.scrollTo({
-        top: window.scrollY + rect.top - cachedStickyTop + span.start + desired,
+        top: window.scrollY + rect.top - cachedStickyTop + timeline.gocourt.start + desired,
       });
     }
 
@@ -526,9 +434,7 @@ export function RoomsStory() {
 
     setModeAndWheel();
     onHash();
-    resizeObserver.observe(sticky);
-    resizeObserver.observe(desk);
-    resizeObserver.observe(court);
+    resizeObserver.observe(mixPin);
     resizeObserver.observe(gocourt);
     query.addEventListener("change", setModeAndWheel);
     verticalQuery.addEventListener("change", setModeAndWheel);
@@ -559,54 +465,58 @@ export function RoomsStory() {
       aria-label="Desk, court, and GoCourt"
     >
       <div ref={stickyRef} className="story-sticky">
-        <div className="story-backdrop" aria-hidden="true">
-          <span className="story-glow story-glow-desk" />
-          <span className="story-glow story-glow-court" />
-          <span className="story-glow story-glow-green" />
-        </div>
-
-        <div ref={halvesRef} className="story-halves">
-          <div ref={deskRef} id="work" className="story-half story-desk">
-            <div className="story-half-inner">
-              <p className="section-kicker">01 / About · Desk</p>
-              <h2 className="font-heading story-half-title">
-                Engineer / Computer Scientist
-              </h2>
-              <IntroCode />
+        <div ref={mixRef} className="story-mix">
+          <div ref={mixPinRef} className="story-mix-pin">
+            <div className="story-backdrop" aria-hidden="true">
+              <span className="story-glow story-glow-desk" />
+              <span className="story-glow story-glow-court" />
+              <span className="story-glow story-glow-green" />
             </div>
-          </div>
-          <div ref={courtRef} className="story-half story-court">
-            <div className="story-half-inner">
-              <p className="section-kicker">Court</p>
-              <h2 className="font-heading story-half-title">Personal life</h2>
-              <Sports />
-            </div>
-          </div>
-        </div>
 
-        <div ref={gocourtRef} className="story-gocourt">
-          <div className="story-half-inner">
-            <p ref={blendRef} className="story-blend-line">
-              <span className="story-blend-desk">Engineering</span>
-              <span className="story-blend-plus" aria-hidden="true">
-                +
-              </span>
-              <span className="story-blend-court">Personal life</span>
-            </p>
-            <div ref={resultRef} className="story-result-block">
-              <h2 className="font-heading story-half-title">GoCourt</h2>
-              <p className="story-result">The result of the two.</p>
-              <div className="story-gocourt-card">
-                <p className="story-gocourt-copy">{content.intersection}</p>
+            <div ref={halvesRef} className="story-halves">
+              <div ref={deskRef} id="work" className="story-half story-desk">
+                <div className="story-half-inner">
+                  <p className="section-kicker">01 / About · Desk</p>
+                  <h2 className="font-heading story-half-title">
+                    Engineer / Computer Scientist
+                  </h2>
+                  <IntroCode />
+                </div>
               </div>
-              <IntersectionSection />
+              <div ref={courtRef} className="story-half story-court">
+                <div className="story-half-inner">
+                  <p className="section-kicker">Court</p>
+                  <h2 className="font-heading story-half-title">Personal life</h2>
+                  <Sports />
+                </div>
+              </div>
             </div>
+
+            <div ref={gocourtRef} className="story-gocourt">
+              <div className="story-half-inner">
+                <p ref={blendRef} className="story-blend-line">
+                  <span className="story-blend-desk">Engineering</span>
+                  <span className="story-blend-plus" aria-hidden="true">
+                    +
+                  </span>
+                  <span className="story-blend-court">Personal life</span>
+                </p>
+                <div ref={resultRef} className="story-result-block">
+                  <h2 className="font-heading story-half-title">GoCourt</h2>
+                  <p className="story-result">The result of the two.</p>
+                  <div className="story-gocourt-card">
+                    <p className="story-gocourt-copy">{content.intersection}</p>
+                  </div>
+                  <IntersectionSection />
+                </div>
+              </div>
+            </div>
+
+            <p ref={hintRef} className="story-hint" aria-hidden="true">
+              Scroll to mix
+            </p>
           </div>
         </div>
-
-        <p ref={hintRef} className="story-hint" aria-hidden="true">
-          Scroll to mix
-        </p>
       </div>
     </section>
   );

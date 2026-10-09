@@ -20,7 +20,7 @@ export function Sports() {
         <p className="sport-quote">{content.sports.quote}</p>
         <p className="sport-copy">{content.sports.body}</p>
       </div>
-      <p className="court-label">Hobbies</p>
+      <p className="court-label court-label-hobbies">Hobbies</p>
       <div className="hobby-row" role="list">
         {content.hobbies.map((hobby) => {
           const Icon = hobbyIcons[hobby.id];

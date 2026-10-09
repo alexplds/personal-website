@@ -371,7 +371,8 @@
 
 @media print {
   .story-backdrop,
-  .story-hint {
+  .story-hint,
+  .story-poles {
     display: none !important;
   }
   .story[data-story="vertical"] {
@@ -379,6 +380,8 @@
     background: none !important;
   }
   .story[data-story="vertical"] .story-sticky,
+  .story[data-story="vertical"] .story-mix,
+  .story[data-story="vertical"] .story-mix-pin,
   .story[data-story="vertical"] .story-halves,
   .story[data-story="vertical"] .story-half,
   .story[data-story="vertical"] .story-gocourt {
@@ -1542,7 +1545,8 @@
 
 .story-backdrop,
 .story-paint,
-.story-hint {
+.story-hint,
+.story-poles {
   display: none;
 }
 
@@ -1698,19 +1702,111 @@
   }
 }
 
-/* Phone and tablet: vertical scroll mix. Reduced motion keeps the stacked layout. */
+/* Phone and tablet: desk and court scroll normally. The lava mix starts at GoCourt. */
 @media (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
-  .story[data-story="vertical"] {
-    background: var(--story-ground);
+  .story[data-story="vertical"] .story-sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+    background: none;
   }
 
-  .story[data-story="vertical"] .story-sticky {
-    position: sticky;
-    top: 3.5rem;
-    height: calc(100vh - 3.5rem);
-    height: calc(100svh - 3.5rem);
+  .story[data-story="vertical"] .story-halves {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    gap: 0;
+    height: auto;
+    padding: 0;
+    pointer-events: auto;
+  }
+
+  .story[data-story="vertical"] .story-half {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 50%;
+    min-height: 0;
     overflow: hidden;
-    background: var(--story-ground);
+    padding: 0.75rem max(1.15rem, env(safe-area-inset-right)) 0.75rem
+      max(1.15rem, env(safe-area-inset-left));
+    background: none;
+  }
+
+  .story[data-story="vertical"] .story-half-title {
+    margin-top: 0.3rem;
+    font-size: clamp(1.7rem, 6.4vw, 2.2rem);
+  }
+
+  .story[data-story="vertical"] .intro-code {
+    margin-top: 0.75rem;
+    padding: 0.7rem 0.85rem 0.8rem;
+  }
+
+  .story[data-story="vertical"] .intro-code pre {
+    overflow-x: hidden;
+    font-size: 0.7rem;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+
+  .story[data-story="vertical"] .sport-note {
+    margin-top: 0.75rem;
+    padding: 0.85rem 0.95rem 0.9rem;
+  }
+
+  .story[data-story="vertical"] .sport-quote {
+    font-size: 1.2rem;
+  }
+
+  .story[data-story="vertical"] .sport-copy {
+    margin-top: 0.35rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .story[data-story="vertical"] .court-label {
+    margin-top: 0.65rem;
+  }
+
+  .story[data-story="vertical"] .hobby-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.35rem;
+    margin-top: 0.4rem;
+  }
+
+  .story[data-story="vertical"] .hobby-btn {
+    gap: 0.15rem;
+    min-height: 2.75rem;
+    padding: 0.3rem 0.15rem 0.28rem;
+    border-radius: 0.65rem;
+    font-size: 0.58rem;
+    line-height: 1.15;
+  }
+
+  .story[data-story="vertical"] .hobby-icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  .story[data-story="vertical"] .lang-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+    margin-top: 0.45rem;
+  }
+
+  .story[data-story="vertical"] .lang-chip {
+    min-height: 2.5rem;
+    padding: 0.4rem 0.6rem;
   }
 
   .story[data-story="vertical"] .story-backdrop {
@@ -1724,92 +1820,93 @@
 
   .story[data-story="vertical"] .story-glow {
     position: absolute;
-    inset: -12% 0;
+    inset: -8% 0;
     pointer-events: none;
+  }
+
+  .story[data-story="vertical"] .story-mix-pin {
+    --story-meet: 0;
+    --story-green: 0;
+    position: sticky;
+    top: 3.5rem;
+    height: calc(100vh - 3.5rem);
+    height: calc(100svh - 3.5rem);
+    overflow: hidden;
+    background: var(--story-ground);
   }
 
   .story[data-story="vertical"] .story-glow-desk {
-    background:
-      radial-gradient(
-        130% 78% at 50% 38%,
-        color-mix(in oklab, var(--desk-blob) 96%, transparent),
-        transparent 72%
-      ),
-      linear-gradient(
-        180deg,
-        color-mix(in oklab, var(--desk-blob) 62%, transparent),
-        color-mix(in oklab, var(--desk-blob) 34%, transparent)
-      );
+    --glow: var(--desk-blob);
+    --glow-x: 50%;
+    --glow-y: calc(14% + var(--story-meet) * 28% - var(--story-green) * 20%);
+    opacity: calc(1 - var(--story-green) * 0.12);
+    background: radial-gradient(
+      92% 74% at var(--glow-x) var(--glow-y),
+      color-mix(in oklab, var(--glow) 90%, transparent),
+      transparent 70%
+    );
   }
 
   .story[data-story="vertical"] .story-glow-court {
-    opacity: 0;
-    background:
-      radial-gradient(
-        130% 78% at 50% 62%,
-        color-mix(in oklab, var(--court-blob) 96%, transparent),
-        transparent 72%
-      ),
-      linear-gradient(
-        180deg,
-        color-mix(in oklab, var(--court-blob) 28%, transparent),
-        color-mix(in oklab, var(--court-blob) 64%, transparent)
-      );
+    --glow: var(--court-blob);
+    --glow-x: 50%;
+    --glow-y: calc(86% - var(--story-meet) * 28% + var(--story-green) * 20%);
+    opacity: calc(1 - var(--story-green) * 0.12);
+    background: radial-gradient(
+      92% 74% at var(--glow-x) var(--glow-y),
+      color-mix(in oklab, var(--glow) 90%, transparent),
+      transparent 70%
+    );
   }
 
   .story[data-story="vertical"] .story-glow-green {
-    opacity: 0;
-    background:
-      radial-gradient(
-        120% 90% at 50% 46%,
-        color-mix(in oklab, var(--gocourt-green) 86%, transparent) 0%,
-        color-mix(in oklab, var(--gocourt-blob) 94%, transparent) 52%,
-        transparent 78%
-      ),
-      linear-gradient(
-        180deg,
-        color-mix(in oklab, var(--gocourt-blob) 70%, transparent),
-        color-mix(in oklab, var(--gocourt-green) 36%, transparent)
-      );
+    --glow: var(--gocourt-blob);
+    --glow-x: 50%;
+    --glow-y: 50%;
+    opacity: var(--story-green);
+    background: radial-gradient(
+      108% 78% at 50% 50%,
+      color-mix(in oklab, var(--gocourt-green) 88%, transparent) 0%,
+      color-mix(in oklab, var(--gocourt-blob) 88%, transparent) 46%,
+      transparent 68%
+    );
   }
 
-  .story[data-story="vertical"] .story-halves {
+  .story[data-story="vertical"] .story-desk .story-half-inner {
+    translate: 0 calc(var(--story-meet) * 2.25rem);
+  }
+
+  .story[data-story="vertical"] .story-court .story-half-inner {
+    translate: 0 calc(var(--story-meet) * -2.25rem);
+  }
+
+  .story[data-story="vertical"] .story-mix-pin[data-phase="mix"] .story-halves,
+  .story[data-story="vertical"] .story-mix-pin[data-phase="gocourt"] .story-halves {
+    pointer-events: none;
+  }
+
+  .story[data-story="vertical"] .story-blend-line,
+  .story[data-story="vertical"] .story-result-block {
+    opacity: 0;
+  }
+
+  .story[data-story="vertical"] .story-mix-pin[data-phase="gocourt"] .story-gocourt {
+    pointer-events: auto;
+  }
+
+  .story[data-story="vertical"] .story-gocourt {
     position: absolute;
     inset: 0;
-    z-index: 2;
-    display: block;
-    pointer-events: none;
-  }
-
-  .story[data-story="vertical"] .story-half,
-  .story[data-story="vertical"] .story-gocourt {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    align-items: center;
+    z-index: 3;
+    align-items: safe center;
     justify-content: flex-start;
-    min-height: 100%;
     width: auto;
     max-width: 100%;
-    padding: 1.2rem max(1.15rem, env(safe-area-inset-right)) 1.5rem
+    padding: 1.15rem max(1.15rem, env(safe-area-inset-right)) 1.25rem
       max(1.15rem, env(safe-area-inset-left));
-    background: none;
-    pointer-events: none;
-  }
-
-  .story[data-story="vertical"] .story-court,
-  .story[data-story="vertical"] .story-gocourt {
-    opacity: 0;
-  }
-
-  .story[data-story="vertical"] .story-court {
-    z-index: 1;
-  }
-
-  .story[data-story="vertical"] .story-gocourt {
-    z-index: 3;
     background: transparent;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .story[data-story="vertical"] .story-half-inner {
@@ -1820,7 +1917,7 @@
     position: absolute;
     bottom: max(0.85rem, env(safe-area-inset-bottom));
     left: 50%;
-    z-index: 4;
+    z-index: 5;
     display: flex;
     max-width: calc(100% - 2rem);
     translate: -50% 0;
